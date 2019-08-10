@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>选择Debit Note</title>
+    <script type="text/javascript" src="/TMS/js/all.js"></script>
+</head>
+<body style=" width:740px;">
+<div class="mypanel">
+  <div class="mypanel-body">
+    <div id="toolbar" class="toolbar">
+    	<form action="?" method="post">
+            <div class="pull-left">
+            	<input type="hidden" name="pno" id="pno" value="<?php echo input("pno"); ?>" />
+            	编号：<input name="no" type="text" id="no" value="<?php echo input('no')?>" size="16" />
+                公司：<input name="company" type="text" id="company" value="<?php echo input('company')?>" size="16" />
+                <input name="Submit" type="submit" id="Submit" value="搜索" />
+            </div>
+         </form>
+      </div>
+          <table id="mytable" class="mytable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>单据编号</th>
+                    <th>公司名称</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+            {foreach name="list" item="v" key="k"}
+            <tr>
+            <td><?php echo $k+1; ?></td>
+            <td><?php echo $v['allno']; ?></td>
+            <td><?php echo $v['customname']; ?></td>
+            <td><a href="javascript:parent.SelectReturn('<?php echo $v['id']; ?>');">选择</a></td>
+            </tr>
+            {/foreach}
+          </table>
+          <div class="table-pagination" style="display: block;">
+                <div class="pull-right"><?php echo $page; ?></div>
+            </div>
+    </div>
+</div>
+</body>
+</html>

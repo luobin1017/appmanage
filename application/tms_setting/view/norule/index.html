@@ -1,0 +1,152 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><?php echo Config('sys_info')['sys_company']; ?> - 外贸管理系统</title>
+<script src="/tms/js/all.js" language="javascript"></script>
+</head>
+<body>
+<h1>系统编号设置</h1>
+<div class="mypanel">
+<div class="mypanel-heading">
+        <div class="mypanel-lead"><em>系统编号设置</em>可以在此修改系统中编号规则及显示规则</div>
+        <ul class="nav">
+            <li class="active"><a href="#basic">基础编号</a></li>
+            {foreach name="list" item="v"}
+            <li><a href="#<?php echo $v['ex_name']; ?>"><?php echo $v['type']; ?>编号</a></li>
+            {/foreach}
+            </li>
+        </ul>
+    </div>
+
+    <div class="mypanel-body">
+        <div id="myTabContent" class="mytab-content">
+            <div class="mytab-pane active" id="basic">
+                <div class="widget-body no-padding">
+                    <form id="basic-form" method="POST" action="/tms/index.php/tms_setting/norule/update">
+                        <table class="table-setting">
+                          <tr>
+                            <td width="120" align="right">产品编号前缀<input name="ttype" type="hidden" value="basic"></td>
+                            <td><input name="p_ex_name" type="text" value="<?php echo $p[0]['ex_name']; ?>" size="10"></td>
+                            <td width="120" align="right">产品编号长度</td>
+                            <td><input name="p_no_len" type="text" value="<?php echo $p[0]['no_len']; ?>" size="10"></td>
+                            <td width="120" align="right">起始编号</td>
+                            <td><input name="p_no_star" type="text" value="<?php echo $p[0]['no_star']; ?>" size="10"></td>
+                            <td width="120" align="right">显示规则</td>
+                            <td><input name="p_no_rule" type="text" value="<?php echo $p[0]['no_rule']; ?>" size="20"></td>
+                            <td>[ex_name]编号前缀,[no]编号</td>
+                          </tr>
+                          <tr>
+                            <td align="right">客户编号前缀</td>
+                            <td><input name="c_ex_name" type="text" value="<?php echo $c[0]['ex_name']; ?>" size="10"></td>
+                            <td align="right">客户编号长度</td>
+                            <td><input name="c_no_len" type="text" value="<?php echo $c[0]['no_len']; ?>" size="10"></td>
+                            <td align="right">起始编号</td>
+                            <td><input name="c_no_star" type="text" value="<?php echo $c[0]['no_star']; ?>" size="10"></td>
+                            <td align="right">显示规则</td>
+                            <td><input name="c_no_rule" type="text" value="<?php echo $c[0]['no_rule']; ?>" size="20"></td>
+                            <td>&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td align="right">供应商编号前缀</td>
+                            <td width="100"><input name="s_ex_name" type="text" value="<?php echo $s[0]['ex_name']; ?>" size="10"></td>
+                            <td align="right">供应商编号长度</td>
+                            <td width="100"><input name="s_no_len" type="text" value="<?php echo $s[0]['no_len']; ?>" size="10"></td>
+                            <td align="right">起始编号</td>
+                            <td width="100"><input name="s_no_star" type="text" value="<?php echo $s[0]['no_star']; ?>" size="10"></td>
+                            <td align="right">显示规则</td>
+                            <td width="150"><input name="s_no_rule" type="text" value="<?php echo $s[0]['no_rule']; ?>" size="20"></td>
+                            <td>&nbsp;</td>
+                            </tr>
+                            <tfoot>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <button type="submit">确定</button>
+                                        <button type="reset">重置</button>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </form>
+                </div>
+            </div>
+           {foreach name="list" item="v"}
+            <div class="mytab-pane " id="<?php echo $v['ex_name']; ?>">
+                <div class="widget-body no-padding">
+                    <form id="<?php echo $v['ex_name']; ?>-form"  method="POST" action="/tms/index.php/tms_setting/norule/update">
+                      <table class="table-setting">
+                        <tr>
+                          <td width="120" align="right">编号前缀<input name="ttype" type="hidden" value="<?php echo $v['type']; ?>"></td>
+                          <td width="160"><input name="ex_name" type="text" value="<?php echo $v['ex_name']; ?>" size="10"></td>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td align="right">编号规则</td>
+                          <td><input name="no_type" type="text" value="<?php echo $v['no_type']; ?>" size="10"></td>
+                          <td>1,按年份顺序生成，2，顺序生成</td>
+                        </tr>
+                        <tr>
+                          <td align="right">编号长度</td>
+                          <td><input name="no_len" type="text" value="<?php echo $v['no_len']; ?>" size="10"></td>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <thead>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td align="right">编号2长度</td>
+                            <td><input name="no2_len" type="text" value="<?php echo $v['no2_len']; ?>" size="10"></td>
+                            <td>&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td align="right">修改版前缀</td>
+                            <td><input name="r_name" type="text" value="<?php echo $v['r_name']; ?>" size="10"></td>
+                            <td>&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td align="right">修改版编号长度</td>
+                            <td><input name="r_len" type="text" value="<?php echo $v['r_len']; ?>" size="10"></td>
+                            <td>&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td align="right">编号显示规则</td>
+                            <td><input name="no_rule" type="text" value="<?php echo $v['no_rule']; ?>" size="20"></td>
+                            <td>[ex_name]编号前缀,[no]编号20180001格式，,[no-2]2018-0001格式，[no-3]180001格式，[no-4]18-0001格式。</td>
+                          </tr>
+                          <tr>
+                            <td align="right">修改版显示规则</td>
+                            <td><input name="rno_rule" type="text" value="<?php echo $v['rno_rule']; ?>" size="20"></td>
+                            <td>[r_name]修改版前缀,[r_no]修改版编号</td>
+                          </tr>
+                          <tr>
+                            <td align="right">编号预览</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                          </tr>
+                        </tbody>
+                        <tfoot>
+                          <tr>
+                            <td></td>
+                            <td><button type="submit">确定</button>
+                              <button type="reset">重置</button></td>
+                            <td></td>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </form>
+                </div>
+            </div>
+            {/foreach}
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><?php echo Config('sys_info')['sys_company']; ?> - 外贸管理系统</title>
+<script src="/tms/js/all.js" language="javascript"></script>
+</head>
+<body>
+<h1>添加/编辑客户信息</h1>
+<div class="mypanel">
+	<div class="mypanel-heading">
+        <div class="mypanel-lead"><em>添加/编辑供应商信息</em>可以在此添加/修改客户的详细信息</div>
+    </div>
+
+    <div class="mypanel-body">
+        <div id="myTabContent" class="mytab-content">
+            <div class="mytab-pane active">
+                <div class="widget-body no-padding">
+                    <form id="basic-form" method="POST" action="/tms/index.php/tms_purchase/suppliers/update">
+                        <table class="table-setting">
+                            <tr>
+                                <td>客戶类型</td>
+                                <td>
+                                    <select name="own">
+                                        <option value="SZS">深圳公司供应商</option>
+                                        <!--<option value="S">香港公司供應商</option>-->
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <tr class="listtd1">
+                                <td width="13%">公司中文名</td>
+                                <td width="37%"><font color="red">
+                                    <input name="name" type="text" class="input80" id="name" value="<?php echo $arr['name']; ?>"/>
+                                    <input name="id" type="hidden" class="input80"  value="<?php echo $arr['id']; ?>"/>
+                                    *</font></td>
+                                <td width="13%">公司英文名</td>
+                                <td width="37%"><input name="ename" type="text" class="input80" id="ename" value="<?php echo $arr['ename']; ?>"/></td>
+                            </tr>
+                            <tr class="listtd2">
+                                <td>所在城市</td>
+                                <td><label for="blacklist"><font color="red">
+                                    <input name="city" type="text" class="input80" id="city" value="<?php echo $arr['city']; ?>"/>
+                                    *</font></label></td>
+                                <td>傳真</td>
+                                <td><input name="fax" type="text" class="input80" id="fax" value="<?php echo $arr['fax']; ?>" /></td>
+                            </tr>
+                            <tr class="listtd1">
+                                <td>聯系人1</td>
+                                <td><input name="contact1" type="text" class="input80" id="contact1" value="<?php echo $arr['contact1']; ?>" />
+                                    <font color="red"> *</font></td>
+                                <td>電話1</td>
+                                <td><input name="phone1" type="text" class="input80" id="phone1" value="<?php echo $arr['phone1']; ?>" /></td>
+                            </tr>
+                            <tr class="listtd2">
+                                <td>E-mail1</td>
+                                <td><input name="email1" type="text" class="input80" id="email1" value="<?php echo $arr['email1']; ?>" />
+                                    <font color="red">*</font></td>
+                                <td>手機1</td>
+                                <td><input name="mob1" type="text" class="input80" id="mob1" value="<?php echo $arr['mob1']; ?>" /></td>
+                            </tr>
+                            <tr class="listtd1">
+                                <td>QQ1</td>
+                                <td><input name="qq1" type="text" class="input80" id="qq1" value="<?php echo $arr['qq1']; ?>" /></td>
+                                <td>網絡通訊1</td>
+                                <td><input name="net1" type="text" class="input80" id="net1" value="<?php echo $arr['net1']; ?>" /></td>
+                            </tr>
+                            <tr class="listtd2">
+                                <td>聯系人2</td>
+                                <td><input name="contact2" type="text" class="input80" id="contact2" value="<?php echo $arr['contact2']; ?>" /></td>
+                                <td>電話2</td>
+                                <td><input name="phone2" type="text" class="input80" id="phone2" value="<?php echo $arr['phone2']; ?>" /></td>
+                            </tr>
+                            <tr class="listtd1">
+                                <td>E-mail2</td>
+                                <td><input name="email2" type="text" class="input80" id="email2" value="<?php echo $arr['email2']; ?>" /></td>
+                                <td>手機2</td>
+                                <td><input name="mob2" type="text" class="input80" id="mob2" value="<?php echo $arr['mob2']; ?>" /></td>
+                            </tr>
+
+                            <tr class="listtd2">
+                                <td>QQ2</td>
+                                <td><input name="qq2" type="text" class="input80" id="qq2" value="<?php echo $arr['qq2']; ?>" /></td>
+                                <td>網絡通訊2</td>
+                                <td><input name="net2" type="text" class="input80" id="net2" value="<?php echo $arr['net2']; ?>" /></td>
+                            </tr>
+                            <tr class="listtd2">
+                                <td>公司地址</td>
+                                <td colspan="3"><textarea name="address" rows="5" class="input80" id="address"><?php echo $arr['address']; ?></textarea></td>
+                            </tr>
+                            <tr class="listtd1">
+                                <td>網址</td>
+                                <td><input name="web" type="text" class="input80" id="web" value="<?php echo $arr['web']; ?>" /></td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr class="listtd2">
+                                <td>備注</td>
+                                <td colspan="3"><textarea id="content" name="content" cols="20" rows="2" class="ckeditor"><?php echo $arr['content']; ?></textarea></td>
+                            </tr>
+                            <tr class="listtd1">
+                                <td>經營產品</td>
+                                <td><textarea name="jinyin" rows="5" class="input80" id="jinyin"><?php echo $arr['jinyin']; ?></textarea></td>
+                                <td>曾詢價產品</td>
+                                <td><textarea name="xunjia" rows="5" class="input80" id="xunjia"><?php echo $arr['xunjia']; ?></textarea></td>
+                            </tr>
+                            <tr class="listtd2">
+                                <td colspan="4" align="center"><table border="0" align="center" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td wIDth="120" align="center"><input name="Submit" type="submit" ID="Submit" value="確定" /></td>
+                                        <td wIDth="120" align="center"><input name="Reset" type="reset" ID="Reset" value="重新輸入" /></td>
+                                        <td wIDth="120" align="center"><input name="return" type="button" id="return" value="返回供應商列表" onclick="document.location='index.html';" /></td>
+                                    </tr>
+                                </table></td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+function checkpermissions(obj,id)
+{
+	if ($(obj).prop("checked"))
+	{
+		$(".permissions_"+id).attr("checked", true);
+	}
+	else
+	{
+		$(".permissions_"+id).attr("checked", false);
+	}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<style>
+    .top_right{
+        position: absolute!important;
+        right: 100px;
+        top: 25px;
+        font: 200 16px  arial;
+        color: #fff;
+        text-align: center;
+    }
+    .top_right_2{
+        position: absolute!important;
+        right: 200px;
+        top: 25px;
+        font: 200 17px  arial;
+        color: #fff;
+    }
+    @media screen and (max-width: 920px) {
+        .top_right_2{  display: none;}
+        .top_right{  display: none;}
+    }
+    @media screen and (max-width: 570px) {
+        .houtai_name{  display: none;}
+    }
+</style>
+<div class="layui-header layui-header-updata">
+    <div class="layui-logo">
+        <div class="layui-logo-line"></div>
+        {if ( cookie('brandcode') == 2)}<img src="/images/admin/logo_pen.png" alt="">
+        {elseif cookie('brandcode') == 1 /}<img src="/images/admin/logo_neikui.png" alt="">
+        {elseif cookie('brandcode') == 3 /}<img src="/images/admin/logo_dser.png" alt="">
+        {/if}
+    </div>
+    <!-- 头部区域（可配合layui已有的水平导航） -->
+
+    <ul class="layui-nav layui-layout-left houtai_name">
+        <li class="layui-nav-item">
+            <a href="" style="font-size: 24px">
+                {if ( cookie('brandcode') == 2)}无人机管理后台
+                {elseif cookie('brandcode') == 1 /}内窥镜管理后台
+                {elseif cookie('brandcode') == 3 /}扫地机器人管理后台
+                {/if}
+            </a>
+        </li>
+    </ul>
+    <div class=" top_right_2">
+            <p>当前用户 :　{$_COOKIE['username']}</p>
+            <p>　　权限 :　{if (cookie('user_permissions_group')=='100')}超级管理员{else /}普通用户{/if}</p>
+    </div>
+    <div class=" top_right">
+        <a href="/index.php/cms_login/index/logout" style="color: #fff">
+            <img  src="/images/admin/425.png" alt="">
+            <p>退出</p>
+        </a>
+    </div>
+    <!--<ul class="layui-nav layui-layout-right" style="right: 64px">
+        <li class="layui-nav-item">
+            <a href="javascript:;">
+                <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                <?php echo $_COOKIE['username'];?>
+            </a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="/index.php/cms_login/index/logout">
+                退出
+            </a>
+        </li>
+    </ul>-->
+</div>

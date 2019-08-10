@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>选择客户</title>
+    <base target="_self">
+    <script src="/TMS/js/all.js" language="javascript"></script>
+
+</head>
+<body>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin:5px 0px;">
+                <form action="?" method="post">
+                    <tr>
+                        <td height="30">
+
+                            <table border="0" cellpadding="0" cellspacing="3">
+                                <tr>
+                                    <td>编号</td>
+                                    <td><input name="customid" type="text" id="customid" value="<?php echo input('customid')?>" size="16" /></td>
+                                    <td>名称</td>
+                                    <td><input name="customname" type="text" id="customname" value="<?php echo input('customname')?>" size="16" /></td>
+                                    <td><input name="Submit" type="submit" id="Submit" value="搜索" /></td>
+                                </tr>
+                            </table>
+
+                        </td>
+                        <td align="right"><span class="font_color1">双击指定行可进行选择。</span></td>
+                    </tr>
+                </form>
+            </table>
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table id="mytable" class="mytable">
+                <thead>
+                    <tr>
+                      <th width="40" height="22">序号</th>
+                        <th width="120">客户编号</th>
+                      <th>客户名称</th>
+                      <th>所在区域</th>
+                        <th width="50">操作</th>
+                    
+                    </tr>
+                </thead>
+                {foreach $arr as $k=>$v}
+                <tr ondblclick="parent.SelectReturn('<?php echo $v['allno']; ?>');" >
+                    <td align="center"><?php echo $k+1; ?></td>
+                    <td align="center"><?php echo $v['allno']; ?></td>
+                    <td><?php echo $v['enname']; ?></td>
+                    <td align="center"><?php echo $v['countryname']; ?></td>
+                    <td align="center">
+
+                        <a href="javascript:void(null);" onclick="parent.SelectReturn('<?php echo $v['allno']; ?>');">选择</a>
+                    </td>
+                </tr>
+                {/foreach}
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height="40">
+            <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td height="40">
+                        共<font color=red><?php echo $total; ?></font>条 <font color=red><?php echo $pagesize; ?></font>/页
+                        共<font color=red><?php echo $totalPage; ?></font>页
+                    </td>
+                    <td align="right"><?php echo $page; ?></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<script type="text/javascript" language="javascript">setfocus("no");</script>
+</body>
+</html>

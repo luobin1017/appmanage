@@ -1,0 +1,387 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title><?php echo Config('sys_info')['sys_company']; ?> - 外贸管理系统</title>
+    <script src="/tms/js/all.js" language="javascript"></script>
+    <style>
+        .checkbox_center{vertical-align: sub}
+    </style>
+</head>
+<body>
+<h1>新增Custom Invoice</h1>
+<div class="mypanel">
+    <div class="mypanel-heading">
+        <div class="mypanel-lead"><em>新增 Custom Invoice</em>可以在此制作</div>
+    </div>
+
+    <div class="mypanel-body">
+        <div id="toolbar" class="toolbar">
+            <div class="pull-right">
+                <input class="bigbtn" name="Reset2" type="button" id="Reset2" value="返回列表" onClick="if(confirm('返回后您在此表单输入的所有数据都将丢失！确定要返回吗？')){gourl('../index.html');}" />
+            </div>
+            <div class="pull-left">
+                <input type="hidden" id="quotationid" /><input type="hidden" id="quotationname" />
+                <input class="bigbtn" name="Reset1" type="button" id="Reset2" value="导入单据" onclick="SelectID('quotation','',function(){gourl('/tms/index.php/tms_business/quotation/edit/?action=import&id='+$('#quotationid').val());})" />
+            </div>
+        </div>
+        <form name="form1" id="form1" method="post" action="?action=add&no=<?php echo $no; ?>">
+            <input type="hidden" name="type" id="type" value="<?php echo $v['type']; ?>" />
+            <table width="100%"  border="0" align="center" cellpadding="3" cellspacing="1" class="maintable" id="maintable">
+                <tbody>
+                <tr>
+                    <td width="160"  class="tdright">单号：</td>
+                    <td width="383">
+                        <?php echo showtableno("Custom Invoice",$v['qno'],0,$v['rno']) ?>
+                        <input type="hidden" name="qno" id="qno" value="<?php echo $v['qno']; ?>" />
+                        <input type="hidden" name="rno" id="rno" value="<?php echo $v['rno']; ?>" />
+                        <input type="hidden" name="dballno" id="dballno" value="<?php echo $v['dballno']; ?>" />
+                    </td>
+                    <td width="167" class="tdright">日期：</td>
+                    <td width="453"><input name="makedate" type="hidden" class="input80" id="makedate" value="<?php echo $v['makedate']; ?>" /><?php echo $v['makedate']; ?></td>
+                </tr>
+                <!---->
+                <tr style="height: 80px">
+                    <td width="160" height="80" class="tdright">关联单据：</td>
+                    <td width="383" >
+                        <input name="piid" type="text" class="input50" readonly id="piid" value="<?php echo $v['piid']; ?>">
+                        <input name="pino" type="hidden" id="pino" value="<?php echo $v['pino']; ?>" />
+                        <a class="btn btn-default" href="javascript:void(0)" <?php if($v['type']=="edit"){echo "style='display:none';";} ?> onclick='SelectID("pi","",function(){form1.action="?action=selectpi&no=<?php echo $no; ?>";form1.submit();})'>选择PI</a> <span <?php if($v['type']=="edit"){echo "style='display:none';";} ?>>(无关联时请勿选)</span>
+                        <!---->
+                    </td>
+                    <td class="tdright">制单人：</td>
+                    <td>
+                        <input name="makename" type="hidden" id="makename" value="<?php echo $v['makename']; ?>" /><?php echo $v['makename']; ?>
+                    </td>
+                </tr>
+                <!---->
+                <tr style="height: 70px">
+                    <td width="160" height="55" class="tdright">公司代码：</td>
+                    <td width="383">
+                      <input name="customids" type="text" class="input50" readonly id="customids" value="<?php echo $v['customid']; ?>">
+                        <input name="customid" type="hidden" id="customid" value="<?php echo $v['customid']; ?>" />
+                        <input name="suppliersid" type="hidden" id="suppliersid" value="" />
+                        <a class="btn btn-default" href="javascript:void(0)" onclick='SelectID("custom","",function(){form1.action="?action=selectcustom&no=<?php echo $no; ?>";form1.submit();})'>选择客户</a> 或
+                        <a class="btn btn-default" href="javascript:void(0)" onclick='SelectID("suppliers","",function(){form1.action="?action=selectsuppliers&no=<?php echo $no; ?>";form1.submit();})'>选择供应商</a>
+                        <font color="red">*</font>
+                    </td>
+                    <td class="tdright"></td>
+                    <td></td>
+                </tr>
+                <!---->
+                <tr>
+                    <td class="tdright">公司名称：</td>
+                    <td><input name="customname" type="text" class="input80" id="customname" value="<?php echo $v['customname']; ?>" ></td>
+                    <td class="tdright">地址：</td>
+                    <td><input name="customaddress" type="text" class="input80" id="customaddress" value="<?php echo $v['customaddress']; ?>" /></td>
+                </tr>
+                <!---->
+                <tr>
+                    <td class="tdright">联系人：</td>
+                    <td><input name="contact" type="text" class="input80" id="contact" value="<?php echo $v['contact']; ?>" ></td>
+                    <td class="tdright">联系电话：</td>
+                    <td><input name="phone" type="text" class="input80" id="phone" value="<?php echo $v['phone']; ?>" /></td>
+                </tr>
+                <!---->
+                <tr>
+                    <td class="tdright">传真：</td>
+                    <td><input name="fax" type="text" class="input80" id="fax" value="<?php echo $v['fax']; ?>" /></td>
+                    <td class="tdright">邮箱：</td>
+                    <td><input name="email" type="text" class="input80" id="email" value="<?php echo $v['email']; ?>" /></td>
+                </tr>
+                <!---->
+                <tr>
+                    <td class="tdright">货币类型：</td>
+                    <td><?php echo showselect('currencys',$v['currencys'],$currencysarray,"",'');?></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <table width="100%"  border="0" align="center" cellpadding="3" cellspacing="1">
+                            <tr>
+                                <td width="112" align="center">序号</td>
+                                <td width="305" align="center">描述</td>
+                                <td align="center">&nbsp;</td>
+                                <td align="center">数量</td>
+                                <td align="center">单价</td>
+                                <td align="center">合计金额</td>
+                                <td align="center">操作选项</td>
+                                <td width="68"  align="center">&nbsp;</td>
+                            </tr>
+                            <?php
+                                	//var_dump($listitem);exit(0);
+                                        $amount=0;
+
+                                    if($v['productorderid']=="")$v['productorderid']=count($listitem)+1;
+                                	foreach($listitem as $k=>$item)
+                            {
+                            $amount += $item['price']*$item['num'];
+
+                            ?>
+                            <tr>
+                                <td align="center"><?php echo $item["productorderid"]; ?></td>
+                                <td width="305">
+                                    <?php echo coder($item['productinfo']);?><br>
+                                    {if condition="$item.picture!=''"}<img src="<?php echo $item['picture']; ?>" width="110" height="110" />{/if}
+                                </td>
+                                <td align="left" valign="top">
+                                    <div></div>
+                                </td>
+                                <td align="center">
+
+                                    <div class="itemnum"><?php echo str3x($item['num'])." ".$item['unit']; ?></div>
+
+                                </td>
+                                <td align="center">
+
+                                    <div class="itemnum"><?php echo $v['currencys']." ".strtocurr($item['price']); ?></div>
+
+                                </td>
+
+                                <td align="center">
+
+                                    <div class="itemnum"><?php echo $v['currencys']." ".strtocurr($item['price']*$item['num']); ?></div>
+
+                                </td>
+                                <td width="92" align="center">
+                                    <a href="javascript:sheet_edit(<?php echo $item['id']; ?>);">修改</a>
+                                    <a href="javascript:sheet_del(<?php echo $item['id']; ?>);">删除</a>
+                                </td>
+                            </tr>
+                            <?php
+                                	}
+                                ?>
+                            <tr>
+                                <td align="center"></td>
+                                <td align="center"></td>
+                                <td colspan="2" align="center"></td>
+                                <td align="center">Total:</td>
+                                <td align="center">
+                                    总金额:&nbsp;&nbsp;<?php echo $v['currencys'].strtocurr($amount);?>
+                                    <input type="hidden" name="amount" value="<?php echo $amount;?>">
+                                </td>
+                                <td align="center"></td>
+                                <td align="center"></td>
+
+                            </tr>
+                            <tr style="background-color: #e3e3c7">
+                                <td align="center" colspan="10" class="text c">添加項目</td>
+                            </tr>
+                            <tr>
+                                <td align="center">序号</td>
+                                <td align="center">描述</td>
+                                <td width="164" align="center">&nbsp;</td>
+                                <td width="133" align="center">数量</td>
+                                <td width="133" align="center">单价</td>
+                                <td width="120" align="center">合计金额</td>
+                                <td width="92" align="center"></td>
+                            </tr>
+                            <tr>
+                                <td align="center"><input name="productorderid" type="text" id="productorderid" style="width:30px; text-align:center;" value="<?php echo $v['productorderid']; ?>" /></td>
+                                <td>
+                                    <table>
+                                        <tbody>
+                                        <tr>
+                                            <input name="itemid" type="hidden" value="<?php echo $v['itemid']; ?>" />
+
+                                            <td align="left" valign="top"><textarea name="productinfo" cols="67" rows="6" id="productinfo"><?php echo $v['productinfo']; ?></textarea></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td align="center">
+                                    <div id="selpic"></div>
+                                </td>
+
+                                <td>
+                                    <input name="num" id="num" type="text" value="<?php echo $v['num']; ?>" size="4" />
+                                    <?php echo showselect('unit',$v['unit'],sysinfo('sys_units'),"",'');?>
+                                </td>
+                                <td>
+                                    <span class="currencys"><?php echo $v['currencys']; ?></span> <input name="price" id="price" type="text" value="<?php echo $v['price']; ?>" size="4" />
+                                </td>
+                                <td>
+                                    <input name="priceid" id="priceid" type="hidden" value="" />
+                                    <span class="currencys"><?php echo $v['currencys']; ?></span> <input name="count" type="text" readonly="" id="count" value="" size="4">
+                                </td>
+                                <td align="center" colspan="2">
+                                    <input class="bigbtn" name="add" type="button" id="add" value="提交项目" onclick='if(checkproduct()==true){form1.action="?action=add&no=<?php echo $no; ?>";form1.submit();return false;}' />
+                                </td>
+                            </tr>
+                        </table>
+
+                    </td>
+                </tr>
+<!---->
+<tr><td colspan="10"><br></td></tr>
+<tr>
+  <td class="tdright">备注 :</td>
+  <td colspan="3"><textarea name="content" id="content" class="width98" ><?php echo $v['content']; ?></textarea></td>
+</tr>
+<tr>
+    <td class="tdright">备注 :</td>
+    <td colspan="3"><textarea name="shipment" id="shipment" class="width98" >{.$.v['shipment']}</textarea></td>
+</tr>
+
+<tr>
+  <td colspan="4" style="height:60px; text-align:center">
+    <input class="bigbtn" name="btnsubmit" type="button" value="提交单据" onClick="checkform(0);"  />
+    <input class="bigbtn" name="rsubmit" type="button" value="开立R版本" onClick="checkform(1);" <?php if($v['type']!='edit')echo " disabled"; ?>  />
+    <input class="bigbtn" name="return" type="button" value="返回列表" onClick="gourl('../index.html');" />
+    </td>
+</tr>
+
+</tbody>
+</table>
+</form>
+</div>
+</div>
+<script>
+    var pd_edit;
+    function ShowEdit(pdobj)
+    {
+        var html="<div class='pdetion_edit_div' id='pdetion_edit_div'><div class='pdetion_edit_close' title='关闭' onclick='HideEdit("+pdobj.InstanceName+");'></div>";
+        //alert("v:"+$("#productinfo").val());
+        pd_edit=new JDetion("pd_edit",pdobj.InputName,true,$("#"+pdobj.InputName).val());
+        html+=pd_edit.GetHtml();
+        html+="</div>";
+        $(document.body).append(html);
+        pd_edit.Update();
+        $("#pdetion_edit_div").css("left",$("#pdetion_edit_"+pdobj.InstanceName).offset().left);
+        $("#pdetion_edit_div").css("top",$("#pdetion_edit_"+pdobj.InstanceName).offset().top);
+    }
+
+    function HideEdit(pdobj)
+    {
+        $("#pdetion_edit_div").remove();
+        pdobj.json=pd_edit.json;
+        pdobj.IsJson=pd_edit.IsJson;
+        if(pdobj.IsJson)
+        {
+            pdobj.json=eval($("#"+pdobj.InputName).val());
+        }
+        else
+        {
+            pdobj.Value=$("#"+pdobj.InputName).val();
+            //alert(pdobj.value);
+        }
+        pdobj.Update();
+    }
+
+    $("#currencys").on('change',function(){
+        $(".currencys").html($("#currencys").val());
+        $("#quotationprice").attr("data-currencys",$("#currencys").val());
+    });
+
+    $("#unit").on('change',function(){
+        $(".unit").html($("#unit").val());
+    });
+
+    function setdiv(obj)
+    {
+        if($(obj).prop('checked')==true)
+        {
+            $("#pdiv").addClass("hidden");
+            $("#selpic").addClass("hidden");
+            $("#podiv").removeClass("hidden");
+            $(".addprice").remove();
+        }
+        else
+        {
+            $("#pdiv").removeClass("hidden");
+            $("#selpic").removeClass("hidden");
+            $("#podiv").addClass("hidden");
+        }
+    }
+
+    function setpno(obj)
+    {
+        if($(obj).prop('checked')!=true)
+        {
+            $("#ppiddiv").addClass("hidden");
+        }
+        else
+        {
+            $("#ppiddiv").removeClass("hidden");
+        }
+    }
+
+    function checkproduct()
+    {
+        var num=$("#num").val();
+        var price=$("#price").val();
+        if(num==""||price==""){alert("请输入数量以及价格！");return false;}
+        var numprice=num+","+price;
+
+        var numlist=$(".numlist");
+        var pricelist=$(".pricelist");
+        for(var i=0;i<numlist.length;i++)
+        {
+            if(($(numlist[i]).val()==""&&$(pricelist[i]).val()!="")||($(numlist[i]).val()!=""&&$(pricelist[i]).val()==""))
+            {
+                alert("请输入正确的数量以及价格，不能单独输入数量或价格！");return false;
+            }
+            else
+            {
+                numprice += "|" + $(numlist[i]).val()+","+$(pricelist[i]).val();
+            }
+        }
+        $("#numprice").val(numprice);
+        return true;
+    }
+
+    function checkform(ntype)
+    {
+        if($("#customid").val()==""){alert("您还未选择客户！");return false;}
+        if(ntype==1){ $("#type").val('r');}
+        form1.action="?action=submit&no=<?php echo $no; ?>";form1.submit();
+    }
+
+    function sheet_edit(id)
+    {
+        form1.action="?action=edit&no=<?php echo $no; ?>&itemid="+id;form1.submit();
+    }
+
+    function sheet_del(id)
+    {
+        form1.action="?action=del&no=<?php echo $no; ?>&itemid="+id;form1.submit();
+    }
+
+    function SelectBank(val)
+    {
+        $.ajax({
+            type:'POST',
+            url:'../selectbankinfo.html',
+            data:{sid:val},
+            datatype:'json',
+            success:function(data){
+                $("#bankinfo").val(data.status);
+                form1.action="?action=selectbank&no=<?php echo $no; ?>";form1.submit();
+            }
+        });
+    }
+
+    function blurcount(){
+        $("#num").blur(function(){
+            $a = $("#num").val() * $("#price").val();
+            $("#count").val('')
+            $("#count").val($a)
+        });
+        $("#price").blur(function(){
+            $b = $("#num").val() * $("#price").val();
+            $("#count").val('')
+            $("#count").val($b)
+        });
+    }
+
+    $(document).ready(function(){
+        //$("#priceterm").addClass("easyui-combobox");
+        $('#priceterm').combobox();
+        $("#payment").css("width","98%");
+        $('#payment').combobox();
+        blurcount();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><?php echo Config('sys_info')['sys_company']; ?> - 外贸管理系统</title>
+<script src="/tms/js/all.js" language="javascript"></script>
+</head>
+<body>
+<h1>系统权限管理</h1>
+<div class="mypanel">
+    <div class="mypanel-heading">
+	    <div class="mypanel-lead"><em>系统权限管理</em>可以在此添加/修改系统权限信息</div>
+    </div>
+
+    <div class="mypanel-body">
+      <div id="toolbar" class="toolbar">
+        	<div class="pull-right">
+                <a href="/tms/index.php/tms_setting/permissions/edit" class="btn-add" title="添加" >添加</a>
+            </div>
+            <div class="pull-left">
+            </div>
+        </div>
+            <table id="mytable" class="mytable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>权限名称</th>
+                    {foreach name="plist" item="p" key="k"}
+                    <th><?php echo $p; ?></th>
+                    {/foreach}
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="myclasssort">
+            <tr>
+              <td>&nbsp;</td>
+              <td><input name="save" type="button" id="save" onClick="savesort();" value="保存排序"></td>
+              <td>&nbsp;</td>
+              {foreach name="plist" item="p" key="k"}
+              <th>&nbsp;</th>
+              {/foreach}
+            </tr>
+            {foreach name="list" item="v" key="k"}
+            <tr class="myclassitem" id="myclasssort_<?php echo $v['id']; ?>">
+            <td><?php echo $k+1; ?></td>
+            <td><?php echo $v['name']; ?></td>
+            {foreach name="plist" item="p" key="k2"}
+            <td>
+            	<?php
+                	if(strstr(','.$v['permissions'].',',','.(string)($k2+1).',')!=false)
+                    {
+                    	echo '<span>( '.$v['no'].numtochr($k2+1,2).' ) '.$p."</span>";
+                    }
+                ?>
+            </td>
+            {/foreach}
+            <td>
+                <a href="/tms/index.php/tms_setting/permissions/edit?id=<?php echo $v['id']; ?>">编辑</a>
+                <a href="/tms/index.php/tms_setting/permissions/del?id=<?php echo $v['id']; ?>">删除</a>
+            </td>
+            </tr>
+            {/foreach}
+            <tr>
+              <td>&nbsp;</td>
+              <td><input name="save2" type="button" onClick="savesort();" id="save2" value="保存排序"></td>
+              <td>&nbsp;</td>
+              {foreach name="plist" item="p" key="k"}
+              <th>&nbsp;</th>
+              {/foreach}
+            </tr>
+            </tbody>
+            </table>
+        </div>
+</div>
+</body>
+<script>
+	//开始排序
+	$('#myclasssort').sortable();
+	
+	//保存排序，将排序转换成字符串提交到sort
+	function savesort()
+	{
+		var itemlist=$('.myclassitem');
+		var idlist="";
+		for(i=0;i<itemlist.length;i++)
+		{
+			id=strcut(itemlist[i].id+"-","_","-",2);
+			if(id!="")
+			{
+				if(idlist!="")idlist+=",";
+				idlist+=id;
+			}
+		}
+		document.location="sort.html?id="+idlist;
+	}
+</script>
+</html>

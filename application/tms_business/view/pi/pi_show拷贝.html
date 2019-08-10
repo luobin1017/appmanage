@@ -1,0 +1,701 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>查看PI信息</title>
+    <link rel="stylesheet" type="text/css" href="/TMS/css/member.css" />
+    <script src="/TMS/js/all.js" language="javascript"></script>
+    <style type="text/css">
+        <!--
+        .style1 {color: #FF0000}
+        -->
+    </style>
+</head>
+<body>
+
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+    <tr>
+        <td>
+            <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td height="40" align="center" class="title">查看PI資料</td>
+                </tr>
+                <tr>
+                    <td height="40" align="right">
+                        <input type="button" name="Submit" value="返回PI管理" onclick="location='PI.asp';" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><table width="100%"  border="0" align="center" cellpadding="3" cellspacing="1" class="listtable">
+
+                        <tr class="listtd2">
+                            <td width="12%">TO</td>
+                            <td><?php echo $rs['customname']; ?>(<?php echo $rs['customid']; ?>)</td>
+                            <td width="12%">PINo.</td>
+                            <td width="40%"><strong><?php echo $rs['allno']; ?></strong></td>
+                        </tr>
+                        <tr class="listtd1">
+                            <td>&nbsp;</td>
+                            <td><?php echo $rs['customaddress']; ?></td>
+                            <td>Date</td>
+                            <td><?php echo $rs['makedate']; ?></td>
+                        </tr>
+                        <tr class="listtd2">
+                            <td>Attn</td>
+                            <td><?php echo $rs['contact']; ?></td>
+                            <td>Order No </td>
+                            <td><?php echo $rs['custompo']; ?></td>
+                        </tr>
+                        <tr class="listtd1">
+                            <td>Tel</td>
+                            <td><?php echo $rs['phone']; ?></td>
+                            <td>Person In Charge </td>
+                            <td><?php echo $rs['makename']; ?></td>
+                        </tr>
+                        <tr class="listtd2">
+                            <td>Fax</td>
+                            <td><?php echo $rs['fax']; ?></td>
+                            <td>Source</td>
+                            <td><?php echo $rs['source']; ?></td>
+                        </tr>
+                        <tr class="listtd1">
+                            <td>E-mail</td>
+                            <td><?php echo $rs['email']; ?></td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr class="listtd1">
+                            <td colspan="4"><table width="100%"  border="0" align="center" cellpadding="3" cellspacing="1" class="listtable">
+                                <tr class="listtitle">
+                                    <td width="40" rowspan="2">ID</td>
+                                    <td width="70" rowspan="2">Item</td>
+                                    <td rowspan="2">Description</td>
+                                    <td width="90" rowspan="2">Quantity</td>
+                                    <td rowspan="2">Unit Price<br> (Ex-factory Shen Zhen) </td>
+                                    <td width="140" rowspan="2">Amount</td>
+                                </tr>
+                                <tr class="listtitle"> </tr>
+                                <?php $allnum=0;?>
+                        {foreach $itemarr as $k=>$v}
+                                <?php $allnum +=$v['num'];?>
+                                <tr class="listtd2" onmouseover="listover(this,2)" onmouseout="listout(this,2)">
+                                    <td align="center"><?php echo $k+1; ?></td>
+                                    <td align="center">
+                                        <img src="<?php echo $v['productpicture']; ?>" width="60" height="60" />
+                                    </td>
+                                    <td style="word-wrap:break-word; word-break:break-all;">
+                                        <span style="font-weight:bold; font-size:14px;"><?php echo $v['productname']; ?><span style="color:red;">(非標準産品)</span>
+                                        </span><br />
+                                        <?php echo coder($v["productinfo"]); ?>
+
+                                    </td>
+                                    <td align="right"><?php echo str3x($v['num']).$v['unit']?></td>
+                                    <td align="right"><?php echo $rs['currencys'].strtocurr($v['price']);?></td>
+                                    <td align="right"><?php echo $rs['currencys'].strtocurr($v['num']*$v['price']);?></td>
+                                </tr>
+
+                        {/foreach}
+                                <tr class="listtd1" onmouseover="listover(this,1)" onmouseout="listout(this,1)">
+                                    <td align="center">&nbsp;</td>
+                                    <td align="center">&nbsp;</td>
+                                    <td align="right">合計 </td>
+                                    <td align="right"><?php echo str3x($allnum)." ".$itemarr[0]['unit']; ?></td>
+                                    <td width="80" align="center">&nbsp;</td>
+                                    <td align="right"><?php echo $rs['currencys']." ".strtocurr($rs['amount']); ?></td>
+                                </tr>
+                            </table></td>
+                        </tr>
+                        <tr class="listtd1">
+                            <td>Payment :</td>
+                            <td><?php echo $rs['payment']; ?></td>
+                            <td>Banker :</td>
+                            <td>
+                                <?php echo coder($banker['content']);?>
+                            </td>
+                        </tr>
+                        <tr class="listtd2">
+                            <td>Approval Sample :</td>
+                            <td colspan="3"><?php echo $rs['confirmation']; ?></td>
+                        </tr>
+                        <tr class="listtd1">
+                            <td>Bulk Delivery :</td>
+                            <td colspan="3"><?php echo $rs['delivery']; ?></td>
+                        </tr>
+                        <tr class="listtd2">
+                            <td>Shipment :</td>
+                            <td colspan="3"><?php echo $rs['address']; ?></td>
+                        </tr>
+                        <tr class="listtd1">
+                            <td>Delivery Address :</td>
+                            <td colspan="3"><?php echo $rs['deliveryaddr']; ?></td>
+                        </tr>
+                        <tr class="listtd2">
+                            <td>Remarks :</td>
+                            <td colspan="3"><?php echo $v['content']; ?></td>
+                        </tr>
+                        <tr class="listtd1">
+                            <td>Carton/Shipping Marks</td>
+                            <td><table width="100%" border="0" cellpadding="0" cellspacing="5">
+                                <tr>
+                                    <td><?php echo $rs['mark']; ?></td>
+                                </tr>
+
+                            </table>          </td>
+                            <td>Side Marks</td>
+                            <td><table width="100%" border="0" cellpadding="0" cellspacing="5">
+                                <tr>
+                                    <td><?php echo $rs['side']; ?></td>
+                                </tr>
+                            </table>          </td>
+                        </tr>
+                        <tr class="listtd2">
+                            <td>SHIPING MARK ON INNER BOX : </td>
+                            <td><table width="100%" border="0" cellpadding="0" cellspacing="5">
+                                <tr>
+
+                                    <td><?php echo $rs['boxplants']; ?></td>
+                                </tr>
+                            </table></td>
+                            <td>已拍圖片</td>
+                            <td><input name="picy2" type="checkbox" id="picy2" value="1" disabled="disabled"  /></td>
+                        </tr>
+                        <tr class="listtd2">
+                            <td height="30" colspan="4" class="listtitle00"><strong>跟進信息</strong></td>
+                        </tr>
+                        <tr class="listtd1">
+                            <td>已確認客戶交貨期</td>
+                            <td></td>
+                            <td>最終交貨期</td>
+                            <td></td>
+                        </tr>
+                        <tr class="listtd2">
+                            <td>樣板交貨期</td>
+                            <td></td>
+                            <td>運輸</td>
+                            <td></td>
+                        </tr>
+                        <tr class="listtd1">
+                            <td>驗貨日期</td>
+                            <td></td>
+                            <td>外箱唛</td>
+                            <td><input name="facside" type="checkbox" id="facside" value="1" disabled="disabled"  />
+                                已通知廠</td>
+                        </tr>
+                        <tr class="listtd2">
+                            <td>截倉日期</td>
+                            <td></td>
+                            <td>申請FORM A/CO費用</td>
+                            <td>0.000&nbsp;</td>
+                        </tr>
+                        <tr class="listtd1">
+                            <td width="12%">本地運費卸貨費</td>
+                            <td width="38%">0.000</td>
+                            <td width="12%">CFS.THC等費用</td>
+                            <td width="40%">0.000</td>
+                        </tr>
+                        <tr class="listtd2">
+                            <td>寄文件費</td>
+                            <td>0.000</td>
+                            <td>銀行費用及其他</td>
+                            <td>0.000</td>
+                        </tr>
+                        <tr class="listtd1">
+                            <td>深圳寄出的国际快递费用或其它杂费</td>
+                            <td>0.000</td>
+                            <td>樣品費</td>
+                            <td>RMB 0.000</td>
+                        </tr>
+                        <tr class="listtd2">
+                            <td>估計利潤約</td>
+                            <td></td>
+                            <td>已出貨並已收錢</td>
+                            <td><input name="Shipped" type="checkbox" id="Shipped" value="1" disabled="disabled"  /></td>
+                        </tr>
+                        <tr class="listtd1">
+                            <td>其他费用</td>
+                            <td>0.000&nbsp;</td>
+                            <td>業務跟進備註&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr class="listtd2">
+                            <td>優惠碼</td>
+                            <td></td>
+                            <td>財務跟進備註</td>
+                            <td></td>
+                        </tr>
+                        <tr class="listtd2">
+                            <td>是否走一達通出口</td>
+                            <td>否</td>
+                            <td>海關跟進備註&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr class="listtd2">
+                            <td>一達通出口額外費用</td>
+                            <td>
+                                0.000<br />
+
+                            </td>
+                            <td>是否使用信保</td>
+                            <td>否</td>
+                        </tr>
+                        <tr class="listtd2">
+                            <td>是否小额信保订单</td>
+                            <td>否
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr class="listtd2">
+                            <td height="30" colspan="4" class="listtitle00"><strong>業務信息<span class="title"><a name="top_isnew" id="top_isnew"></a></span></strong></td>
+                        </tr>
+                        <form  id="form_isnew" name="form_isnew" method="post" action="?action=isnew&no=20180376_0#top_isnew">
+                            <script language="JavaScript" type="text/javascript">
+                                function isnew_edit(sfname,stype){
+                                    var new_show = document.getElementById(sfname+"_show");
+                                    var new_form = document.getElementById(sfname+"_form");
+                                    if(stype==1){
+                                        new_show.style.display = "none";
+                                        new_form.style.display = "";
+                                    }else{
+                                        new_show.style.display = "";
+                                        new_form.style.display = "none";
+                                    }
+                                }
+                            </script>
+
+                            <tr class="listtd2">
+                                <td>單據類型</td>
+                                <td>
+          <span id="isnew_show">
+		  老客戶
+          </span>
+          <span id="isnew_form" style="display:none;">
+          <select name="seisnew" id="seisnew">
+              <option value="0">老客戶</option>
+              <option value="1" >新客戶</option>
+          </select>
+          <select name="AuditUser" id="AuditUser"><option value="">選擇組長</option></select><select name="FinanceUser" id="FinanceUser"><option value="">選擇財務</option><option value="Amy"  style="background-color:#6F3;" selected="selected">Amy</option><option value="Cici" >Cici</option><option value="Cindy" >Cindy</option></select>
+          <input type="submit" name="isnew_btn" id="isnew_btn" value="提交" />
+          <input type="button" name="button_s2" id="button_s2" value="退出" onclick="isnew_edit('isnew',0);" />
+          </span>
+                                </td>
+                                <td>業務員</td>
+                                <td>Toli&nbsp;</td>
+                            </tr>
+                            <tr class="listtd2">
+                                <td>主打单品</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr class="listtd2">
+                                <td>組長審核</td>
+                                <td>
+          <span id="audit_show">
+          未審核
+          </span>
+          <span id="audit_form" style="display:none;">
+          <select name="seaudit" id="seaudit">
+              <option value="1" >通過</option>
+              <option value="2" >不通過</option>
+          </select>
+          <input name="cnaudit" type="text" id="cnaudit" onclick="clearDefaultText(this,'審核備註。')" value="審核備註。" size="50" />
+          <input type="submit" name="audit_btn" id="audit_btn" value="提交" />
+          <input type="button" name="button_s4" id="button_s4" value="退出" onclick="isnew_edit('audit',0);" />
+          </span>
+                                </td>
+                                <td>財務審核</td>
+                                <td>
+          <span id="finance_show">
+          未審核
+          </span>
+          <span id="finance_form" style="display:none;">
+          <select name="sefinance" id="sefinance">
+              <option value="1" >通過</option>
+              <option value="2" >不通過</option>
+          </select>
+          <input name="cnfinance" id="cnfinance" type="text" value="審核備註。" onclick="clearDefaultText(this,'審核備註。')" size="50" />
+          <input type="submit" name="finance_btn" id="finance_btn" value="提交" />
+          <input type="button" name="button_s6" id="button_s6" value="退出" onclick="isnew_edit('finance',0);" />
+          </span>
+                                </td>
+                            </tr>
+                        </form>
+                        <tr class="listtd1">
+                            <td colspan="4"><table border="0" align="center" cellpadding="0" cellspacing="10">
+                                <tr>
+                                    <td align="center"><input name="modify1"  type="button" id="modify" value="修改PI" onclick="location='PI_Modify.asp?no=20180376_0';" /></td>
+                                    <td align="center"><input name="modify3"  type="button" id="modify2" value="跟進PI" onclick="location='?action=modifyfee&no=20180376_0#modify';" /></td>
+                                    <td align="center"><input name="modify4"  type="button" id="modify2" value="结算审核" onclick="location='?action=FiAudit&amp;no=20180376_0';" /></td>
+                                    <td align="center"><input name="modify4"  disabled="disabled"  type="button" id="modify2" value="结算解锁" onclick="location='?action=UnFiAudit&no=20180376_0';" /></td>
+                                    <td align="center"><input name="easypo"  type="button" id="easypo" value="关联开支" onclick="location='../purchase/po_easy_add.asp?piid=20180376';" /></td>
+                                    <td align="center"><input name="modify2" type="button" id="modify3" value="查看PI舊版本" onclick="location='PI.asp?old=1&no=20180376';" /></td>
+                                    <td align="center"><input name="excel" type="button" id="excel" value="導出Excel" onclick="location='PITOExcel.asp?no=20180376_0';" /></td>
+                                    <!--<td align="center"><input name="excel2" type="button" id="excel2" value="導到中文Excel" onclick="location='PITOExcel_CN.asp?no=_';" /></td>
+                                    <td align="center"><input name="pdf" type="button" id="pdf" value="導到PDF" onclick="location='emoribts://export/?type=pi&amp;no=&rno=';" /></td>-->
+                                    <td align="center"><input name="back" type="button" id="back" value="返回列表" onclick="window.location='PI.asp'" /></td>
+                                    <td align="center"><input name="close" type="button" id="close" value="關閉窗口" onclick="window.close();" /></td>
+                                </tr>
+                            </table>        </td>
+                        </tr>
+
+                    </table></td>
+                </tr>
+            </table>
+            <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td height="40" align="center" class="title">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td height="40" align="center">
+                        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td align="center"><span class="title">PI相关费用</span></td>
+                                <td width="150" align="right"><input type="button" name="Submit3" value="添加新的PI费用"  onclick="location='?no=20180376_0&amp;action=addpifee#add';" /></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td><table width="100%"  border="0" align="center" cellpadding="3" cellspacing="1" class="listtable">
+                        <tr class="listtitle">
+                            <td width="40">編號</td>
+                            <td width="160">金额</td>
+                            <td>备注</td>
+                            <td width="160">錄入人</td>
+                            <td width="160">錄入時間</td>
+                            <td width="160">操作選項</td>
+                        </tr>
+
+                    </table></td>
+                </tr>
+                <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td height="40" align="center" class="title">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td height="40" align="center" class="title"><a name="modify" id="modify"></a>跟進PI</td>
+                    </tr>
+                    <form action="?action=fee&id=<?php echo $rs['id']; ?>" method="post" name="form1" id="form1" onsubmit="return checkfee();">
+                        <tr>
+                            <td>
+                                <!---Merchandise--->
+                                <div style="display:">
+                                <table width="100%"  border="0" align="center" cellpadding="3" cellspacing="1" class="listtable">
+                                    <tr class="listtd2">
+                                        <td>已確認客戶交貨期</td>
+                                        <td>
+                                            <input name="makedate1" type="text" id="makedate1" class="easyui-datebox" value="<?php echo input('makedate1', '')?>" size="13">
+                                        </td>
+                                        <td>最終交貨期</td>
+                                        <td>
+                                            <input name="makedate2" type="text" id="makedate2" class="easyui-datebox" value="<?php echo input('makedate1', '')?>" size="13">
+                                        </td>
+                                    </tr>
+                                    <tr class="listtd1">
+                                        <td>樣板交貨期</td>
+                                        <td><input name="peried" type="text" id="peried" value="" readonly="" onFocus="this.select()" onClick="fPopCalendar(event,this,this)" /><img src="../../images/calendar/calendar_clear.jpg" alt="清空日期" align="absmiddle" onclick="setinputvalue('peried','');" /></td>
+                                        <td>運輸</td>
+                                        <td><input name="transport" type="text" id="transport" value="" />
+                                            <select name="pricetermlist" id="pricetermlist"  onchange="if(this.options[this.selectedIndex].value!=''){setinputvalue('transport',this.options[this.selectedIndex].value + pricetermType_se.value);}">
+                                                <option value="">選擇運輸方式</option>
+                                                <option value=""></option>
+                                            </select>
+                                            <input name="pricetermType_se" type="hidden" id="pricetermType_se" value="[到付]" />
+                                            <input name="pricetermType" type="radio" id="pricetermType" onclick="javascript:setinputvalue('transport',pricetermlist.value + this.value);setinputvalue('pricetermType_se',this.value);" value="[預付]" />
+                                            預付
+                                            <input name="pricetermType" type="radio" id="pricetermType" onclick="javascript:setinputvalue('transport',pricetermlist.value + this.value);setinputvalue('pricetermType_se',this.value);" value="[到付]" checked="checked" />
+                                            到付</td>
+                                    </tr>
+                                    <tr class="listtd2">
+                                        <td>驗貨日期</td>
+                                        <td><input name="inspection" type="text" id="inspection" value="" onFocus="this.select()" onClick="fPopCalendar(event,this,this)" readonly="" /><img src="../../images/calendar/calendar_clear.jpg" alt="清空日期" align="absmiddle" onclick="setinputvalue('inspection','');" /></td>
+                                        <td>外箱嘜</td>
+                                        <td><input name="facside" type="checkbox" id="facside" value="1" />
+                                            已通知廠</td>
+                                    </tr>
+                                    <tr class="listtd1">
+                                        <td>截倉日期</td>
+                                        <td><input name="cutoff" type="text" id="cutoff" value="" onFocus="this.select()" onClick="fPopCalendar(event,this,this)" readonly="" /><img src="../../images/calendar/calendar_clear.jpg" alt="清空日期" align="absmiddle" onclick="setinputvalue('cutoff','');" /></td>
+                                        <td>已拍圖片</td>
+                                        <td><input name="picy" type="checkbox" id="picy" value="1" /></td>
+                                    </tr>
+
+                                    <tr class="listtd2">
+                                        <td>已出貨並已收錢</td>
+                                        <td><label for="Shipped"><input name="Shipped" type="checkbox" id="Shipped" value="1"  />
+                                            是</label></td>
+                                        <td>估計利潤約</td>
+                                        <td><select name="c5" id="c5">
+                                            <option value="USD">USD</option>
+                                            <option value="RMB" selected="selected">RMB</option>
+                                            <option value="HKD" selected="selected" >HKD</option>
+                                        </select>
+                                            <input name="Profits" type="text" id="Profits" value="" size="10" /></td>
+                                    </tr>
+                                    <tr class="listtd2">
+                                        <td>業務跟進備註</td>
+                                        <td><textarea name="recontent" rows="5" class="input80" id="recontent"></textarea></td>
+                                        <td>優惠碼</td>
+                                        <td>
+                                            <select name="coupon" id="coupon">
+                                                <option value="0" selected="selected">不使用優惠碼</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
+                                </div>
+                                <!---Shipping--->
+                                <div style="display:">
+                                <table width="100%"  border="0" align="center" cellpadding="3" cellspacing="1" class="listtable">
+                                    <tr class="listtd2" >
+                                        <td width="12%">本地運費卸貨費</td>
+                                        <td width="38%"><select name="c1" id="c1">
+                                            <option value="USD" >USD</option>
+                                            <option value="RMB" >RMB</option>
+                                            <option value="HKD" >HKD</option>
+                                        </select>
+                                            <input name="Localfreight" type="text" id="Localfreight" value="" size="10" /></td>
+                                        <td width="12%">CFS.THC等費用</td>
+                                        <td width="38%"><select name="c2" id="c2">
+                                            <option value="USD" >USD</option>
+                                            <option value="RMB" >RMB</option>
+                                            <option value="HKD" >HKD</option>
+                                        </select>
+                                            <input name="CFSTHC" type="text" id="CFSTHC" value="" size="10" /></td>
+                                    </tr>
+                                    <tr class="listtd1">
+                                        <td>寄文件費</td>
+                                        <td><select name="c3" id="c3">
+                                            <option value="USD" >USD</option>
+                                            <option value="RMB" >RMB</option>
+                                            <option value="HKD" >HKD</option>
+                                        </select>
+                                            <input name="DocFee" type="text" id="DocFee" value="" size="10" /></td>
+                                        <td>申請FORM A/CO費用</td>
+                                        <td><select name="c9" id="c9">
+                                            <option value="USD" >USD</option>
+                                            <option value="RMB" >RMB</option>
+                                            <option value="HKD" >HKD</option>
+                                        </select>
+                                            <input name="FormA" type="text" id="FormA" value="" size="10" /></td>
+                                    </tr>
+                                    <tr class="listtd2">
+                                        <td>海關跟進備註</td>
+                                        <td><textarea name="recontent2" rows="5" class="input80" id="recontent2"></textarea></td>
+                                        <td>銀行費用及其他</td>
+                                        <td><select name="c4" id="c4">
+                                            <option value="USD" >USD</option>
+                                            <option value="RMB" >RMB</option>
+                                            <option value="HKD" >HKD</option>
+                                        </select>
+                                            <input name="Bankcosts" type="text" id="Bankcosts" value="" size="10" /></td>
+                                    </tr>
+                                </table>
+                                </div>
+                                <!---Accountant--->
+                                <div style="display:">
+                                <table width="100%"  border="0" align="center" cellpadding="3" cellspacing="1" class="listtable">
+                                    <tr class="listtd2">
+                                        <td width="12%">深圳寄出的国际快递费用或其它杂费</td>
+                                        <td><select name="c6" id="c6">
+                                            <option value="USD" >USD</option>
+                                            <option value="RMB" >RMB</option>
+                                            <option value="HKD" >HKD</option>
+                                        </select>
+                                            <input name="OtherFee" type="text" id="OtherFee" value="" size="10" /></td>
+                                        <td>其他杂费</td>
+                                        <td><select name="c8" id="c8">
+                                            <option value="USD" >USD</option>
+                                            <option value="RMB" >RMB</option>
+                                            <option value="HKD" >HKD</option>
+                                        </select>
+                                            <input name="OtherFee2" type="text" id="OtherFee2" value="" size="10" /></td>
+                                    </tr>
+                                    <tr class="listtd2">
+                                        <td>一達通出口額外費用</td>
+                                        <td>
+                                            <select name="onetouch_c" id="onetouch_c">
+                                                <option value="USD" >USD</option>
+                                                <option value="RMB" >RMB</option>
+                                                <option value="HKD" >HKD</option>
+                                            </select>
+                                            <input name="onetouch" type="text" id="onetouch" value="<%=onetouch%>" size="10" /> <span class="hrbg_redB">(可选，如產生一達通額外費用，請在下面輸入費用明細信息)</span><br />
+                                            <textarea name="onetouch_remark" rows="3" class="input80" id="onetouch_remark" style="margin-top:3px;"></textarea>
+                                        </td>
+                                        <td>財務跟進備註&nbsp;</td>
+                                        <td><textarea name="recontent3" rows="5" class="input80" id="recontent3"></textarea>&nbsp;</td>
+                                    </tr>
+                                </table>
+                                </div>
+                                <table width="100%"  border="0" align="center" cellpadding="3" cellspacing="1" class="listtable">
+                                    <tr class="listtd1">
+                                        <td colspan="4"><table border="0" align="center" cellpadding="0" cellspacing="0">
+                                            <tr>
+                                                <td width="120" align="center"><input name="Submit2" type="submit" id="Submit2" value="確認" /></td>
+                                                <td width="120" align="center"><input name="Reset2" type="button" id="Reset2" value="返回" onclick="gourl('?no=');" /></td>
+                                            </tr>
+                                        </table></td>
+                                    </tr>
+                                </table></td>
+                        </tr>
+                    </form>
+                    <script language="JavaScript" type="text/javascript">
+                        function checkfee()
+                        {
+//	else
+                            if(isNaN(getinputvalue("Localfreight"))){alert("本地運費卸貨費只能輸入數字！");setfocus("Localfreight");return false;}
+//	else if(getinputvalue("CFSTHC")==""){alert("請輸入CFS.THC等費用!");setfocus("CFSTHC");return false;}
+                            else if(isNaN(getinputvalue("CFSTHC"))){alert("CFS.THC等費用僅能輸入數字！");setfocus("CFSTHC");return false;}
+//	else if(getinputvalue("DocFee")==""){alert("請輸入寄文件費!");setfocus("DocFee");return false;}
+                            else if(isNaN(getinputvalue("DocFee"))){alert("寄文件費僅能輸入數字！");setfocus("DocFee");return false;}
+//	else if(getinputvalue("Bankcosts")==""){alert("請輸入銀行費用及其他!");setfocus("Bankcosts");return false;}
+                            else if(isNaN(getinputvalue("Bankcosts"))){alert("銀行費用及其他僅能輸入數字！");setfocus("Bankcosts");return false;}
+//	else if(getinputvalue("Profits")==""){alert("請輸入估計利潤約!");setfocus("Profits");return false;}
+                            else if(isNaN(getinputvalue("Profits"))){alert("估計利潤約僅能輸入數字！");setfocus("Profits");return false;}
+                            return true;
+                        }
+                    </script>
+                </table>
+            </table>
+
+            <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td height="40" align="center" class="title">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td height="40" align="center"><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td align="center"><span class="title">PI收款信息</span></td>
+                            <td width="150" align="right">
+                                <input type="button" name="Submit" value="添加新的收款信息"  onclick="location='?no=20180376_0&action=addreceived#add';" />
+                            </td>
+                        </tr>
+
+                    </table>      </td>
+                </tr>
+                <tr>
+                    <td><table width="100%"  border="0" align="center" cellpadding="3" cellspacing="1" class="listtable">
+                        <tr class="listtitle">
+                            <td width="40">編號</td>
+                            <td>已收金額</td>
+                            <td>銀行手續費</td>
+                            <td>剩余金額</td>
+                            <td>收款時間</td>
+                            <td>收款方式</td>
+                            <td>錄入人</td>
+                            <td>錄入時間</td>
+                            <td>操作選項</td>
+                        </tr>
+
+                    </table></td>
+                </tr>
+            </table>
+
+            <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td height="40" align="center" class="title">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td height="40" align="right"><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td align="center"><span class="title">相關的Debit Note</span></td>
+                            <td width="150" align="right">
+                                <input type="button" name="Submit" value="更多相關DN" onclick="window.open('../Merchandise/debit_note.asp?piid=20180376_0');" />
+                            </td>
+                        </tr>
+                    </table></td>
+                </tr>
+                <tr>
+                    <td><table width="100%"  border="0" align="center" cellpadding="3" cellspacing="1" class="listtable">
+                        <tr class="listtitle">
+                            <td width="40">編號</td>
+                            <td width="110">Debit Note編碼</td>
+                            <td>客戶名稱</td>
+                            <td>總金額</td>
+                            <td>银行手续费</td>
+                            <td>開單日期</td>
+                            <td>制單人</td>
+                        </tr>
+
+                    </table></td>
+                </tr>
+            </table>
+
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" style="display:none;">
+                <tr>
+                    <td height="40" align="center" class="title">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td height="40" align="center"><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td align="center"><span class="title">相關POSZ（旧）</span></td>
+                            <td width="150" align="right">
+                                <!--<input type="button" name="Submit" value="添加新的POSZ信息" onclick="location='?no=&action=addposz#add';" />-->
+                            </td>
+                        </tr>
+
+                    </table>      </td>
+                </tr>
+                <tr>
+                    <td><table width="100%"  border="0" align="center" cellpadding="3" cellspacing="1" class="listtable">
+                        <tr class="listtitle">
+                            <td width="40" rowspan="2">編號</td>
+                            <td width="140" rowspan="2">POSZ編號</td>
+                            <td width="120" rowspan="2">物料</td>
+                            <td width="120" rowspan="2">數量</td>
+                            <td width="120" rowspan="2">金額</td>
+                            <td rowspan="2">備注</td>
+                            <td width="140" rowspan="2">錄入人</td>
+                            <td width="140" rowspan="2">錄入時間</td>
+                            <td colspan="2">操作選項</td>
+                        </tr>
+                        <tr class="listtitle">
+                            <td width="40">修改</td>
+                            <td width="40">刪除</td>
+                        </tr>
+
+                    </table></td>
+                </tr>
+            </table>
+
+            <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td height="40" align="center" class="title">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td height="40" align="center"><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td align="center"><span class="title">相關Credit Note</span></td>
+                        </tr>
+
+                    </table>      </td>
+                </tr>
+                <tr>
+                    <td><table width="100%"  border="0" align="center" cellpadding="3" cellspacing="1" class="listtable">
+                        <tr class="listtitle">
+                            <td>編號</td>
+                            <td>Credit Note編碼</td>
+                            <td>客戶名稱</td>
+                            <td>總金額</td>
+                            <td>開單日期</td>
+                            <td>制單人</td>
+                        </tr>
+
+                    </table></td>
+                </tr>
+            </table>
+
+            <br />
+            <br />
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" class="copyright" style="display:none;">
+                <tr>
+                    <td align="center">Copyright &copy;2008 By Emori</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

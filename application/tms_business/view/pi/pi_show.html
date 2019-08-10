@@ -1,0 +1,565 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>江森制品有限公司 - 外贸管理系统</title>
+    <script src="/tms/js/all.js" language="javascript"></script>
+    <style>
+        /*show*/
+        .table  .text-c-tr td{ vertical-align: middle;  text-align: center; }
+        .table  .text-c-td{ text-align: left!important;  }
+        .table  .text-d-td td{vertical-align: middle;}
+        .table-cellsp td{padding: 3px 10px 3px 10px;}
+        .title {  font-size: 18px;  font-weight: bold;  color: #709900;  }
+    </style>
+</head>
+<body>
+<h1><strong>查看PI资料</strong></h1>
+<div class="mypanel">
+    <div class="mypanel-heading">
+        <div class="mypanel-lead"><em></em>可以在此查看PI信息</div>
+    </div>
+    <table width="1191" class="table table-border table-bordered table-bg table-hover">
+        <tr class="text-c ">
+            <td width="148">To</td>
+            <td width="453"><?php echo $rs['customname']; ?>(<?php echo $rs['customid']; ?>)</td>
+            <td width="148">PINo.</td>
+            <td width="440"><strong><?php echo $rs['allno']; ?></strong></td>
+        </tr>
+        <tr class="text-c ">
+            <td></td>
+            <td><?php echo $rs['customaddress']; ?></td>
+            <td>Date</td>
+            <td><?php echo $rs['makedate']; ?></td>
+        </tr>
+        <tr class="text-c ">
+            <td>Attn</td>
+            <td><?php echo $rs['contact']; ?></td>
+            <td>Order No</td>
+            <td><?php echo $rs['custompo']; ?></td>
+        </tr>
+        <tr class="text-c ">
+            <td>Tel</td>
+            <td><?php echo $rs['phone']; ?></td>
+            <td>Person In Charge</td>
+            <td><?php echo $rs['makename']; ?></td>
+        </tr>
+        <tr class="text-c ">
+            <td>Fax</td>
+            <td><?php echo $rs['fax']; ?></td>
+            <td>Source</td>
+            <td><?php echo $rs['source']; ?></td>
+        </tr>
+        <tr class="text-c ">
+            <td>E-mail</td>
+            <td><?php echo $rs['email']; ?></td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+
+    </table>
+    <!---->
+    <table width="1191" class="table table-border table-bordered table-bg table-hover">
+        <tr class="text-c-tr" style="background-color: #709900">
+            <td>No</td>
+            <td>Picture</td>
+            <td>Description</td>
+            <td>Quantity</td>
+            <td>Unit Price <br />
+                (Ex-factory Shen Zhen)</td>
+        </tr>
+        {foreach $itemarr as $k=>$v}
+            <tr class="text-c text-c-tr">
+                <td><?php echo $k+1; ?></td>
+                <td> <img src="<?php echo $v['picture']; ?>" width="80" height="80" />
+                </td>
+                <td class="text-c-td">
+                     <span style="font-weight:bold; font-size:14px;">
+                <?php echo $v['productname']; ?> {if condition="$v.isbasic==0"}<span style="color:red;">(非標準産品)</span>{/if}
+                </span><br />
+
+                    <div style="max-width:600px">
+                        <script>
+                            var pdtext<?php echo $v['id']; ?>="<?php echo strtojs($v["productinfo"]); ?>";
+                            var pd<?php echo $v['id']; ?>=new JDetion("pd<?php echo $v['id']; ?>",null,false,pdtext<?php echo $v['id']; ?>);
+                            pd<?php echo $v['id']; ?>.Show();
+                        </script>
+                    </div>
+                </td>
+                <td width="120" align="right"><?php echo str3x($v['num'])." ".$v['unit']; ?></td>
+                <td width="180" align="right"><?php echo $rs['currencys']." ".strtocurr($v['price']); ?></td>
+            </tr>
+        {/foreach}
+    </table>
+    <!---->
+    <table width="1191" class="table table-border table-bordered table-bg table-striped table-hover">
+        <tr class="text-d-td">
+            <td width="162" >Payment :</td>
+            <td width="417"><?php echo $rs['payment']; ?></td>
+            <td width="162"> Banker</td>
+            <td width="430"><?php echo coder($rs['bankinfo']);?></td>
+        </tr>
+        <tr class="text-d-td">
+            <td >Approval Sample :</td>
+            <td colspan="3"><?php echo $rs['confirmation']; ?></td>
+        </tr>
+        <tr class="text-d-td">
+            <td >Bulk Delivery :</td>
+            <td colspan="3"><?php echo $rs['delivery']; ?></td>
+        </tr>
+        <tr class="text-d-td">
+            <td >Shipment :</td>
+            <td colspan="3"><?php echo $rs['address']; ?></td>
+        </tr>
+        <tr class="text-d-td">
+            <td >Delivery Address :</td>
+            <td colspan="3"><?php echo $rs['deliveryaddr']; ?></td>
+        </tr>
+        <tr class="text-d-td">
+            <td >Remarks :</td>
+            <td colspan="3"><?php echo $rs['content']; ?></td>
+        </tr>
+        <tr class="text-d-td">
+            <td width="162" >Carton/Shipping Marks :</td>
+            <td width="417"><?php echo $rs['mark']; ?></td>
+            <td width="162" >Side Marks</td>
+            <td width="430"><?php echo coder($rs['side']);?></td>
+        </tr>
+        <tr class="text-d-td">
+            <td width="162" >SHIPING MARK ON INNER BOX :</td>
+            <td width="417"><?php echo $rs['boxplants']; ?></td>
+            <td width="162" >已拍图片</td>
+            <td width="430"><input name="picy2" type="checkbox" id="picy2" value="1" disabled="disabled"></td>
+        </tr>
+    </table>
+    <!--跟进信息-->
+    <table width="1191" class="table table-border table-bordered table-bg table-hover">
+        <tr class="text-c-tr" style="background-color: #becf7f">
+            <td colspan="4"><h4><strong>跟进信息</strong></h4></td>
+        </tr>
+        <tr class="text-d-td">
+            <td width="25%">已确认客户交货期</td>
+            <td width="25%"><?php echo $rs['deliveryend']; ?></td>
+            <td width="25%">最终交货期</td>
+            <td width="25%"><?php echo $rs['deliveryed']; ?></td>
+        </tr>
+        <tr>
+            <td>样板交货期</td>
+            <td><?php echo $rs['peried']; ?></td>
+            <td>运输</td>
+            <td><?php echo $rs['transport']; ?></td>
+        </tr>
+        <tr>
+            <td>验货日期</td>
+            <td><?php echo $rs['inspection']; ?></td>
+            <td>外箱唛</td>
+            <td><input name="facside" type="checkbox" id="facside" value="<?php echo $rs['facside']; ?>" {if condition="$rs.facside==1"}checked="checked"{else/}{/if}  disabled="disabled"  />
+                已通知厂</td>
+        </tr>
+        <tr>
+            <td>截仓日期</td>
+            <td><?php echo $rs['cutoff']; ?></td>
+            <td>申请FORM A/CO费用</td>
+            <td><?php echo $rs['forma']; ?>&nbsp;</td>
+        </tr>
+        <tr>
+            <td width="12%">本地运费卸货费</td>
+            <td width="38%"><?php echo $rs['localfreight']; ?>&nbsp;</td>
+            <td width="12%">CFS.THC等费用</td>
+            <td width="40%"><?php echo $rs['cfsthc']; ?>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>寄文件费</td>
+            <td><?php echo $rs['docfee']; ?>&nbsp;</td>
+            <td>银行费用及其他</td>
+            <td><?php echo $rs['bankcosts']; ?>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>深圳寄出的国际快递费用或其它杂费</td>
+            <td><?php echo $rs['otherfee']; ?>&nbsp;</td>
+            <td>样品费</td>
+            <td>RMB 0.000</td>
+        </tr>
+        <tr>
+            <td>估计利润约</td>
+            <td><?php echo $rs['profits']; ?></td>
+            <td>已出货并已收钱</td>
+            <td><input name="shipped" type="checkbox" id="Shipped" value="<?php echo $rs['shipped']; ?>" {if condition="$rs.shipped==1"}checked="checked"{else/}{/if} disabled="disabled"  /></td>
+        </tr>
+        <tr>
+            <td>其他费用</td>
+            <td><?php echo $rs['otherfee2']; ?>&nbsp;</td>
+            <td>业务跟进备注&nbsp;</td>
+            <td><?php echo $rs['recontent']; ?>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>财务跟进备注</td>
+            <td><?php echo $rs['recontent3']; ?></td>
+        </tr>
+        <tr>
+            <td>是否走一达通出口</td>
+            <td>{if condition="$rs.isonetouch==1"}是{else/}否{/if}</td>
+            <td>海关跟进备注&nbsp;</td>
+            <td><?php echo $rs['recontent2']; ?>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>一达通出口額外费用</td>
+            <td>
+                <?php echo $rs['onetouch']; ?><br />
+
+            </td>
+            <td>是否使用信保</td>
+            <td>{if condition="$rs.isci==1"}是{else/}否{/if}</td>
+        </tr>
+        <tr>
+            <td>是否小额信保订单</td>
+            <td>{if condition="$rs.issmallass==1"}是{else/}否{/if}
+            </td>
+        </tr>
+        <tr style="background-color: #becf7f">
+            <td height="30" colspan="4" class="listtitle00" style="text-align: center"><strong>业务信息<span class="title"><a name="top_isnew" id="top_isnew"></a></span></strong></td>
+        </tr>
+        <form  id="form_isnew" name="form_isnew" method="post" action="?action=isnew&no=20180376_0#top_isnew">
+            <script language="JavaScript" type="text/javascript">
+                function isnew_edit(sfname,stype){
+                    var new_show = document.getElementById(sfname+"_show");
+                    var new_form = document.getElementById(sfname+"_form");
+                    if(stype==1){
+                        new_show.style.display = "none";
+                        new_form.style.display = "";
+                    }else{
+                        new_show.style.display = "";
+                        new_form.style.display = "none";
+                    }
+                }
+            </script>
+
+            <tr>
+                <td>单据类型</td>
+                <td>
+                  <span id="isnew_show">
+                  老客戶
+                  </span>
+                  <span id="isnew_form" style="display:none;">
+                      <select name="seisnew" id="seisnew">
+                          <option value="0">老客戶</option>
+                          <option value="1" >新客戶</option>
+                      </select>
+                      <input type="submit" name="isnew_btn" id="isnew_btn" value="提交" />
+                      <input type="button" name="button_s2" id="button_s2" value="退出" onclick="isnew_edit('isnew',0);" />
+                  </span>
+                </td>
+                <td>业务员</td>
+                <td><?php echo $rs['makename']; ?>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>主打单品</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>组长审核</td>
+                <td>
+                      <span id="audit_show">
+                      未审核
+                      </span>
+                      <span id="audit_form" style="display:none;">
+                          <select name="seaudit" id="seaudit">
+                              <option value="1" >通过</option>
+                              <option value="2" >不通过</option>
+                          </select>
+                          <input name="cnaudit" type="text" id="cnaudit" onclick="clearDefaultText(this,'审核备注。')" value="审核备注。" size="50" />
+                          <input type="submit" name="audit_btn" id="audit_btn" value="提交" />
+                          <input type="button" name="button_s4" id="button_s4" value="退出" onclick="isnew_edit('audit',0);" />
+                      </span>
+                </td>
+                <td>财务审核</td>
+                <td>
+                      <span id="finance_show">
+                      未审核
+                      </span>
+                      <span id="finance_form" style="display:none;">
+                          <select name="sefinance" id="sefinance">
+                              <option value="1" >通过</option>
+                              <option value="2" >不通过</option>
+                          </select>
+                          <input name="cnfinance" id="cnfinance" type="text" value="审核备注。" onclick="clearDefaultText(this,'审核备注。')" size="50" />
+                          <input type="submit" name="finance_btn" id="finance_btn" value="提交" />
+                          <input type="button" name="button_s6" id="button_s6" value="退出" onclick="isnew_edit('finance',0);" />
+                      </span>
+                </td>
+            </tr>
+        </form>
+        <tr>
+            <td colspan="10">
+                <table height="20" border="0" align="center" cellpadding="10" cellspacing="10" >
+                    <tr class="table-cellsp">
+                        <td align="center"><input name="modify1"  type="button" id="modify" value="修改PI" onclick="location='/tms/index.php/tms_business/pi/edit/?action=modify&id=<?php echo $rs['id']; ?>';" {if condition="$rs.fiaudit==1"}disabled="disabled"; style="color: #999" {/if}/></td>
+                        <td align="center"><input name="modify3"  type="button" id="modify2" value="跟进PI" onclick="location='?action=modifyfee&id=<?php echo $rs['id']; ?>#modify';" {if condition="$rs.fiaudit==1"}disabled="disabled"; style="color: #999" {/if}/></td>
+                        <td align="center"><input name="modify4"  type="button" id="modify2" value="结算审核" onclick="location='?action=fiaudit&id=<?php echo $rs['id']; ?>';" {if condition="$rs.fiaudit==1"}disabled="disabled"; style="color: #999" {/if}/></td>
+                        <td align="center"><input name="modify4"  type="button" id="modify2" value="结算解锁" onclick="location='?action=defiaudit&id=<?php echo $rs['id']; ?>';" {if condition="$rs.fiaudit==0"}disabled="disabled"; style="color: #999" {/if} /></td>
+                        <td align="center"><input name="easypo"  type="button" id="easypo" value="关联开支" onclick="location='../purchase/po_easy_add.asp?piid=20180376';" {if condition="$rs.fiaudit==1"}disabled="disabled"; style="color: #999" {/if}/></td>
+                        <td align="center"><input name="excel" type="button" id="excel" value="导出Excel" onclick="location='PITOExcel.asp?no=20180376_0';" /></td>
+                        <!--<td align="center"><input name="excel2" type="button" id="excel2" value="導到中文Excel" onclick="location='PITOExcel_CN.asp?no=_';" /></td>
+                        <td align="center"><input name="pdf" type="button" id="pdf" value="導到PDF" onclick="location='emoribts://export/?type=pi&amp;no=&rno=';" /></td>-->
+                        <td align="center"><input name="back" type="button" id="back" value="返回列表" onclick="window.location='PI.asp'" /></td>
+                        <td align="center"><input name="close" type="button" id="close" value="关闭窗口" onclick="window.close();" /></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+    </table>
+    <!---->
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tbody><tr>
+            <td height="40" align="center" class="title">&nbsp;</td>
+        </tr>
+        <tr>
+            <td height="40" align="center"><table width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tbody><tr>
+                    <td align="center"><span class="title">PI相关费用</span></td>
+                    <td width="150" align="right"><input type="button" name="Submit3" value="添加新的PI费用" onclick=""></td>
+                </tr>
+                </tbody></table></td>
+        </tr>
+        <tr>
+            <td>
+                <table width="100%" border="0" align="center" cellpadding="3" cellspacing="1" class="listtable">
+                    <tbody>
+                        <tr class="listtitle">
+                            <td width="40">编号</td>
+                            <td width="160">金额</td>
+                            <td>备注</td>
+                            <td width="160">录入人</td>
+                            <td width="160">录入時間</td>
+                            <td width="160">操作选项</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        </tbody></table>
+
+    <!--跟进PI信息-->
+    <form action="?action=fee" method="post" name="form1" id="form1" onsubmit="return checkfee();" >
+    <table width="100%" border="0" cellpadding="0" cellspacing="0" <?php if($action!="modifyfee"){echo 'style="display:none"'; }?> >
+        <tbody>
+        <tr>
+            <td height="40" align="center" class="title">&nbsp;</td>
+        </tr>
+        <tr>
+            <td height="40" align="center" class="title"><a name="modify" id="modify"></a>跟进PI</td>
+        </tr>
+        
+        <tr>
+            <td>
+                <!---Merchandise--->
+                <div>
+                    <table width="100%" border="0" align="center" cellpadding="3" cellspacing="1" class="table table-border table-bordered table-bg table-hover">
+                        <tbody>
+                        <tr>
+                            <td width="12%">已确认客户交货期</td>
+                            <input type="hidden" name="id" value="<?php echo $rs['id']; ?>">
+                            <input type="hidden" name="allno" value="<?php echo $rs['allno']; ?>">
+                            <td width="38%"><input name="deliveryend" type="text" id="deliveryend" class="easyui-datebox" value="<?php echo $rs['deliveryend']; ?>" size="13"></td>
+                            <td width="12%">最终交货期</td>
+                            <td width="38%"><input name="deliveryed" type="text" id="deliveryed" class="easyui-datebox" value="<?php echo $rs['deliveryed']; ?>" size="13"></td>
+                        </tr>
+                        <tr>
+                            <td>样板交货期</td>
+                            <td><input name="peried" type="text" id="peried" class="easyui-datebox" value="<?php echo $rs['peried']; ?>" size="13"></td>
+                            <td>运输</td>
+                            <td><input name="transport" type="text" id="transport" value="<?php echo $rs['transport']; ?>">
+                                <select name="pricetermlist" id="pricetermlist" onchange="if(this.options[this.selectedIndex].value!=''){setinputvalue('transport',this.options[this.selectedIndex].value + pricetermType_se.value);}">
+                                    <option value="">选择运输方式</option>
+
+                                    <option value="NOT FIX YET">NOT FIX YET</option>
+
+                                    <option value="NO">NO</option>
+
+                                    <option value="AIR">AIR</option>
+
+                                    <option value="SEA">SEA</option>
+
+                                    <option value="COURIER">COURIER</option>
+
+                                    <option value="TRUCK">TRUCK</option>
+
+                                    <option value="TNT">TNT</option>
+
+                                    <option value="全日通">全日通</option>
+
+                                    <option value="FEDEX">FEDEX</option>
+
+                                    <option value="顺丰">顺丰</option>
+
+                                    <option value="DHL">DHL</option>
+
+                                    <option value="OCS">OCS</option>
+
+                                    <option value="UPS">UPS</option>
+
+                                </select>
+                                <input name="pricetermType_se" type="hidden" id="pricetermType_se" value="[到付]">
+                                <input name="pricetermType" type="radio" id="pricetermType" onclick="javascript:setinputvalue('transport',pricetermlist.value + this.value);setinputvalue('pricetermType_se',this.value);" value="[预付]">
+                                预付
+                                <input name="pricetermType" type="radio" id="pricetermType" onclick="javascript:setinputvalue('transport',pricetermlist.value + this.value);setinputvalue('pricetermType_se',this.value);" value="[到付]" checked="checked">
+                                到付</td>
+                        </tr>
+                        <tr>
+                            <td>验货日期</td>
+                            <td><input name="inspection" type="text" id="inspection" class="easyui-datebox" value="<?php echo $rs['inspection']; ?>"  size="13"></td>
+                            <td>外箱唛</td>
+                            <td><input name="facside" type="checkbox" id="facside" value="1"  {if condition="$rs.facside==1"}checked="checked"{else/}{/if} >
+                                已通知厂</td>
+                        </tr>
+                        <tr>
+                            <td>截仓日期</td>
+                            <td><input name="cutoff" type="text" id="cutoff" class="easyui-datebox" value="<?php echo $rs['cutoff']; ?>" size="13"></td>
+                            <td>已拍图片</td>
+                            <td><input name="picy" type="checkbox" id="picy" value="1" {if condition="$rs.picy==1"}checked="checked"{else/}{/if}></td>
+                        </tr>
+
+                        <tr>
+                            <td>已出货并已收钱</td>
+                            <td><label for="Shipped"><input name="shipped" type="checkbox" id="Shipped" value="1" {if condition="$rs.shipped==1"}checked="checked"{else/}{/if}>
+                                是</label></td>
+                            <td>估计利润约</td>
+                            <td>
+                                <?php echo showselect('profits_curr',substr($rs['profits'],0,3),$currencysarray,"",'');?>
+                                <input name="profits" type="text" id="Profits" value="<?php echo substr($rs['profits'],3);?>" size="10"></td>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>业务跟进备注</td>
+                            <td><textarea name="recontent" rows="5" class="input80" id="recontent"><?php echo $rs['recontent']; ?></textarea></td>
+                            <td></td>
+                            <td>
+                            </td>
+                        </tr>
+                        </tbody></table>
+                </div>
+                <!---Shipping--->
+                <div>
+                    <table width="100%" border="0" align="center" cellpadding="3" cellspacing="1" class="table table-border table-bordered table-bg table-hover">
+                        <tbody><tr>
+                            <td width="12%">本地运费卸货费</td>
+                            <td width="38%">
+                                <?php echo showselect('localfreight_curr',substr($rs['localfreight'],0,3),$currencysarray,"",'');?>
+                                <input name="localfreight" type="text" id="Localfreight" value="<?php echo substr($rs['localfreight'],3);?>" size="10">
+                            </td>
+
+                            <td width="12%">CFS.THC等费用</td>
+                            <td width="38%">
+                                <?php echo showselect('cfsthc_curr',substr($rs['cfsthc'],0,3),$currencysarray,"",'');?>
+                                <input name="cfsthc" type="text" id="CFSTHC" value="<?php echo substr($rs['cfsthc'],3);?>" size="10">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>寄文件费</td>
+                            <td>
+                                <?php echo showselect('docfee_curr',substr($rs['docfee'],0,3),$currencysarray,"",'');?>
+                                <input name="docfee" type="text" id="DocFee" value="<?php echo substr($rs['docfee'],3);?>" size="10">
+                            </td>
+                            <td>申请FORM A/CO费用</td>
+                            <td>
+                                <?php echo showselect('forma_curr',substr($rs['forma'],0,3),$currencysarray,"",'');?>
+                                <input name="forma" type="text" id="FormA" value="<?php echo substr($rs['forma'],3);?>" size="10">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>海关跟进备注</td>
+                            <td><textarea name="recontent2" rows="5" class="input80" id="recontent2"><?php echo $rs['recontent2']; ?></textarea></td>
+                            <td>银行费用及其他</td>
+                            <td>
+                                <?php echo showselect('bankcosts_curr',substr($rs['bankcosts'],0,3),$currencysarray,"",'');?>
+                                <input name="bankcosts" type="text" id="Bankcosts" value="<?php echo substr($rs['bankcosts'],3);?>" size="10">
+                            </td>
+                        </tr>
+                        </tbody></table>
+                </div>
+                <!---Accountant--->
+                <div>
+                    <table width="100%" border="0" align="center" cellpadding="3" cellspacing="1" class="table table-border table-bordered table-bg table-hover">
+                        <tbody><tr>
+                            <td width="12%">深圳寄出的国际快递费用或其它杂费</td>
+                            <td width="38%">
+                                <?php echo showselect('otherfee_curr',substr($rs['otherfee'],0,3),$currencysarray,"",'');?>
+                                <input name="otherfee" type="text" id="OtherFee" value="<?php echo substr($rs['otherfee'],3);?>" size="10">
+                            </td>
+                            <td width="12%">其他杂费</td>
+                            <td width="38%">
+                                <?php echo showselect('otherfee2_curr',substr($rs['otherfee'],0,3),$currencysarray,"",'');?>
+                                <input name="otherfee2" type="text" id="OtherFee2" value="<?php echo substr($rs['otherfee2'],3);?>" size="10">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>一达通出口額外费用</td>
+                            <td>
+                                <?php echo showselect('onetouch_curr',substr($rs['onetouch'],0,3),$currencysarray,"",'');?>
+                                <input name="onetouch" type="text" id="onetouch" value="<?php echo substr($rs['onetouch'],3);?>" size="10">
+                                <span class="hrbg_redB">(可选，如产生一达通額外费用，请在下面输入費用明细信息)</span><br>
+                                <textarea name="onetouch_remark" rows="3" class="input80" id="onetouch_remark" style="margin-top:3px;"><?php echo $rs['onetouch_remark']; ?></textarea>
+                            </td>
+                            <td>财务跟进备注&nbsp;</td>
+                            <td><textarea name="recontent3" rows="5" class="input80" id="recontent3"><?php echo $rs['recontent3']; ?></textarea>&nbsp;</td>
+                        </tr>
+                        </tbody></table>
+                </div>
+                <table width="100%" border="0" align="center" cellpadding="3" cellspacing="1" >
+                    <tbody><tr>
+                        <td colspan="4"><table border="0" align="center" cellpadding="0" cellspacing="0">
+                            <tbody><tr>
+                                <td width="120" align="center"><input name="Submit2" type="submit" id="Submit2" value="确认"></td>
+                                <td width="120" align="center"><input name="Reset2" type="button" id="Reset2" value="返回" onclick="gourl('?id=<?php echo $rs['id']; ?>');"></td>
+                            </tr>
+                            </tbody></table></td>
+                    </tr>
+                    </tbody></table></td>
+        </tr>
+        
+        <script language="JavaScript" type="text/javascript">
+            function checkfee()
+            {
+                //alert($("#deliveryend").val());
+//	if(getinputvalue("Localfreight")==""||getinputvalue("Localfreight")<0){alert("本地運費卸貨費!");setfocus("Localfreight");return false;}
+//	else
+                if(isNaN(getinputvalue("Localfreight"))){alert("本地运费卸货费只能输入数字！");setfocus("Localfreight");return false;}
+//	else if(getinputvalue("CFSTHC")==""){alert("請輸入CFS.THC等費用!");setfocus("CFSTHC");return false;}
+                else if(isNaN(getinputvalue("CFSTHC"))){alert("CFS.THC等费用只能输入数字！");setfocus("CFSTHC");return false;}
+//	else if(getinputvalue("DocFee")==""){alert("請輸入寄文件費!");setfocus("DocFee");return false;}
+                else if(isNaN(getinputvalue("DocFee"))){alert("寄文件费只能输入数字！");setfocus("DocFee");return false;}
+//	else if(getinputvalue("Bankcosts")==""){alert("請輸入銀行費用及其他!");setfocus("Bankcosts");return false;}
+                else if(isNaN(getinputvalue("Bankcosts"))){alert("银行费用及其他只能输入数字！");setfocus("Bankcosts");return false;}
+//	else if(getinputvalue("Profits")==""){alert("請輸入估計利潤約!");setfocus("Profits");return false;}
+                else if(isNaN(getinputvalue("Profits"))){alert("估计利润约只能输入数字！");setfocus("Profits");return false;}
+                return true;
+            }
+        </script>
+        </tbody></table></form>
+
+</div>
+</body>
+<script>
+    $(document).ready(function(){
+        $(".contact-taggle").hide();
+        $("#hidebtn").click(function() {
+            $(".contact-taggle").toggle();
+        })
+    });
+    function checkradio(a,val)
+    {
+        if (val==1){
+            $(a).css('checked','checked');
+        }
+        else
+        {
+            $(a).css('checked','');
+        }
+
+    }
+</script>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><?php echo Config('sys_info')['sys_company']; ?> - 外贸管理系统</title>
+<script src="/tms/js/all.js" language="javascript"></script>
+</head>
+<body>
+<h1>添加/编辑菜单信息</h1>
+<div class="mypanel">
+	<div class="mypanel-heading">
+        <div class="mypanel-lead"><em>添加/编辑菜单信息</em>可以在此添加/修改菜单的详细信息</div>
+    </div>
+
+    <div class="mypanel-body">
+        <div id="myTabContent" class="mytab-content">
+            <div class="mytab-pane active">
+                <div class="widget-body no-padding">
+                    <form id="basic-form" method="POST" action="/tms/index.php/tms_setting/permissions/update">
+                        <table class="table-setting">
+                          <tr>
+                            <td width="120" align="right">权限名称
+                              <input name="id" type="hidden" value="<?php echo $v['id']; ?>"></td>
+                            <td><input name="name" type="text" id="name" value="<?php echo $v['name']; ?>" size="20"></td>
+                          </tr>
+                          <tr>
+                            <td align="right">权限前缀</td>
+                            <td><input name="no" type="text" id="no" value="<?php echo $v['no']; ?>" size="20"></td>
+                          </tr>
+                          {foreach name="plist" item="p" key="k"}
+                          <tr>
+                            <td width="120" align="right"> <?php if($k==0){ ?>权限属性<?php } ?></td>
+                            <td><label for="permissions_<?php echo $k+1; ?>"><input name="permissions[]" type="checkbox" id="permissions" value="<?php echo $k+1; ?>" <?php if(strstr($v['permissions'],(string)($k+1))!=false){ ?>checked<?php } ?> ><?php echo $p; ?></label></td>
+                          </tr>
+                          {/foreach}
+                            <tfoot>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <button type="submit">确定</button>
+                                        <button type="reset">重置</button>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

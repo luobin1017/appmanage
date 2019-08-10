@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Deepsea后台管理系统</title>
+    <link rel="stylesheet" href="/style/layui/css/layui.css">
+    <link rel="stylesheet" href="/style/main.css">
+</head>
+<body class="layui-layout-body">
+<div class="bgindex">
+    <div class="layui-layout layui-layout-admin">
+        {include file="public/header" /}
+        <div class="layui-side layui-bg-black layui-bg-black-updata">
+            <div class="layui-side layui-bg-black layui-bg-black-updata">
+                <div class="layui-side-scroll">
+                    <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                    <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                        <li class="layui-nav-item">
+                            <a class="" href="/index.php/cms/index/index">用户反馈及回复</a>
+                        </li>
+                        <li class="layui-nav-item ">
+                            <a href="javascript:;">用户管理</a>
+                            <dl class="layui-nav-child">
+                                <dd ><a href="/index.php/cms/userinfo/index">列表展示</a></dd>
+                                <dd><a href="/index.php/cms/userinfo/picshow">图表展示</a></dd>
+                            </dl>
+                        </li>
+                        <li class="layui-nav-item">
+                            <a href="javascript:;">消息推送</a>
+                            <dl class="layui-nav-child">
+                                <dd ><a href="/index.php/cms/apppush/index">推送APP消息</a></dd>
+                                <dd><a href="/index.php/cms/apppush/emailpush">推送邮件信息</a></dd>
+                            </dl>
+                        </li>
+                        <li class="layui-nav-item"><a href="/index.php/cms/appconfig/index">APP主页配置</a></li>
+                        <li class="layui-nav-item layui-this"><a href="/index.php/cms/updatefirmware/index">固件信息管理</a></li>
+                        <li class="layui-nav-item"><a href="/index.php/cms/usercontrol/index">账号管理</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-body layui-body-content" id="layerDemo">
+            <div class="content-main" style="padding: 15px;color: #fff;" >
+                <form  action="add" method="post" id="pushsubmit" enctype="multipart/form-data">
+                    <div class="layui-input-block fankui_in">
+                        <label class="layui-form-label">文件名称 : </label>
+                        <div class="layui-input-block">
+                            <input type="hidden" name="type" value="<?php echo $result['type'];?>">
+                            <input type="hidden" name="id" value="<?php echo $result['id'];?>">
+                            <input type="text" name="filename" id="filename"  value="<?php echo $result['filename'];?>" lay-verify="required" placeholder="文件名称"  class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-input-block fankui_in">
+                        <label class="layui-form-label">文件大小 : </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="filesize" id="filesize" value="<?php echo $result['filesize'];?>" lay-verify="required" placeholder="文件大小"  class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-input-block fankui_in">
+                        <label class="layui-form-label">文件版本号 : </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="version" id="version" value="<?php echo $result['version'];?>" lay-verify="required" placeholder="文件版本号"  class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-input-block fankui_in">
+                        <label class="layui-form-label">下载路径 : </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="downloadurl" id="downloadurl" value="<?php echo $result['downloadurl'];?>" lay-verify="required" placeholder="文件下载路径"  class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-input-block fankui_in">
+                        <label class="layui-form-label">所属分类 : </label>
+                        <div class="layui-input-block">
+                            <div class="layui-input-block fankui_in">
+                                <select name="classname" lay-verify="" id="classname">
+                                    <option value="">请选择一个分类</option>
+                                    {foreach $class as $k=>$v }
+                                        <option value="<?php echo $v['classname_en'];?>" {if condition="$result['classname']=='flight_control'"}selected="selected"{/if} ><?php echo $v['classname_cn'];?></option>
+                                    {/foreach}
+                                    <!--<option value="flight_control" {if condition="$result['classname']=='flight_control'"}selected="selected"{/if} >飞控</option>
+                                    <option value="camera" {if condition="$result['classname']=='camera'"}selected="selected"{/if} >相机</option>-->
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-input-block fankui_in">
+                        <label class="layui-form-label">更新日期 : </label>
+                        <div class="layui-input-block">
+                            <div class="layui-input-block fankui_in">
+                                <input type="updatedate" id="updatedate" name="updatedate" readonly="readonly" value="<?php echo $result['updatedate'];?>" placeholder="文件更新日期" class="layui-input">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-input-block fankui_in">
+                        <label class="layui-form-label">更新内容[英] : </label>
+                        <div class="layui-input-block">
+                            <textarea name="updatenote_en" id="updatenote_en" value="<?php echo $result['updatenote_en'];?>" placeholder="请输入内容" class="layui-textarea"><?php echo $result['updatenote_en'];?></textarea>
+                        </div>
+                    </div>
+                    <div class="layui-input-block fankui_in">
+                        <label class="layui-form-label">更新内容[中] : </label>
+                        <div class="layui-input-block">
+                            <textarea name="updatenote_cn" id="updatenote_cn" placeholder="请输入内容" class="layui-textarea"><?php echo $result['updatenote_cn'];?></textarea>
+                        </div>
+                    </div>
+                </form>
+                <div id="reply-btn" style="margin-top: 50px;">
+                    <button class="layui-btn layui-btn-lg layui-btn-normal" onclick="beforeSubmit();" >提交信息</button>
+                    <button class="layui-btn layui-btn-lg layui-btn-primary" onclick="location='index'">返回上级</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<div class="layui-footer">
+        &lt;!&ndash; 底部固定区域 &ndash;&gt;
+        © layui.com - 底部固定区域
+    </div>-->
+</div>
+</div>
+
+<script src="/style/layui/layui.js"></script>
+<script src="/style/jquery.js"></script>
+<script src="/style/main.js"></script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function(){
+        var element = layui.element;
+
+        layui.use('laydate', function(){
+            var laydate = layui.laydate;
+            //常规用法
+            laydate.render({
+                elem: '#updatedate'
+                ,type: 'datetime'
+            });
+        });
+
+    });
+
+</script>
+<style>
+    .layui-layer-dialog .layui-layer-content {background-color: #F8F8F8;}
+    .layui-layer-btn {background-color: #F8F8F8;}
+</style>
+<script>
+    layui.use('layer', function(){ //独立版的layer无需执行这一句
+        var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+        //常规用法
+        //触发事件
+    })
+    function beforeSubmit(){
+        if($("#filename").val()==''){
+            alert('文件名称不能为空！');
+            $("#filename").focus();
+            return false;
+        }
+        if($("#filesize").val()==''){
+            alert('文件大小不能为空！');
+            $("#filesize").focus();
+            return false;
+        }
+        if($("#version").val()==''){
+            alert('文件版本号不能为空！');
+            $("#version").focus();
+            return false;
+        }
+        if($("#downloadurl").val()==''){
+            alert('文件下载路径不能为空！');
+            $("#downloadurl").focus();
+            return false;
+        }
+        if($("#classname").val()==''){
+            alert('请选择一个分类！');
+            $("#classname").focus();
+            return false;
+        }
+        if($("#updatedate").val()==''){
+            alert('文件更新日期不能为空！');
+            $("#updatedate").focus();
+            return false;
+        }
+        if($("#updatenote_en").val()==''){
+            alert('文件更新内容[英]不能为空！');
+            $("#updatenote_en").focus();
+            return false;
+        }
+        if($("#updatenote_cn").val()==''){
+            alert('文件更新内容[中]不能为空！');
+            $("#updatenote_cn").focus();
+            return false;
+        }
+
+
+        layer.confirm('是否提交？', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            pushsubmit();
+            layer.msg('提交成功', {icon: 1});
+        });
+    }
+
+    function pushsubmit(){
+        $("#pushsubmit").submit();
+    }
+</script>
+</body>
+</html>

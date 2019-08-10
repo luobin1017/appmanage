@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><?php echo Config('sys_info')['sys_company']; ?> - 外贸管理系统</title>
+<script src="/tms/js/all.js" language="javascript"></script>
+</head>
+<body>
+<h1>添加/编辑应聘信息</h1>
+<div class="mypanel">
+	<div class="mypanel-heading">
+        <div class="mypanel-lead"><em>添加/编辑应聘信息</em>可以在此添加/修改应聘的详细信息</div>
+    </div>
+
+    <div class="mypanel-body">
+        <div id="myTabContent" class="mytab-content">
+            <div class="mytab-pane active">
+                <div class="widget-body no-padding">
+                    <form id="basic-form" method="POST" action="/tms/index.php/tms_setting/zhaopin/update">
+                        <table class="table-setting">
+                          <tr>
+                            <td width="120" align="right">姓名<input name="id" type="hidden" value="<?php echo $v['id']; ?>"></td>
+                            <td><input name="uname" type="text" id="uname" value="<?php echo $v['uname']; ?>" size="10"></td>
+                          </tr><tr>
+                            <td align="right">性别</td>
+                            <td><input name="sex" type="text" id="sex" value="<?php echo $v['sex']; ?>" size="10"></td>
+                          </tr>
+                          <tr>
+                            <td align="right">职位</td>
+                            <td><?php echo showselect('job',$v['job'],sysinfo('var_jobs'),"请选择",'');?></td>
+                            </tr><tr>
+                            <td align="right">电话</td>
+                            <td><input name="tel" type="text" id="tel" value="<?php echo $v['tel']; ?>" size="10"></td>
+                          </tr>
+                          <tr>
+                            <td align="right">面试时间</td>
+                            <td><input name="interview" type="text" id="interview" class="easyui-datebox" value="<?php echo $v['interview']; ?>" size="13"></td>
+                            </tr><tr>
+                            <td align="right">状态</td>
+                            <td><?php echo showselect('status',$v['status'],sysinfo('var_jobstatus'),"请选择",'');?></td>
+                          </tr>
+                          <tr>
+                            <td align="right">备注</td>
+                            <td><textarea name="remark" cols="50" rows="5" id="remark"><?php echo $v['remark']; ?></textarea></td>
+                          </tr>
+                            <tfoot>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <button type="submit">确定</button>
+                                        <button type="reset">重置</button>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

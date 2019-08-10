@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>江森制品有限公司 - 外贸管理系统</title>
+    <script src="/tms/js/all.js" language="javascript"></script>
+    <style>
+        /*show*/
+        .table  .text-c-tr td{ vertical-align: middle;  text-align: center; }
+        .table  .text-c-td{ text-align: left!important;  }
+    </style>
+</head>
+<body>
+<h1><strong>查看供应商资料</strong></h1>
+<div class="mypanel">
+    <div class="mypanel-heading">
+        <div class="mypanel-lead"><em></em>可以在此查看供应商信息</div>
+    </div>
+    <table width="1191" class="table table-border table-bordered table-striped table-bg table-hover">
+        <tr class="text-c ">
+            <td width="148">供应商编码</td>
+            <td colspan="3" class="listtd1"><font color="red"><?php echo $arr['allno']; ?></font></td>
+        </tr>
+        <tr class="text-c ">
+            <td>公司中文名</td>
+            <td width="36%" class="listtd1"><?php echo $arr['name']; ?></td>
+            <td width="148">公司英文名</td>
+            <td width="440" class="listtd1"><?php echo $arr['ename']; ?></td>
+        </tr>
+        <tr class="text-c ">
+            <td>所在城市</td>
+            <td class="listtd2"><?php echo $arr['city']; ?></td>
+            <td>传真</td>
+            <td class="listtd2"><?php echo $arr['fax']; ?></td>
+        </tr>
+        <tr class="text-c ">
+            <td>联系人1</td>
+            <td class="listtd1"> <?php echo $arr['contact1']; ?> <a href="#" target="_blank">查看名片<span style="color:#FF0000;">(0)</span></a></td>
+            <td>电话1</td>
+            <td class="listtd1"> {if condition="$arr.phone1 <> ''"}<a href='callto://<?php echo $arr['temp']; ?>'><?php echo $arr['phone1']; ?></a>{else/}{/if} </td>
+        </tr>
+        <tr class="text-c ">
+            <td>电子邮箱1</td>
+            <td class="listtd2"><?php echo $arr['email1']; ?></td>
+            <td>手机1</td>
+            <td class="listtd2"><?php echo $arr['mob1']; ?></td>
+        </tr>
+        <tr class="text-c ">
+            <td>QQ1</td>
+            <td class="listtd2"><?php echo $arr['qq1']; ?></td>
+            <td>网络通讯1</td>
+            <td class="listtd2"><?php echo $arr['net1']; ?></td>
+        </tr>
+        <tr class="text-c ">
+            <td>联系人2</td>
+            <td class="listtd2"><?php echo $arr['contact2']; ?></td>
+            <td>电话2</td>
+            <td class="listtd2">{if condition="$arr.phone2 <> ''"}<a href='callto://<?php echo $arr['temp2']; ?>'><?php echo $arr['phone2']; ?></a>{else/}{/if}</td>
+        </tr>
+        <tr class="text-c ">
+            <td>电子邮箱2</td>
+            <td class="listtd1"><?php echo $arr['email2']; ?></td>
+            <td>手机2</td>
+            <td class="listtd1"><?php echo $arr['mob2']; ?></td>
+        </tr>
+        <tr class="text-c ">
+            <td>QQ2</td>
+            <td class="listtd2"><?php echo $arr['qq2']; ?></td>
+            <td>网络通讯2</td>
+            <td class="listtd2"><?php echo $arr['net2']; ?></td>
+        </tr>
+        <tr class="text-c ">
+            <td>公司地址</td>
+            <td class="listtd1"><?php echo $arr['address']; ?></td>
+            <td>网址</td>
+            <td class="listtd1"><a href="<?php echo $arr['web']; ?>" target="_blank"><?php echo $arr['web']; ?>/</a></td>
+        </tr>
+        <tr class="text-c ">
+            <td>备注</td>
+            <td colspan="3"><?php echo $arr['content']; ?></td>
+        </tr>
+        <tr class="text-c ">
+            <td>经营产品</td>
+            <td class="listtd2"><?php echo $arr['jinyin']; ?></td>
+            <td>曾询价产品</td>
+            <td class="listtd2"><?php echo $arr['xunjia']; ?></td>
+        </tr>
+        <tr class="text-c ">
+            <td>是否黑名单</td>
+            <td class="listtd1" style="color:#FF0000"> {if condition="$arr.blacklist == 1"}是&nbsp;&nbsp;{else/}否&nbsp;&nbsp;{/if},&nbsp;&nbsp;<?php echo $arr['black']; ?> </td>
+            <td>是否新供应商</td>
+            <td class="listtd1" style="color:#FF0000"> {if condition="$arr.isnew == 1"}是&nbsp;&nbsp;{else/}否&nbsp;&nbsp;{/if},&nbsp;&nbsp;<?php echo $arr['newremark']; ?> </td>
+        </tr>
+        <tr class="text-c ">
+            <td>建档人</td>
+            <td class="listtd1"><?php echo $arr['username']; ?></td>
+            <td>建档时间</td>
+            <td class="listtd1"><?php echo $arr['time']; ?>&nbsp;&nbsp;&nbsp;<span style="color:#00F;">{if condition="$arr.uptime <> ''"}最新更新：<?php echo $arr['upuser']; ?>，<?php echo $arr['uptime']; ?>，<?php echo $arr['upip']; ?>{/if}</span></td>
+       </tr>
+    </table>
+    <!---->
+    <table width="100%"  class="table table-border table-bordered table-striped table-bg table-hover">
+        <tr class="text-c-tr" style="background-color: #9d9d9d">
+            <td colspan="10"><h4><strong>相关的PO</strong></h4></td>
+        </tr>
+        <tr class="text-c ">
+            <td width="60" align="center">编号</td>
+            <td width="120" align="center">PO编码</td>
+            <td align="center">订购产品</td>
+            <td align="center">总金额</td>
+            <td width="100" align="center">开单日期</td>
+            <td align="center">交货日期</td>
+            <td width="100" align="center">制单人</td>
+        </tr>
+        {foreach $po as $k=>$v}
+        <tr class="text-c " onmouseover="listover(this,2)" onmouseout="listout(this,2)" style="cursor:pointer;">
+            <td align="center"><?php echo $k+1; ?></td>
+            <td align="center"><a href="po_show.html?no=20180332_0-2_0" target="_blank"><?php echo $v['allno']; ?></a></td>
+            <td align="center"></td>
+            <td align="center"><?php echo $v['currencys']; ?><?php echo $v['amount']; ?></td>
+            <td width="100" align="center" title="<?php echo $v['makedate']; ?>"><?php echo strtotime("Y-m-d",$v['makedate']); ?></td>
+            <td align="center"><?php echo $v['delivery']; ?></td>
+            <td align="center"><?php echo $v['makename']; ?></td>
+        </tr>
+        {/foreach}
+    </table>
+    <!---->
+    
+    <!---->
+<table height="20" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-bottom: 20px">
+        <tr>
+            <td width="120" align="center"><input name="modify" type="button" id="modify" value="修改供应商资料" onclick="window.location='edit.html?action=modify&id=<?php echo $arr['id']; ?>'" /></td>
+            <td width="120" align="center"><input name="return" type="button" id="return" value="返回列表" onclick="document.location='index.html';" /></td>
+        </tr>
+    </table>
+
+
+</div>
+</body>
+</html>

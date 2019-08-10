@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>供應商信息管理</title>
+    <script src="/TMS/js/all.js" language="javascript"></script>
+</head>
+<body>
+
+<table wIDth="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td height="40" align="center" class="title">查看供應商資料</td>
+    </tr>
+    <tr>
+        <td height="40" align="right">
+            <input type="button" name="Submit" value="返回供應商列表" onclick="gourl('index.html');" />
+        </td>
+    </tr>
+    <tr>
+        <td><table wIDth="100%"  border="0" align="center" cellpadding="3" cellspacing="1" class="listtable">
+            <tr class="listtd1">
+                <td width="14%">供應商代碼</td>
+                <td width="36%"><font color="red"><?php echo $arr['allno']; ?></font></td>
+                <td width="14%">&nbsp;</td>
+                <td width="36%">&nbsp;</td>
+            </tr>
+            <tr class="listtd1">
+                <td>公司中文名</td>
+                <td><?php echo $arr['name']; ?></td>
+                <td>公司英文名</td>
+                <td><?php echo $arr['ename']; ?></td>
+            </tr>
+            <tr class="listtd2">
+                <td>所在城市</td>
+                <td><?php echo $arr['city']; ?></td>
+                <td>傳真</td>
+                <td><?php echo $arr['fax']; ?></td>
+            </tr>
+            <tr class="listtd1">
+                <td>聯系人1</td>
+                <td>
+                    <?php echo $arr['contact1']; ?>
+                    <a href="../tools/namecard.asp?customid=SZS1145" target="_blank">查看名片<span style="color:#FF0000;">(0)</span></a>
+
+                </td>
+                <td>電話1</td>
+                <td>
+                    <?php if($arr.phone1!=""){ ?><a href='callto://<?php echo $arr.temp']; ?>'><?php echo $arr['phone1']; ?></a><?php } ?>
+                </td>
+            </tr>
+            <tr class="listtd2">
+                <td>電子郵箱1</td>
+                <td><?php echo $arr['email1']; ?></td>
+                <td>手機1</td>
+                <td><?php echo $arr['mob1']; ?></td>
+            </tr>
+            <tr class="listtd2">
+                <td>QQ1</td>
+                <td><?php echo $arr['qq1']; ?></td>
+                <td>網絡通訊1</td>
+                <td><?php echo $arr['net1']; ?></td>
+            </tr>
+            <tr class="listtd2">
+                <td>聯系人2</td>
+                <td><?php echo $arr['contact2']; ?></td>
+                <td>電話2</td>
+                <td><?php if($arr['phone2']!=""){ ?><a href='callto://<?php echo $arr['temp2']; ?>'><?php echo $arr['phone2']; ?></a><?php } ?></td>
+            </tr>
+            <tr class="listtd1">
+                <td>電子郵箱2</td>
+                <td><?php echo $arr['email2']; ?></td>
+                <td>手機2</td>
+                <td><?php echo $arr['mob2']; ?></td>
+            </tr>
+            <tr class="listtd2">
+                <td>QQ2</td>
+                <td><?php echo $arr['qq2']; ?></td>
+                <td>網絡通訊2</td>
+                <td><?php echo $arr['net2']; ?></td>
+            </tr>
+            <tr class="listtd1">
+                <td>公司地址</td>
+                <td><?php echo $arr['address']; ?></td>
+                <td>網址</td>
+                <td><a href="<?php echo $arr['web']; ?>" target="_blank"><?php echo $arr['web']; ?>/</a></td>
+            </tr>
+            <tr class="listtd1">
+                <td>備注</td>
+                <td colspan="3"><?php echo $arr['content']; ?></td>
+            </tr>
+            <tr class="listtd2">
+                <td>經營產品</td>
+                <td><?php echo $arr['jinyin']; ?></td>
+                <td>曾詢價產品</td>
+                <td><?php echo $arr['xunjia']; ?></td>
+            </tr>
+            <tr class="listtd1">
+                <td>是否黑名單</td>
+                <td style="color:#FF0000">
+                    {if condition="$arr.blacklist == 1"}是&nbsp;&nbsp;{else/}否&nbsp;&nbsp;{/if},&nbsp;&nbsp;<?php echo $arr['black']; ?>
+                </td>
+                <td>
+                    是否新供應商
+                </td>
+                <td style="color:#FF0000">
+                    {if condition="$arr.isnew == 1"}是&nbsp;&nbsp;{else/}否&nbsp;&nbsp;{/if},&nbsp;&nbsp;<?php echo $arr['newremark']; ?>
+                </td>
+            </tr>
+            <tr class="listtd1">
+                <td>建檔人</td>
+                <td><?php echo $arr['username']; ?></td>
+                <td>建檔時間</td>
+                <td><?php echo $arr['time']; ?>&nbsp;&nbsp;&nbsp;<span style="color:#00F;">{if condition="$arr.uptime <> ''"}最新更新：<?php echo $arr['upuser']; ?>，<?php echo $arr['uptime']; ?>，<?php echo $arr['upip']; ?>{/if}</span></td>
+            </tr>
+            <tr class="listtd2">
+                <td colspan="4" align="center"><table border="0" align="center" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td width="120" align="center"><input name="modify" type="button" id="modify" value="修改供應商資料" onclick="window.location='suppliers_update.html?id=<?php echo $arr['id']; ?>';" /></td>
+                        <td width="120" align="center"><input name="return" type="button" id="return" value="返回供應商列表" onclick="document.location='index.html';" /></td>
+                    </tr>
+                </table></td>
+            </tr>
+        </table></td>
+    </tr>
+</table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td height="40" align="center" class="title">&nbsp;</td>
+    </tr>
+    <tr>
+        <td height="40" align="right"><table width="100%" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td align="center"><span class="title">相關的PO</span></td>
+                <td width="150" align="right"><a href="../Purchase/po.asp?suppliersid=SZS1145" target="_blank">更多相關的PO</a></td>
+            </tr>
+        </table>      </td>
+    </tr>
+    <tr>
+        <td><table width="100%"  border="0" align="center" cellpadding="3" cellspacing="1" class="listtable">
+            <tr class="listtitle">
+                <td width="40">編號</td>
+                <td width="100">PI編碼</td>
+                <td>訂購產品</td>
+                <td>總金額</td>
+                <td width="100">開單日期</td>
+                <td>交貨日期</td>
+                <td width="100">制單人</td>
+            </tr>
+            {foreach $po as $k=>$v}
+                <tr class="listtd2" onmouseover="listover(this,2)" onmouseout="listout(this,2)" style="cursor:pointer;">
+                    <td align="center"><?php echo $k+1; ?></td>
+                    <td align="center"><a href="po_show.html?no=20180332_0-2_0" target="_blank"><?php echo $v['allno']; ?></a></td>
+                    <td align="center"></td>
+                    <td align="center"><?php echo $v['currencys']; ?><?php echo $v['amount']; ?></td>
+                    <td width="100" align="center" title="<?php echo $v['makedate']; ?>"><?php echo strtotime("Y-m-d",$v['makedate']); ?></td>
+                    <td align="center"><?php echo $v['delivery']; ?></td>
+                    <td align="center"><?php echo $v['makename']; ?></td>
+                </tr>
+            {/foreach}
+        </table>
+        </td>
+    </tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="copyright" style="display:none;">
+    <tr>
+        <td align="center">Copyright &copy;2008 By Emori</td>
+    </tr>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><?php echo Config('sys_info')['sys_company']; ?> - 外贸管理系统</title>
+<script src="/tms/js/all.js" language="javascript"></script>
+</head>
+<body>
+<h1>PI 管理</h1>
+<div class="mypanel">
+    <div class="mypanel-heading">
+	    <div class="mypanel-lead"><em>PI 管理</em>可以在此修改PI信息</div>
+    </div>
+
+    <div class="mypanel-body">
+        <div id="toolbar" class="toolbar">
+        	<div class="pull-right">
+	            <a href="/tms/index.php/tms_business/pi/edit/" class="btn-add newbar" title="添加PI" >添加</a>
+            </div>
+            <div class="pull-left">
+            <form name="form1" action="?" method="post">
+                <table border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td>
+                            <table border="0">
+                                <tr>
+                                    <td height="26" align="center" class="input-group-addon">单据代码</td>
+                                    <td align="center"><input name="allno" class="form-control" type="text" id="allno" value="<?php echo input('allno')?>" size="12"></td>
+                                    <td align="center"><?php echo showselect('makename',input('makename', ''),$userarray,"制单人",'');?></td>
+                                    <td align="center"><?php echo showselect('received',input('received', ''),array(array('未收任何货款','1'),array('已收部分货款','2'),array('已经收完货款','3'),array('有多余货款','4')),"收款情况",'');?></td>
+                                    <td align="center"><?php echo showselect('class',input('class', ''),'A,B,C',"已拍图片",'');?></td>
+                                    <td align="center"><?php echo showselect('iscancel',input('iscancel', ''),array(array('已取消','1'),array('未取消','0')),"是否取消",'');?></td>
+                                    <td height="26" align="center"><?php echo showselect('country',input('country', ''),$countryarray,"所在地区",'');?></td>
+                                    <td align="center"><?php echo showselect('class',input('class', ''),'A,B,C',"单据类型",'');?></td>
+                                    <td align="center"><?php echo showselect('isci',input('isci', ''),array(array('是','1'),array('否','0')),"小额信保",'');?></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table border="0">
+                                <tr>
+                                    <td height="26" align="center" class="input-group-addon">客户代码</td>
+                                    <td align="center"><input name="customid" class="form-control" type="text" id="customid" value="<?php echo input('customid')?>" size="12"></td>
+                                    <td align="center" class="input-group-addon">客户PO</td>
+                                    <td align="center"><input name="custompo" class="form-control" type="text" id="custompo" size="12"></td>
+                                    <td align="center" class="input-group-addon">客户名称</td>
+                                    <td><input name="customname" type="text" class="form-control" id="customname" size="12"></td>
+                                    <td class="input-group-addon">关联DN</td>
+                                    <td align="center"><input name="tel" class="form-control" type="text" id="tel" size="12"></td>
+
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table border="0">
+                                <tr>
+                                    <td height="26" align="center">收款日期</td>
+                                    <td align="center"><input name="makedate1" type="text" id="makedate1" class="easyui-datebox" value="<?php echo input('makedate1', '')?>" size="13"></td>
+                                    <td align="center">&nbsp;到&nbsp;</td>
+                                    <td align="center"><input name="makedate2" type="text" id="makedate2" class="easyui-datebox" value="<?php echo input('makedate2', '')?>" size="13"></td>
+                                    <td align="center"><?php echo showselect('clientsource',input('clientsource', ''),$clientsourcearray,"客户来源",'');?></td>
+                                    <td align="center"><input name="Submit" class="btn btn-success" type="submit" id="Submit" value="　　搜索　　"></td>
+                                    <td>&nbsp;</td>
+                                    <td align="center"><button name="seeAll" class="btn btn-success"  id="seeAll"  value="1">查看所有</button></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table border="0">
+                                <tr>
+                                    <td height="26" align="center" class="input-group-addon">产品代码</td>
+                                    <td align="center"><input name="productno" class="form-control" type="text" id="productno" value="<?php echo input('productno', '')?>" size="12"></td>
+                                    <td align="center" class="input-group-addon">产品名称</td>
+                                    <td align="center"><input name="productname" class="form-control" type="text" id="productname" value="<?php echo input('productname', '')?>" size="12"></td>
+                                    <td><?php echo showselect('productclass',input('productclass'),$productclassrray,"请选择产品分类",'');?></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table border="0">
+                                <tr>
+                                    <td height="26" align="center">开单日期</td>
+                                    <td align="center"><input name="makedate3" type="text" id="makedate3" class="easyui-datebox" value="<?php echo input('makedate3', '')?>" size="13"></td>
+                                    <td align="center">&nbsp;到&nbsp;</td>
+                                    <td align="center"><input name="makedate4" type="text" id="makedate4" class="easyui-datebox" value="<?php echo input('makedate4', '')?>" size="13"></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            </div>
+        </div>
+            <table id="mytable" class="mytable">
+            <thead>
+                <tr>
+                    <th><input name="btSelectAll" type="checkbox"></th>
+                    <th>序号</th>
+                    <th>单据代码</th>
+                    <th>客户名称</th>
+                    <th>产品类别</th>
+                    <th>总金额</th>
+                    <th>已经收金额</th>
+                    <th>小单信保</th>
+                    <th>开单日期</th>
+                    <th>制单</th>
+                    <th>操作选项</th>
+                </tr>
+            </thead>
+            <tbody>
+            {foreach $arr as $k=>$v }
+            <tr style="" >
+            <td><input data-index="0" name="btSelectItem" type="checkbox"></td>
+            <td><?php echo $k+1; ?></td>
+            <td><?php echo $v['allno']; ?></td>
+            <td><?php echo $v['customname']; ?></td>
+            <td><?php echo $v['productname']; ?></td>
+            <td><?php echo $v['currencys']; ?>&nbsp;<?php echo strtocurr($v['amount'])?></td>
+            <td><?php echo $v['currencys']; ?>&nbsp;<?php echo strtocurr($v['received'])?></td>
+            <td>{if condition="$v.isci==1"}是{else/}否{/if}</td>
+            <td><?php echo $v['makedate']; ?></td>
+            <td><?php echo $v['makename']; ?></td>
+            <td>
+                <a target="_blank" href="/pdf/?type=<?php echo $v['language']; ?>pi&allno=<?php echo $v['allno']; ?>" title="导出<?php echo $v['allno']; ?>">导出PDF</a>
+                <a class="newbar" href="/tms/index.php/tms_business/pi/edit/?action=modify&id=<?php echo $v['id']; ?>&fiaudit=<?php echo $v['fiaudit']; ?>" title="编辑<?php echo $v['allno']; ?>">编辑</a>
+                <a class="newbar" href="/tms/index.php/tms_business/pi/pi_show.html?id=<?php echo $v['id']; ?>')" title="查看<?php echo $v['allno']; ?>">查看</a>
+            </td>
+            </tr>
+            {/foreach}
+            <?php if(count($arr)<=0&&isset($sqlwhere)){ ?>
+            <tr><td colspan="12" style="height:100px;">没有符合 <span style="color:red; font-weight:bold;"><?php echo $sqlwhere; ?></span> 的搜索结果</td></tr>
+            <?php } ?>
+            </tbody>
+            </table>
+            <div class="table-pagination" style="display: block;">
+                <div class="pull-right" id="demo2"><?php echo $page; ?></div>
+                <div class="pull-left pagination-detail">
+                    总共 <?php echo $total; ?> 条记录，<?php echo $pagesize; ?>条 / 页，页数 <?php echo $pagenow; ?> / <?php echo $totalPage; ?>
+                   </span>
+                </div>
+            </div>
+        <div id="demo2"></div>
+    </div>
+</div>
+</body>
+<script>
+    layui.use(['laypage', 'layer'], function() {
+        var laypage = layui.laypage
+                , layer = layui.layer;
+
+        //自定义样式
+        laypage.render({
+            elem: 'demo2'
+            , count: 100
+            , theme: '#1E9FFF'
+        });
+        //调用分页
+        laypage.render({
+            elem: 'demo20'
+            ,count: data.length
+            ,jump: function(obj){
+                //模拟渲染
+                document.getElementById('biuuu_city_list').innerHTML = function(){
+                    var arr = []
+                            ,thisData = data.concat().splice(obj.curr*obj.limit - obj.limit, obj.limit);
+                    layui.each(thisData, function(index, item){
+                        arr.push('<li>'+ item +'</li>');
+                    });
+                    return arr.join('');
+                }();
+            }
+        });
+    })
+</script>
+</html>
+

@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>江森制品有限公司 - 外贸管理系统</title>
+    <script src="/tms/js/all.js" language="javascript"></script>
+    <style>
+        /*show*/
+        .table  .text-c-tr td{ vertical-align: middle;  text-align: center; }
+        .table  .text-c-td{ text-align: left!important; }
+    </style>
+</head>
+<body>
+<h1><strong>查看Debit Note资料</strong></h1>
+<div class="mypanel">
+    <div class="mypanel-heading">
+        <div class="mypanel-lead"><em></em>可以在此查看<strong>Debit Note</strong>信息</div>
+    </div>
+    <table width="1191" class="table table-border table-bordered table-bg table-hover">
+        <tr class="text-c ">
+            <td width="148">关联单据</td>
+            <td width="453">&nbsp;</td>
+            <td width="148">Debit_NoteNo.</td>
+            <td width="440"><?php echo $rs['allno']; ?>&nbsp;</td>
+        </tr>
+        <tr class="text-c ">
+            <td>客户/供应商代码</td>
+            <td><?php echo $rs['customid']; ?>&nbsp;</td>
+            <td>制单日期</td>
+            <td><?php echo $rs['makedate']; ?>&nbsp;</td>
+        </tr>
+        <tr class="text-c ">
+            <td>客户/供应商名称</td>
+            <td><?php echo $rs['customname']; ?>&nbsp;</td>
+            <td>制单人</td>
+            <td><?php echo $rs['makename']; ?>&nbsp;</td>
+        </tr>
+        <tr class="text-c ">
+            <td>地址</td>
+            <td><?php echo $rs['customaddress']; ?>&nbsp;</td>
+            <td>传真</td>
+            <td><?php echo $rs['fax']; ?>&nbsp;</td>
+        </tr>
+        <tr class="text-c ">
+            <td>联系人</td>
+            <td><?php echo $rs['contact']; ?>&nbsp;</td>
+            <td>邮箱</td>
+            <td><?php echo $rs['email']; ?>&nbsp;</td>
+        </tr>
+        <tr class="text-c ">
+            <td>联系电话</td>
+            <td><?php echo $rs['phone']; ?>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+    </table>
+    <!---->
+  <table width="1191" class="table table-border table-bordered table-bg table-hover">
+        <tr class="text-c-tr" style="background-color: #9d9d9d">
+            <td width="130">序号</td>
+            <td width="647">描述</td>
+            <td width="130">数量</td>
+            <td width="130">单价</td>
+            <td width="130">小计</td>
+        </tr>
+        <?php $a =0;?>
+        {foreach $itemarr as $k=>$v}
+        <tr class="text-c text-c-tr">
+            <td><?php echo $k+1; ?></td>
+            <td class="text-c-td">
+                <?php echo coder($v['productinfo']);?><br>
+                {if condition="$v.picture!=''"}<img src="<?php echo $v['picture']; ?>" width="130" height="130" />{/if}
+            </td>
+            <td><?php echo $v['num']; ?></td>
+            <td><?php echo $v['currencys']; ?>&nbsp;<?php echo strtocurr($v['price']);?></td>
+            <td><?php echo $v['currencys']; ?>&nbsp;<?php echo strtocurr($v['num']*$v['price']);?></td>
+            <?php $a += $v['num']*$v['price']?>
+        </tr>
+        {/foreach}
+        <tr  class="text-c-tr">
+            <td colspan="3"></td>
+            <td>合计：</td>
+            <td><?php echo $v['currencys']; ?>&nbsp;<?php echo strtocurr($a);?></td>
+        </tr>
+    </table>
+    <!---->
+    <table width="1191" class="table table-border table-bordered table-bg table-striped table-hover">
+        <tr>
+            <td colspan="2">Payment：</td>
+        </tr>
+        <tr class="text-c-tr">
+            <td >Bank：</td>
+            <td class="text-c-td"><?php echo coder($banker['encontent']);?></td>
+        </tr>
+    </table>
+    <!---->
+  <table height="20" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-bottom: 20px">
+        <tr>
+            <td width="120" align="center"><input name="modify" type="button" id="modify" value="修改资料" onclick="window.location='edit.html?action=modify&id=84846'" /></td>
+            <td width="120" align="center"><input name="return" type="button" id="return" value="返回列表" onclick="document.location='index.html';" /></td>
+        </tr>
+    </table>
+
+
+</div>
+</body>
+</html>

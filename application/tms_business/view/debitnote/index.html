@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><?php echo Config('sys_info')['sys_company']; ?> - 外贸管理系统</title>
+<script src="/tms/js/all.js" language="javascript"></script>
+</head>
+<body>
+<h1>Debit Note 管理</h1>
+<div class="mypanel">
+    <div class="mypanel-heading">
+	    <div class="mypanel-lead"><em>PI 管理 </em>  可以在此修改PI信息</div>
+    </div>
+
+    <div class="mypanel-body">
+        <div id="toolbar" class="toolbar">
+        	<div class="pull-right">
+	            <a href="edit/" class="btn-add" title="添加" >添加</a>
+            </div>
+            <div class="pull-left">
+            <form name="form1" action="?" method="post">
+                <table border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td>
+                            <table border="0">
+                                <tr>
+                                    <td height="26" align="center" class="input-group-addon">单据代码</td>
+                                    <td align="center"><input name="allno" type="text" id="allno" class="form-control" value="<?php echo input('allno')?>" size="12"></td>
+                                    <td height="26" align="center" class="input-group-addon">客户代码</td>
+                                    <td align="center"><input name="customid" type="text" id="customid" class="form-control" value="<?php echo input('customid')?>" size="12"></td>
+                                    <td height="26" align="center" class="input-group-addon">客户名称</td>
+                                    <td align="center"><input name="customname" type="text" id="customname" class="form-control" value="<?php echo input('customname')?>" size="12"></td>
+                                    <td height="26" align="center" class="input-group-addon">关联PI</td>
+                                    <td align="center"><input name="pino" type="text" id="pino" class="form-control" value="<?php echo input('pino')?>" size="12"></td>
+                                    <td align="center"><input name="Submit" type="submit" class="btn btn-success" id="Submit" value="搜索"></td>
+                                    <td>&nbsp;</td>
+                                    <td align="center"><button name="seeAll" class="btn btn-success"  id="seeAll"  value="1">查看所有</button></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr class="moretr">
+                        <td>
+                            <table border="0">
+                                <tr>
+                                    <td height="26" align="center">开单日期</td>
+                                    <td align="center"><input name="makedate1" type="text" id="makedate1" class="easyui-datebox" value="<?php echo input('makedate1', '')?>" size="13"></td>
+                                    <td align="center">&nbsp;到&nbsp;</td>
+                                    <td align="center"><input name="makedate2" type="text" id="makedate2" class="easyui-datebox" value="<?php echo input('makedate2', '')?>" size="13"></td>
+                                    <td align="center"><?php echo showselect('received',input('received', ''),array(array('未收任何货款','1'),array('已收部分货款','2'),array('已经收完货款','3'),array('有多余货款','4')),"收款情况",'');?></td>
+                                    <td align="center"><?php echo showselect('makename',input('makename', ''),$userarray,"制单人",'');?></td>
+                                    <td align="center"><?php echo showselect('isxdxb',input('isxdxb', ''),array(array('是','1'),array('否','0')),"小额信保",'');?></td>
+                                    <td height="26" align="center">收款日期</td>
+                                    <td align="center"><input name="makedate3" type="text" id="makedate3" class="easyui-datebox" value="<?php echo input('makedate3', '')?>" size="13"></td>
+                                    <td align="center">&nbsp;到&nbsp;</td>
+                                    <td align="center"><input name="makedate4" type="text" id="makedate4" class="easyui-datebox" value="<?php echo input('makedate4', '')?>" size="13"></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            </div>
+        </div>
+            <table width="1212" class="mytable" id="mytable">
+            <thead>
+                <tr>
+                    <th width="20"><input name="btSelectAll" type="checkbox"></th>
+                    <th width="48">序号</th>
+                    <th width="53">Debit Note编码</th>
+                    <th width="91">客户名称</th>
+                    <th width="550">内容</th>
+                    <th width="40">总金额</th>
+                    <th width="93">开单日期</th>
+                    <th width="40">制单</th>
+                    <th width="40">小额信保</th>
+                    <th width="40">收完赊款</th>
+                    <th width="139">操作选项</th>
+                </tr>
+            </thead>
+            <tbody>
+            {foreach $arr as $k=>$v }
+            <tr style="" >
+            <td><input data-index="0" name="btSelectItem" type="checkbox"></td>
+            <td><?php echo $k+1; ?></td>
+            <td><?php echo showtableno("Debit Note",$v['no'],0,$v['rno']) ?></td>
+            <td><?php echo $v['customid']; ?></td>
+            <td><?php echo $v['content']; ?></td>
+            <td><?php echo strtocurr($v['amount']); ?></td>
+            <td><?php echo $v['makedate']; ?></td>
+            <td><?php echo $v['makename']; ?></td>
+            <td>{if condition="$v.isxdxb==1"}<span style="color: red">是</span>{else/}<span>否</span>{/if}</td>
+            <td>{if condition="$v.amount<=$v.received"}<span style="color: red">是</span>{else/}<span>否</span>{/if}</td>
+            <td>
+                <a target="_blank" href="/pdf/?type=debit note&allno=<?php echo $v['allno']; ?>" title="导出<?php echo $v['allno']; ?>">导出PDF</a>
+                <a href="edit/?action=modify&id=<?php echo $v['id']; ?>" title="编辑">编辑</a>
+                <a href="#" onclick="parent.menubar_add('查看<?php echo $v['customid']; ?>','/tms/index.php/tms_business/debitnote/db_show.html?id=<?php echo $v['id']; ?>');">查看</a>
+            </td>
+            </tr>
+            {/foreach}
+            <?php if(count($arr)<=0&&isset($sqlwhere)){ ?>
+            <tr><td colspan="12" style="height:100px;">没有符合 <span style="color:red; font-weight:bold;"><?php echo $sqlwhere; ?></span> 的搜索结果</td></tr>
+            <?php } ?>
+            </tbody>
+            </table>
+            <div class="table-pagination" style="display: block;">
+				<div class="pull-right"><?php echo $page; ?></div>
+                <div class="pull-left pagination-detail">
+                    总共 <?php echo $total; ?> 条记录，<?php echo $pagesize; ?>条 / 页，页数 <?php echo $pagenow; ?> / <?php echo $totalPage; ?>
+                   </span>
+                </div>
+            </div>
+    </div>
+</div>
+</body>
+</html>

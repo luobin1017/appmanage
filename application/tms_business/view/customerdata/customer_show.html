@@ -1,0 +1,185 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title><?php echo Config('sys_info')['sys_company']; ?> - 外贸管理系统</title>
+    <script src="/tms/js/all.js" language="javascript"></script>
+    </head>
+<body >
+<h1><strong>查看客户资料</strong></h1>
+<div class="mypanel">
+    <div class="mypanel-heading">
+        <div class="mypanel-lead"><em></em>可以在此查看客户信息</div>
+    </div>
+    <table width="1191" class="table table-border table-bordered table-bg table-hover">
+        <tr class="text-c ">
+            <td width="100">客户编号</td>
+            <td width="296"><?php echo $rs['allno']; ?></td>
+            <td width="100">客户来源类型</td>
+            <td width="299">{ $source.classname}</td>
+            <td width="100">所属国家</td>
+            <td width="268"><?php if($national['enname']=="") { echo $national['cnname']; } else { echo $national['enname']; } ?></td>
+        </tr>
+        <tr class="text-c">
+            <td>公司名称</td>
+            <td><?php if($rs['enname']=="") { echo $rs['cnname']; } else { echo $rs['enname']; } ?></td>
+            <td>父公司</td>
+            <td><?php if($parent['enname']=="") { echo $parent['cnname']; } else { echo $parent['enname']; } ?></td>
+            <td>子公司</td>
+            <td>无</td>
+        </tr>
+        <tr class="text-c">
+            <td>联系人1</td>
+            <td><?php echo $rs['contact1']; ?></td>
+            <td>邮箱1</td>
+            <td><?php echo $rs['email1']; ?></td>
+            <td>电话1</td>
+            <td><?php echo $rs['phone1']; ?></td>
+        </tr>
+        <tr class="text-c">
+            <td>联系人2</td>
+            <td><?php echo $rs['contact1']; ?></td>
+            <td>邮箱2</td>
+            <td><?php echo $rs['email2']; ?></td>
+            <td>电话2</td>
+            <td><span><?php echo $rs['phone2']; ?></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button class="text-right" id="hidebtn">更多联系人</button>
+            </td>
+        </tr>
+        <tr class="text-c contact-taggle">
+            <td>联系人3</td>
+            <td><?php echo $rs['contact3']; ?></td>
+            <td >邮箱3</td>
+            <td><?php echo $rs['email3']; ?></td>
+            <td>电话3</td>
+            <td><?php echo $rs['phone3']; ?></td>
+        </tr> <tr class="text-c contact-taggle">
+            <td>联系人4</td>
+            <td><?php echo $rs['contact4']; ?></td>
+            <td>邮箱4</td>
+            <td><?php echo $rs['email4']; ?></td>
+            <td>电话4</td>
+            <td><?php echo $rs['phone4']; ?></td>
+        </tr> <tr class="text-c contact-taggle">
+            <td height="24">联系人5</td>
+            <td><?php echo $rs['contact5']; ?></td>
+            <td>邮箱5</td>
+            <td><?php echo $rs['email5']; ?></td>
+            <td>电话5</td>
+            <td><?php echo $rs['phone5']; ?></td>
+        </tr> <tr class="text-c contact-taggle">
+            <td>联系人6</td>
+            <td><?php echo $rs['contact6']; ?></td>
+            <td>邮箱6</td>
+            <td><?php echo $rs['email6']; ?></td>
+            <td>电话6</td>
+            <td><?php echo $rs['phone6']; ?></td>
+        </tr> <tr class="text-c contact-taggle">
+            <td>联系人7</td>
+            <td><?php echo $rs['contact7']; ?></td>
+            <td>邮箱7</td>
+            <td><?php echo $rs['email7']; ?></td>
+            <td>电话7</td>
+            <td><?php echo $rs['phone7']; ?></td>
+        </tr> <tr class="text-c contact-taggle">
+            <td>联系人8</td>
+            <td><?php echo $rs['contact8']; ?></td>
+            <td>邮箱8</td>
+            <td><?php echo $rs['email8']; ?></td>
+            <td>电话8</td>
+            <td><?php echo $rs['phone8']; ?></td>
+        </tr> <tr class="text-c contact-taggle">
+            <td>联系人9</td>
+            <td><?php echo $rs['contact9']; ?></td>
+            <td>邮箱9</td>
+            <td><?php echo $rs['email9']; ?></td>
+            <td>电话9</td>
+            <td><?php echo $rs['phone9']; ?></td>
+        </tr> <tr class="text-c contact-taggle">
+            <td>联系人10</td>
+            <td><?php echo $rs['contact10']; ?></td>
+            <td>邮箱10</td>
+            <td><?php echo $rs['email10']; ?></td>
+            <td>电话10</td>
+            <td><?php echo $rs['phone10']; ?></td>
+        </tr> <tr class="text-c">
+            <td>传真</td>
+            <td><?php echo $rs['fax']; ?></td>
+            <td>网址</td>
+            <td><?php echo $rs['web']; ?></td>
+            <td>信贷上限</td>
+            <td><?php echo $rs['credit']; ?></td>
+        </tr> </tr> <tr class="text-c">
+            <td colspan="1">社交软件</td>
+            <td colspan="5">
+
+                {if condition="$rs.qq !=''"}QQ:<?php echo $rs['qq']; ?>&nbsp;&nbsp;&nbsp;{/if}
+                {if condition="$rs.whatsapp !=''"}whatsapp:<?php echo $rs['whatsapp']; ?>&nbsp;&nbsp;&nbsp;{/if}
+                {if condition="$rs.facebook !=''"}facebook:<?php echo $rs['facebook']; ?>&nbsp;&nbsp;&nbsp;{/if}
+                {if condition="$rs.twitter !=''"}twitter:<?php echo $rs['twitter']; ?>&nbsp;&nbsp;&nbsp;{/if}
+                {if condition="$rs.google !=''"}google:<?php echo $rs['google']; ?>&nbsp;&nbsp;&nbsp;{/if}
+                {if condition="$rs.linkedin !=''"}linkedin:<?php echo $rs['linkedin']; ?>&nbsp;&nbsp;&nbsp;{/if}
+                {if condition="$rs.pinterest !=''"}pinterest:<?php echo $rs['pinterest']; ?>&nbsp;&nbsp;&nbsp;{/if}
+                {if condition="$rs.instagram !=''"}instagram:<?php echo $rs['instagram']; ?>&nbsp;&nbsp;&nbsp;{/if}
+                {if condition="$rs.youtube !=''"}youtube:<?php echo $rs['youtube']; ?>&nbsp;&nbsp;&nbsp;{/if}
+                {if condition="$rs.webchat !=''"}webchat:<?php echo $rs['webchat']; ?>&nbsp;&nbsp;&nbsp;{/if}
+                {if condition="$rs.skype !=''"}skype:<?php echo $rs['skype']; ?>&nbsp;&nbsp;&nbsp;{/if}
+            </td>
+            </tr> </tr> <tr class="text-c">
+            <td>公司地址</td>
+            <td><?php if($rs['enaddress']=="") { ?><?php echo $rs['cnaddress']; ?><?php } else { ?><?php echo $rs['enaddress']; ?><?php } ?></td>
+            <td>建档人</td>
+            <td><?php echo $rs['username']; ?></td>
+            <td>建档时间</td>
+            <td><?php echo $rs['time']; ?></td>
+        </tr> </tr> <tr class="text-c">
+            <td colspan="1">备注</td>
+            <td colspan="5"><?php echo $v['content']; ?></td>
+            </tr> </tr> <tr class="text-c">
+            <td>快递帐号</td>
+            <td><?php echo $rs['ex']; ?></td>
+            <td>曾用Air Mail寄样品</td>
+            <td>{if condition="$rs.isairmail==0"}否{else/}<span style="color: red">是,<?php echo $rs['airmail']; ?></span>{/if}</td>
+            <td>是否黑名单</td>
+            <td>{if condition="$rs.blacklist==0"}否{else/}<span style="color: red">是,<?php echo $rs['black']; ?></span>{/if}</td>
+        </tr> </tr> <tr class="text-c">
+            <td>邮箱是否失效</td>
+            <td>{if condition="$rs.vemail==0"}否{else/}<span style="color: red">是</span>{/if}</td>
+            <td>不可发广告邮件</td>
+            <td>{if condition="$rs.nosend==0"}否{else/}<span style="color: red">是</span>{/if}</td>
+            <td>询过价</td>
+            <td>{if condition="$rs.isqt==0"}否{else/}<span style="color: red">是</span>{/if}</td>
+        </tr> </tr> <tr class="text-c">
+            <td>开过PI</td>
+            <td>{if condition="$rs.ispi==0"}否{else/}<span style="color: red">是</span>{/if}</td>
+            <td>开过Debit Note</td>
+            <td>{if condition="$rs.isdn==0"}否{else/}<span style="color: red">是</span>{/if}</td>
+            <td>寄过样板</td>
+            <td>{if condition="$rs.isci==0"}否{else/}<span style="color: red">是</span>{/if}</td>
+        </tr> </tr> <tr class="text-c">
+            <td>常询价不下单</td>
+            <td>{if condition="$rs.isqp==0"}否{else/}<span style="color: red">是</span>{/if}</td>
+            <td>没有目标的要价</td>
+            <td>{if condition="$rs.isprice==0"}否{else/}<span style="color: red">是</span>{/if}</td>
+            <td>落后国家</td>
+            <td>{if condition="$rs.isfall==0"}否{else/}<span style="color: red">是</span>{/if}</td>
+        </tr> </tr>
+        </tbody>
+    </table>
+    <table height="20" border="0" align="center" cellpadding="0" cellspacing="0">
+        <tr>
+            <td width="120" align="center"><input name="modify" type="button" id="modify" value="修改客户资料" onclick="window.location='edit.html?customid=<?php echo $rs['allno']; ?>'" /></td>
+            <td width="120" align="center"><input name="return" type="button" id="return" value="返回客户列表" onclick="document.location='index.html';" /></td>
+        </tr>
+    </table>
+</div>
+</body>
+<script>
+    $(document).ready(function(){
+        $(".contact-taggle").hide();
+        $("#hidebtn").click(function() {
+            $(".contact-taggle").toggle();
+        })
+    });
+</script>
+</html>

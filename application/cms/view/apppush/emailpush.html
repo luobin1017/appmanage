@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>Deepsea后台管理系统</title>
+	<link rel="stylesheet" href="/style/layui/css/layui.css">
+	<link rel="stylesheet" href="/style/main.css">
+</head>
+<body class="layui-layout-body">
+<div class="bgindex">
+	<div class="layui-layout layui-layout-admin">
+		{include file="public/header" /}
+		<div class="layui-side layui-bg-black layui-bg-black-updata">
+			<div class="layui-side layui-bg-black layui-bg-black-updata">
+				<div class="layui-side-scroll">
+					<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+					<ul class="layui-nav layui-nav-tree"  lay-filter="test">
+						<li class="layui-nav-item">
+							<a class="" href="/index.php/cms/index/index">用户反馈及回复</a>
+						</li>
+						<li class="layui-nav-item ">
+							<a href="javascript:;">用户管理</a>
+							<dl class="layui-nav-child">
+								<dd ><a href="/index.php/cms/userinfo/index">列表展示</a></dd>
+								<dd><a href="/index.php/cms/userinfo/picshow">图表展示</a></dd>
+							</dl>
+						</li>
+						<li class="layui-nav-item layui-nav-itemed">
+							<a href="javascript:;">消息推送</a>
+							<dl class="layui-nav-child">
+								<dd ><a href="/index.php/cms/apppush/index">推送APP消息</a></dd>
+								<dd class="layui-this"><a href="/index.php/cms/apppush/emailpush">推送邮件信息</a></dd>
+							</dl>
+						</li>
+						<li class="layui-nav-item"><a href="/index.php/cms/appconfig/index">APP主页配置</a></li>
+						<li class="layui-nav-item"><a href="/index.php/cms/updatefirmware/index">固件信息管理</a></li>
+						<li class="layui-nav-item"><a href="/index.php/cms/usercontrol/index">账号管理</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="layui-body layui-body-content" id="layerDemo">
+			<div class="content-main" style="padding: 15px;color: #fff;" >
+				<form  action="send_mail?user=all" method="post" id="pushsubmit" enctype="multipart/form-data">
+					<input type="hidden" name="user" value="all">
+					<div class="fankui">推送标题 <button class="layui-btn layui-btn-lg layui-btn-normal layui-btn-updata" style="margin-left: 82%;border-radius: 25px;font-size: 14px" onclick=javascrtpt:window.location.href="historypush" >推送历史</button></div>
+					<div class="layui-input-block fankui_in">
+						<textarea name="sendtitle" id="sendtitle"  cols="182" rows="2" ></textarea>
+					</div>
+					<div class="fankui">推送内容：</div>
+					<div class="layui-input-block fankui_in">
+						<textarea name="sendcontent" id="sendcontent" class="fankui_int2"   cols="182" rows="8" style="border: 1px solid #fff"></textarea>
+					</div>
+					<div class="fankui">附件</div>
+					<div class="layui-input-block fankui_in">
+						<input type="file">
+					</div>
+
+					<div class="radio" style="text-align: center;width: 80%">
+						推送对象：
+						<label style="cursor: pointer">
+							<input name="checkbox1" id="checkbox1" type="radio" checked="checked">
+							所有用户
+						</label>
+						<label style="cursor: pointer">
+							<input name="checkbox2" id="checkbox2" type="radio" onclick="location='emailpush_show'">
+							指定用户
+						</label>
+					</div>
+				</form>
+				<div id="reply-btn" style="margin-top: 50px;">
+					<button class="layui-btn layui-btn-lg layui-btn-normal" onclick="beforeSubmit();" >确认推送</button>
+					<!--<button class="layui-btn layui-btn-lg layui-btn-primary" onclick="location='index'">返回上级</button>-->
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<!--<div class="layui-footer">
+		&lt;!&ndash; 底部固定区域 &ndash;&gt;
+		© layui.com - 底部固定区域
+	</div>-->
+</div>
+</div>
+
+<script src="/style/layui/layui.js"></script>
+<script src="/style/jquery.js"></script>
+<script src="/style/main.js"></script>
+<script>
+	//JavaScript代码区域
+	layui.use('element', function(){
+		var element = layui.element;
+
+		layui.use('laydate', function(){
+			var laydate = layui.laydate;
+			//常规用法
+			laydate.render({
+				elem: '#test3'
+				,type: 'datetime'
+			});
+			laydate.render({
+				elem: '#test4'
+				,type: 'datetime'
+			});
+		});
+
+	});
+
+</script>
+<style>
+	.layui-layer-dialog .layui-layer-content {background-color: #F8F8F8;}
+	.layui-layer-btn {background-color: #F8F8F8;}
+</style>
+<script>
+	layui.use('layer', function(){ //独立版的layer无需执行这一句
+		var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+		//常规用法
+		//触发事件
+	})
+	function beforeSubmit(){
+		if($("#sendtitle").val()==''){
+			alert('标题不能为空！');
+			$("#sendtitle").focus();
+			return false;
+		}
+		if($("#sendcontent").val()==''){
+			alert('内容不能为空！');
+			$("#sendcontent").focus();
+			return false;
+		}
+		layer.confirm('是否推送消息？', {
+			btn: ['确定','取消'] //按钮
+		}, function(){
+			pushsubmit();
+			layer.msg('推送成功', {icon: 1});
+		});
+	}
+
+	function pushsubmit(){
+		$("#pushsubmit").submit();
+	}
+</script>
+</body>
+</html>

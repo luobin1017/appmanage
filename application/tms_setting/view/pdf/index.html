@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><?php echo Config('sys_info')['sys_company']; ?> - 外贸管理系统</title>
+<script src="/tms/js/all.js" language="javascript"></script>
+</head>
+<body>
+<h1>PDF生成设置</h1>
+<div class="mypanel">
+<div class="mypanel-heading">
+        <div class="mypanel-lead"><em>PDF生成设置</em>可以在更新PDF的生成配置信息</div>
+        <ul class="nav">
+            <li class="active"><a href="#basic">数据库信息</a></li>
+            {foreach $list as $i=>$v}<li><a href="#<?php echo $v['enname']; ?>"><?php echo $v['cnname']; ?></a></li>{/foreach}
+        </ul>
+    </div>
+
+    <div class="mypanel-body">
+        <div id="myTabContent" class="mytab-content">
+            <div class="mytab-pane active" id="basic">
+                <div class="widget-body no-padding">
+                <form   method="POST" action="/tms/index.php/tms_setting/pdf/updatedatabase">
+                    <table class="table-setting">
+                        <tr>
+                          <td>配置信息</td>
+                        </tr>
+                        <tr>
+                          <td><textarea name="content" rows="16" id="content" style="width:100%;"><?php echo $datainfo; ?></textarea></td>
+                        </tr>
+                        <tr><td><button type="submit">更新配置文件</button></td>
+                        </tr>
+                       </table>
+                       </form>
+                </div>
+            </div>
+			{foreach $list as $i=>$v}
+            <div class="mytab-pane " id="<?php echo $v['enname']; ?>">
+                <div class="widget-body no-padding">
+                    <form  method="POST" action="/tms/index.php/tms_setting/pdf/update">
+                    <table class="table-setting">
+                        <tr>
+                          <td><input name="name" type="hidden" value="<?php echo $v['enname']; ?>">配置信息</td>
+                        </tr>
+                        <tr>
+                          <td><textarea name="content" rows="16" id="content" style="width:100%;"><?php echo $v['content']; ?></textarea></td>
+                        </tr>
+                        <tr><td><button type="submit">更新配置文件</button></td>
+                        </tr>
+                       </table>
+                    </form>
+                </div>
+            </div>
+            {/foreach}
+        </div>
+    </div>
+</div>
+</body>
+</html>

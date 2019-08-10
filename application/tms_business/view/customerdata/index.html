@@ -1,0 +1,175 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><?php echo Config('sys_info')['sys_company']; ?> - 外贸管理系统</title>
+<script src="/tms/js/all.js" language="javascript"></script>
+</head>
+<body>
+<h1>客户管理</h1>
+<div class="mypanel">
+    <div class="mypanel-heading">
+	    <div class="mypanel-lead"><em>客户管理</em>可以在此修改客户信息</div>
+    </div>
+
+    <div class="mypanel-body">
+        <div id="toolbar" class="toolbar">
+        	<div class="pull-right">
+	            <a href="/tms/index.php/tms_business/customerdata/edit" class="btn-add newbar" title="添加客户资料" >添加</a>
+            </div>
+            <div class="pull-left">
+            <form name="form1" action="?" method="post">
+                <table border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td>
+                            <table border="0">
+                                <tr>
+                                    <td height="26" align="center" class="input-group-addon">客户编号</td>
+                                    <td align="center"><input name="customid" class="form-control" type="text" id="customid" value="<?php echo input('customid')?>" size="12"></td>
+                                    <td align="center" class="input-group-addon">客户名称</td>
+                                    <td align="center"><input name="customname" class="form-control" type="text" id="customname" value="<?php echo input('customname')?>" size="12"></td>
+                                    <td align="center" class="input-group-addon">邮箱</td>
+                                    <td><input name="email" type="text" class="form-control" id="email" value="<?php echo input('email')?>" size="12"></td>
+                                    <td class="input-group-addon">电话</td>
+                                    <td align="center"><input name="tel" class="form-control" type="text" id="tel" value="<?php echo input('tel')?>" size="12"></td>
+                                    <td align="center" class="input-group-addon">传真</td>
+                                    <td align="center" ><input name="fax" class="form-control" type="text" id="fax" value="<?php echo input('fax')?>" size="12"></td>
+                                    <td align="center"><input name="Submit" type="submit" class="btn btn-success" id="Submit" value="搜索"></td>
+                                    <td>&nbsp;</td>
+                                    <td align="center"><button name="seeAll" class="btn btn-success"  id="seeAll"  value="1">查看所有</button></td>
+                                    <td>&nbsp;</td>
+                                    <td align="center"><input type="button" class="btn btn-success" id="moreinput" value="更多搜索选项>>"></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr class="moretr">
+                        <td>
+                            <table border="0">
+                                <tr>
+                                    <td height="26" align="center" class="input-group-addon">　联系人</td>
+                                    <td align="center"><input name="contact" class="form-control" type="text" id="contact" value="<?php echo input('contact')?>" size="12"></td>
+                                    <td align="center" class="input-group-addon">网　　址</td>
+                                    <td align="center"><input name="web" class="form-control" type="text" id="web" value="<?php echo input('web')?>" size="12"></td>
+                                    <td height="26" align="center" class="input-group-addon">时间</td>
+                                    <td align="center"><input name="makedate1" type="text" id="makedate1" class="easyui-datebox" value="<?php echo input('makedate1', '')?>" size="13"></td>
+                                    <td align="center">&nbsp;到&nbsp;</td>
+                                    <td align="center"><input name="makedate2" type="text" id="makedate2" class="easyui-datebox" value="<?php echo input('makedate2', '')?>" size="13"></td>
+
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr class="moretr">
+                        <td>
+                            <table border="0">
+                                <tr>
+                                    <td height="26" align="center" ><?php echo showselect('country',input('country', ''),$countryarray,"所属国家/地区",'');?></td>
+                                    <td align="center"><?php echo showselect('clientsource',input('clientsource', ''),$clientsourcearray,"客户来源",'');?></td>
+                                    <td align="center"><?php echo showselect('class',input('class', ''),'A,B,C',"客户类型",'');?></td>
+                                    <td align="center"><?php echo showselect('makename',input('makename', ''),$userarray,"建档人",'');?></td>
+                                    <td><?php echo showselect('productclass',input('productclass'),$productclassrray,"产品分类",'0');?></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr class="moretr">
+                      <td>
+                        <table border="0">
+                            <tr>
+                                <td height="26" align="center"><?php echo showselect('quotation',input('quotation', ''),'是,否',"是否询价",'');?></td>
+                                <td align="center"><?php echo showselect('pi',input('pi', ''),'是,否',"是否开过PI",'');?></td>
+                                <td align="center">
+                                	<label for="isdn">
+                                		<input name="isdn" type="checkbox" value="1" id="isdn" <?php if(input("isdn")==1)echo "checked" ?>>是否开过Debit Note
+                                	</label>
+                                </td>
+                                <td>
+                                	<label for="blacklist">
+                                		<input name="blacklist" type="checkbox" value="1" id="blacklist" <?php if(input("blacklist")==1)echo "checked" ?>>黑名单
+                                	</label>
+                                </td>
+                                <td>
+                                    <label for="vemail">
+                                   		<input name="vemail" type="checkbox" value="1" id="vemail" <?php if(input("vemail")==1)echo "checked" ?>>邮箱失效
+                                    </label>
+                                </td>
+                                <td>
+                                    <label for="nosend">
+                                    	<input name="nosend" type="checkbox" value="1" id="nosend" <?php if(input("nosend")==1)echo "checked" ?>>不可发广告邮件
+                                    </label>
+                                </td>
+                                <td>
+                                    <label for="isairmail">
+                                    	<input name="isairmail" type="checkbox" value="1" id="isairmail" <?php if(input("isairmail")==1)echo "checked" ?>>曾用Air Mail寄样品
+                                    </label>
+                                </td>
+                            </tr>
+                        </table>
+                      </td>
+                    </tr>
+                </table>
+            </form>
+            </div>
+        </div>
+            <table id="mytable" class="mytable">
+            <thead>
+                <tr>
+                    <th><input name="btSelectAll" type="checkbox"></th>
+                    <th>ID</th>
+                    <th>客户代码</th>
+                    <th>公司名称</th>
+                    <th>国家/地区</th>
+                    <th>联系人</th>
+                    <th>联系电话</th>
+                    <th>邮箱</th>
+                    <th>黑名单</th>
+                    <th>建档人</th>
+                    <th>更新时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+            {foreach $arr as $k=>$v }
+            <tr style="{if condition="$v.blacklist == 1"}color:red;font-weight:700{else/}{/if}" >
+            <td><input data-index="0" name="btSelectItem" type="checkbox"></td>
+            <td><?php echo $k+1; ?></td>
+            <td><?php echo $v['allno']; ?></td>
+            <td><?php if($v['enname']=="") { ?><?php echo $v['cnname']; ?><?php } else { ?><?php echo $v['enname']; ?><?php } ?></td>
+            <td><?php echo $v['countryname']; ?></td>
+            <td><?php echo $v['contact1']; ?></td>
+            <td><?php echo $v['phone1']; ?></td>
+            <td><?php echo $v['email1']; ?></td>
+            <td>{if condition="$v.blacklist == 1"}是{else/}否{/if}</td>
+            <td><?php echo $v['username']; ?></td>
+            <td><?php echo $v['upuser']; ?>{if condition="$v.upuser <> ''"},{/if}<?php echo $v['uptime']; ?></td>
+            <td>
+                <a class="newbar" href="/tms/index.php/tms_business/Customerdata/edit?customid=<?php echo $v['allno']; ?>" title='编辑客户<?php echo $v['allno']; ?>'>编辑</a>
+                <a class="newbar" href="/tms/index.php/tms_business/Customerdata/customer_show.html?customid=<?php echo $v['allno']; ?>" title='查看客户<?php echo $v['allno']; ?>'>查看</a>
+            </td>
+            </tr>
+            {/foreach}
+            <?php if(count($arr)<=0&&isset($sqlwhere)){ ?>
+            <tr><td colspan="12" style="height:100px;">没有符合 <span style="color:red; font-weight:bold;"><?php echo $sqlwhere; ?></span> 的搜索结果</td></tr>
+            <?php } ?>
+            </tbody>
+            </table>
+            <div class="table-pagination" style="display: block;">
+          <div class="pull-right"><?php echo $page; ?></div>
+                <div class="pull-left pagination-detail">
+                    总共 <?php echo $total; ?> 条记录，<?php echo $pagesize; ?>条 / 页，页数 <?php echo $pagenow; ?> / <?php echo $totalPage; ?>
+                   </span>
+                </div>
+            </div>
+    </div>
+</div>
+</body>
+<script>
+    $(document).ready(function(){
+        $(".moretr").hide();
+        $("#moreinput").click(function() {
+            $(".moretr").toggle();
+        })
+    });
+</script>
+</html>

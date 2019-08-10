@@ -1,0 +1,519 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title><?php echo Config('sys_info')['sys_company']; ?> - 外贸管理系统</title>
+    <script src="/tms/js/all.js" language="javascript"></script>
+</head>
+<body>
+<h1>新增PO</h1>
+<div class="mypanel">
+    <div class="mypanel-heading">
+        <div class="mypanel-lead"><em>新增PO</em>可以在此制作po</div>
+    </div>
+    <?php //mydump($v)?>
+    <div class="mypanel-body">
+        <div id="toolbar" class="toolbar">
+            <div class="pull-right">
+                <input class="bigbtn" name="Reset2" type="button" id="Reset2" value="返回列表" onClick="if(confirm('返回后您在此表单输入的所有数据都将丢失！确定要返回吗？')){gourl('../index.html');}" />
+            </div>
+            <div class="pull-left">
+                <input type="hidden" id="quotationid" /><input type="hidden" id="quotationname" />
+                <input class="bigbtn" name="Reset1" type="button" id="Reset2" value="导入单据" onclick="SelectID('quotation','',function(){gourl('/tms/index.php/tms_business/quotation/edit/?action=import&id='+$('#quotationid').val());})" />
+            </div>
+        </div>
+        <form name="form1" id="form1" method="post" action="?action=add&no=<?php echo $no; ?>">
+            <input type="hidden" name="type" id="type" value="<?php echo $v['type']; ?>" />
+            <table width="100%"  border="0" align="center" cellpadding="3" cellspacing="1" class="maintable" id="maintable">
+                <tbody>
+                <tr>
+                    <td width="160" class="tdright">单据编号：</td>
+                    <td width="437">
+                        <select name="potype" id="potype" onchange="SelectPI(this.value);"  <?php if($v['type']=="edit"){echo "style='display:none';";} ?>  >
+                            <option value="1" <?php if($v.potype == 1){ ?>selected="selected"<?php } ?>PO单</option>
+                            <option value="2" <?php if($v.potype == 2){ ?>selected="selected"<?php } ?>样品单</option>
+                        </select>
+                        <input name="piid" type="text" class="input50" readonly id="piid" value="<?php echo $v['pno']; ?>">
+                        <input name="pno" type="hidden"  id="pno" value="<?php echo $v['pno']; ?>">
+                        <input name="allno" type="hidden" id="allno" value="<?php echo $v['pno']; ?>" />
+                        <input type="hidden" name="rno" id="rno" value="<?php echo $v['rno']; ?>" />
+                        <input type="hidden" name="no2" id="no2" value="<?php echo $v['no2']; ?>" />
+                        <input type="hidden" name="pino" id="pino" value="<?php echo $v['pino']; ?>" />
+                        <input type="hidden" name="pono" id="szno" value="<?php echo $v['pono']; ?>" />
+                        <a class="btn btn-default" <?php if($v['type']=="edit"){echo "style='display:none';";} ?> id="selectid" href="javascript:void(0)" onclick='SelectID("pi","",function(){form1.action="?action=selectpi&no=<?php echo $no; ?>";form1.submit();})'>请选择</a>
+                        <font color="red">*</font>
+                    </td>
+                    <td width="160"  class="tdright">制单日期：</td>
+                    <td width="437">
+                        <input name="makedate" type="hidden" class="input80" id="makedate" value="<?php echo $v['makedate']; ?>" />
+                        <?php echo $v['makedate']; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="160" class="tdright">公司编号：</td>
+                    <td>
+                        <input name="suppliersids" type="text" class="input50" readonly id="suppliersids" value="<?php echo $v['suppliersid']; ?>">
+                        <input name="suppliersid" type="hidden" id="suppliersid" value="<?php echo $v['suppliersid']; ?>" />
+                        <a class="btn btn-default" href="javascript:void(0)" onclick='SelectID("suppliers","",function(){form1.action="?action=selectsuppliers&no=<?php echo $no; ?>";form1.submit();})'>请选择</a>
+                        <font color="red">*</font>
+                    </td>
+                    <td width="160"  class="tdright">制单人：</td>
+                    <td><input name="makename" type="hidden" id="makename" value="<?php echo $v['makename']; ?>" /><?php echo $v['makename']; ?></td>
+                </tr>
+                <tr>
+                    <td class="tdright">公司名称：</td>
+                    <td><input name="suppliersname" type="text" class="input80" id="suppliersname" value="<?php echo $v['suppliersname']; ?>" /></td>
+                    <td class="tdright">地址：</td>
+                    <td><input name="suppliersaddress"  class="input80" id="suppliersaddress" value="<?php echo $v['suppliersaddress']; ?>" /></td>
+                </tr>
+                <tr>
+                    <td class="tdright">联系人：</td>
+                    <td>
+                        <textarea name="contact" class="autoTextarea input80" id="contact"><?php echo $v['contact']; ?></textarea>
+                    </td>
+                    <td class="tdright">联系电话：</td>
+                    <td>
+                        <input name="phone" type="text" class="input80" id="phone" value="<?php echo $v['phone']; ?>" /></td>
+                </tr>
+                <tr>
+                    <td class="tdright">传真：</td>
+                    <td><input name="fax" type="text" class="input80" id="fax" value="<?php echo $v['fax']; ?>" ></td>
+                    <td class="tdright">邮箱：</td>
+                    <td><input name="email" type="text" class="input80" id="email" value="<?php echo $v['email']; ?>" /></td>
+                </tr>
+                <tr>
+                    <td class="tdright">货币类型：</td>
+                    <td><?php echo showselect('currencys',$v['currencys'],$currencysarray,"",'');?></td>
+                    <td class="tdright">送货方式：</td>
+                    <td colspan="3">
+                        <?php echo showselect('deliverymethod',input('deliverymethod', $v['deliverymethod']),sysinfo('sys_deliverymethod'),'请选择','');?>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <table width="100%"  border="0" align="center" cellpadding="3" cellspacing="1">
+                            <tr>
+                                <td align="center">序号</td>
+                                <td align="center">项目图片</td>
+                                <td  align="center">描述</td>
+                                <td width="160" align="center">包装</td>
+                                <td width="160" align="center">数量</td>
+                                <td width="290" colspan="2" align="center">单价</td>
+                                <td width="160" align="center">合计金额</td>
+                                <td width="160" align="center">操作选项</td>
+                            </tr>
+                            <?php
+                                	//var_dump($listitem);exit(0);
+                                        $amount=0;
+                                    if($v['productorderid']=="")$v['productorderid']=count($listitem)+1;
+                                	foreach($listitem as $k=>$item)
+                                    {
+                                            $amount += $item['price']*$item['num'];
+
+                            ?>
+                            <tr>
+                                <td width="80" align="center"><?php echo $item['productorderid']; ?></td>
+                                <td align="center">
+                                    <img class="sheet_picture" src="<?php if($item['picture']==''){echo '\\tms\\upfiles\\nopicture.jpg';}else{echo $item['picture'];}?>" />
+                                </td>
+                                <td width="341">
+                                    <style>.JDetion{width: 350px}</style>
+                                    <strong><h4><?php echo $item['seminame']; ?></strong></h5><br>
+                                    <script>
+                                        var pdtext<?php echo $item['id']; ?>='<?php echo strtojs($item["semiinfo"]); ?>';
+                                        var pd<?php echo $item['id']; ?>=new JDetion("pd<?php echo $item['id']; ?>","semiinfo",false,pdtext<?php echo $item['id']; ?>);
+                                        pd<?php echo $item['id']; ?>.Show();
+                                    </script>
+                                </td>
+                                <td align="left" valign="top">
+                                    <div><?php echo $item["packing"]; ?></div>
+                                </td>
+                                <td align="center">
+
+                                    <div class="itemnum"><?php echo str3x($item['num'])." ".$item['unit']; ?></div>
+
+                                </td>
+                                <td colspan="2" align="center">
+
+                                    <div class="itemnum"><?php echo $v['currencys']." ".strtocurr($item['price']); ?></div>
+
+                                </td>
+                                <td align="center">
+
+                                    <div class="itemnum"><?php echo $v['currencys']." ".strtocurr($item['price']*$item['num']); ?></div>
+
+                                </td>
+                                <td align="center">
+                                    <a href="javascript:sheet_edit(<?php echo $item['id']; ?>);">修改</a>
+                                    <a href="javascript:sheet_del(<?php echo $item['id']; ?>);">删除</a>
+                                </td>
+                            </tr>
+                            <?php
+                                	}
+                                ?>
+                            <tr>
+                                <td align="center"></td>
+                                <td align="center"></td>
+                                <td align="center"></td>
+                                <td align="center">Total:</td>
+                                <td align="center"></td>
+                                <td colspan="2" align="center"></td>
+                                <td align="center">
+                                    总金额:&nbsp;&nbsp;<?php echo $v['currencys'].strtocurr($amount);?>
+                                    <input type="hidden" name="amount" value="<?php echo $amount;?>">
+                                </td>
+                                <td align="center"></td>
+
+                            </tr>
+                            <tr style="background-color: #e3e3c7">
+                               <td align="center" colspan="11" class="text c">添加項目</td>
+                            </tr>
+                            <tr>
+                                <td align="center">序号</td>
+                                <td align="center">项目类型</td>
+                                <td align="center">描述</td>
+                                <td width="160" align="center">图片</td>
+                                <td width="160" align="center">包装</td>
+                                <td width="144" align="center">数量</td>
+                                <td width="145" align="center">单价</td>
+                                <td width="160" align="center">合计金额</td>
+                                <td width="160" align="center">操作选项</td>
+                            </tr>
+                            <tr>
+                                <td ><input name="productorderid" type="text" id="productorderid" style="width:30px; text-align:center;" value="<?php echo $v['productorderid']; ?>" /></td>
+                                <td align="center">
+                                    <select name="feetype">
+                                        <option value="1" <?php if($v.feetype==1){ ?>selected="selected"{<?php } ?>物料費用</option>
+                                        <option value="2" <?php if($v.feetype==1){ ?>selected="selected"{<?php } ?>增值稅稅費</option>
+                                        <option value="3" <?php if($v.feetype==1){ ?>selected="selected"{<?php } ?>其他費用</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td align="left">
+                                                    <input name="itemid" type="hidden" value="<?php echo $v['itemid']; ?>" />
+                                                    <input name="semiid" type="hidden" id="semiid" value="0">
+                                                    <input name="seminame" type="text" id="seminame" value="<?php echo $v['seminame']; ?>" size="40">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="left" valign="top"><textarea name="semiinfo" cols="40" rows="5" id="semiinfo"><?php echo $v['semiinfo']; ?></textarea></td>
+                                            </tr>
+                                      </tbody>
+                                    </table>
+                                </td>
+                                <td align="center">
+                                    <div id="selpic">
+                                        <input name="picture" id="picture" type="hidden" value="<?php echo $v['picture']; ?>">
+                                        <img class="sheet_picture" id="pic1" src="<?php if($v['picture']==''){echo '\\tms\\upfiles\\nopicture.jpg';}else{echo $v['picture'];}?>" />
+                                        <br><a href='javascript:SelectID("picture","ptype=Quotation&input=picture&img=pic1",function(){})'>更换图片</a>
+                                        <br><a href='javascript:$("#picture").val("");$("#pic1").attr("src","\\tms\\upfiles\\nopicture.jpg");'>清除图片</a>
+                                    </div>
+                                </td>
+                                <td align="left" valign="top">
+                                    <textarea name="packing" cols="40" rows="5" id="packing"><?php echo $v['packing']; ?></textarea>
+                                </td>
+                                <td colspan="2" align="center" >
+                                    <table width="100%" border="0" cellpadding="3" cellspacing="1" id="quotationprice" data-currencys="<?php echo $v['currencys']; ?>">
+                                        <tr>
+                                            <td>
+                                                <input name="num" id="num" type="text" value="<?php echo $v['num']; ?>" size="4" />
+                                                <?php echo showselect('unit',$v['unit'],sysinfo('sys_units'),"",'');?>
+                                            </td>
+                                            <td>
+                                                <span class="currencys"><?php echo $v['currencys']; ?></span> <input name="price" id="price" type="text" value="<?php echo $v['price']; ?>" size="4" />
+                                            </td>
+                                            <td>
+                                                <input name="priceid" id="priceid" type="hidden" value="" />
+                                            </td>
+
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td align="center">
+                                    <span class="currencys"><?php echo $v['currencys']; ?></span> <input name="count" type="text" readonly="" id="count" value="" size="4">
+                                </td>
+
+                                <td align="center">
+                                    <input class="bigbtn" name="add" type="button" id="add" value="提交项目" onclick='if(checkproduct()==true){form1.action="?action=add&no=<?php echo $no; ?>";form1.submit();return false;}' />
+                                </td>
+    </tr>
+</table>
+
+</td>
+</tr>
+<tr><td><br></td></tr>
+<tr>
+    <td class="tdright">付款方式：</td>
+    <td colspan="3">
+        <?php echo showselect('payment',input('payment', $v['payment']),sysinfo('sys_payment'),'请选择','');?>
+    </td>
+</tr>
+<tr>
+    <td colspan="2" >　　　　　　　　　　     相关DN</td>
+    <td colspan="２" class="tdright"></td>
+    </td>
+</tr>
+<tr>
+    <td colspan="1" class="tdright">　</td>
+    <td colspan="1" class="tdleft">
+        是否主产品：
+        <label for="ismain">
+            <input name="ismain" type="checkbox" value="<?php echo $v['ismain']; ?>" id="ismain" <?php if($v["ismain"]==1)echo "checked=checked" ?>>
+        </label>　　　　　　
+        <label for="isonetouch">是否一达通付款：
+            <input name="isonetouch" type="checkbox" value="<?php echo $v['isonetouch']; ?>" id="isonetouch" <?php if($v["isonetouch"]==1)echo "checked=checked" ?>>
+        </label>　　　　　　
+        是否淘悦订单：
+        <label for="istaoyue">
+            <input name="istaoyue" type="checkbox" value="<?php echo $v['istaoyue']; ?>"  id="istaoyue" <?php if($v["istaoyue"]==1)echo "checked=checked" ?>>
+        </label>
+    </td>
+    <td colspan="1" class="tdleft">
+    </td>
+    <td colspan="1" class="tdleft" ></td>
+</tr>
+<tr>
+    <td class="tdright">货期：</td>
+    <td colspan="3"><textarea name="delivery" id="delivery" class="width98"><?php echo $v['delivery']; ?></textarea></td>
+</tr>
+<tr>
+    <td class="tdright">验货日期：</td>
+    <td colspan="3"><textarea name="inspection" id="inspection" class="width98"><?php echo $v['inspection']; ?></textarea></td>
+</tr>
+
+<tr>
+    <td class="tdright">交货地址 :</td>
+    <td colspan="3"><textarea name="address" id="address" class="width98"><?php echo $v['address']; ?></textarea></td>
+</tr>
+
+<tr>
+    <td class="tdright"> 单据备注 :</td>
+    <td colspan="3"><textarea name="content" id="content" class="width98"><?php echo $v['content']; ?></textarea></td>
+</tr>
+<tr>
+    <td class="tdright">使用备注 :</td>
+    <td colspan="3"><textarea name="usecontent" id="usecontent" class="width98"><?php echo $v['usecontent']; ?></textarea></td>
+</tr>
+
+<tr>
+    <td class="tdright">内箱正唛:</td>
+    <td><textarea name="mark2" id="mark2" style="width: 600px; margin: 0px; height: 178px;"><?php echo $v['mark2']; ?></textarea></td>
+    <td>
+        <input name="markpicture2" id="markpicture2" type="hidden" value="<?php echo $v['markpicture2']; ?>">
+        <img class="sheet_picture" id="markpic2" src="<?php if($v['markpicture2']==''){echo '\\tms\\upfiles\\nopicture.jpg';}else{echo $v['markpicture2'];}?>" />
+        <br><a href='javascript:SelectID("picture","ptype=pi&input=markpicture2&img=markpic2",function(){})'>选择图片</a>
+        <br><a href='javascript:$("#markpicture2").val("");$("#markpic2").attr("src","\\tms\\upfiles\\nopicture.jpg");'>清除图片</a>
+    <td/>
+</tr>
+<tr><td><br></td></tr>
+<tr>
+    <td class="tdright">内箱侧唛 :</td>
+    <td ><textarea name="side2"id="side2" style="width: 600px; margin: 0px; height: 178px;"><?php echo $v['side2']; ?></textarea></td>
+    <td>
+        <input name="sidepicture2" id="sidepicture2" type="hidden" value="<?php echo $v['sidepicture2']; ?>">
+        <img class="sheet_picture" id="sedepic2" src="<?php if($v['sidepicture2']==''){echo '\\tms\\upfiles\\nopicture.jpg';}else{echo $v['sidepicture2'];}?>" />
+        <br><a href='javascript:SelectID("picture","ptype=pi&input=sidepicture2&img=sedepic2",function(){})'>选择图片</a>
+        <br><a href='javascript:$("#sidepicture2").val("");$("#sedepic2").attr("src","\\tms\\upfiles\\nopicture.jpg");'>清除图片</a>
+    <td/>
+</tr>
+<tr><td><br></td></tr>
+<tr>
+    <td class="tdright">外箱正唛 :</td>
+    <td ><textarea name="mark" id="mark" style="width: 600px; margin: 0px; height: 178px;"><?php echo $v['mark']; ?></textarea></td>
+    <td>
+        <input name="markpicture" id="markpicture" type="hidden" value="<?php echo $v['markpicture']; ?>">
+        <img class="sheet_picture" id="markpic" src="<?php if($v['markpicture']==''){echo '\\tms\\upfiles\\nopicture.jpg';}else{echo $v['sidepicture'];}?>" />
+        <br><a href='javascript:SelectID("picture","ptype=pi&input=markpicture&img=markpic",function(){})'>选择图片</a>
+        <br><a href='javascript:$("#markpicture").val("");$("#markpic").attr("src","\\tms\\upfiles\\nopicture.jpg");'>清除图片</a>
+    <td/>
+
+</tr>
+<tr><td><br></td></tr>
+<tr>
+    <td class="tdright">外箱侧唛 :</td>
+    <td ><textarea name="side" id="side" style="width: 600px; margin: 0px; height: 178px;"><?php echo $v['side']; ?></textarea></td>
+    <td>
+        <input name="sidepicture" id="sidepicture" type="hidden" value="<?php echo $v['sidepicture']; ?>">
+        <img class="sheet_picture" id="sidepic" src="<?php if($v['sidepicture']==''){echo '\\tms\\upfiles\\nopicture.jpg';}else{echo $v['sidepicture'];}?>" />
+        <br><a href='javascript:SelectID("picture","ptype=pi&input=sidepicture&img=sidepic",function(){})'>选择图片</a>
+        <br><a href='javascript:$("#sidepicture").val("");$("#sidepic").attr("src","\\tms\\upfiles\\nopicture.jpg");'>清除图片</a>
+    <td/>
+
+</tr>
+
+<tr>
+    <td colspan="4" style="height:60px; text-align:center">
+        <input class="bigbtn" name="btnsubmit" type="button" value="提交单据" onClick="checkform(0);"  />
+        <input class="bigbtn" name="rsubmit" type="button" value="开立R版本" onClick="checkform(1);" <?php if($v['type']!='edit')echo " disabled"; ?>  />
+        <input class="bigbtn" name="return" type="button" value="返回列表" onClick="gourl('../index.html');" />
+    </td>
+</tr>
+</tbody>
+</table>
+</form>
+</div>
+</div>
+<script>
+    var pd_edit;
+    function ShowEdit(pdobj)
+    {
+        var html="<div class='pdetion_edit_div' id='pdetion_edit_div'><div class='pdetion_edit_close' title='关闭' onclick='HideEdit("+pdobj.InstanceName+");'></div>";
+        //alert("v:"+$("#semiinfo").val());
+        pd_edit=new JDetion("pd_edit",pdobj.InputName,true,$("#"+pdobj.InputName).val());
+        html+=pd_edit.GetHtml();
+        html+="</div>";
+        $(document.body).append(html);
+        pd_edit.Update();
+        $("#pdetion_edit_div").css("left",$("#pdetion_edit_"+pdobj.InstanceName).offset().left);
+        $("#pdetion_edit_div").css("top",$("#pdetion_edit_"+pdobj.InstanceName).offset().top);
+    }
+
+    function HideEdit(pdobj)
+    {
+        $("#pdetion_edit_div").remove();
+        pdobj.json=pd_edit.json;
+        pdobj.IsJson=pd_edit.IsJson;
+        if(pdobj.IsJson)
+        {
+            pdobj.json=eval($("#"+pdobj.InputName).val());
+        }
+        else
+        {
+            pdobj.Value=$("#"+pdobj.InputName).val();
+            //alert(pdobj.value);
+        }
+        pdobj.Update();
+    }
+
+    $("#currencys").on('change',function(){
+        $(".currencys").html($("#currencys").val());
+        $("#quotationprice").attr("data-currencys",$("#currencys").val());
+    });
+
+    $("#unit").on('change',function(){
+        $(".unit").html($("#unit").val());
+    });
+
+    function setdiv(obj)
+    {
+        if($(obj).prop('checked')==true)
+        {
+            $("#pdiv").addClass("hidden");
+            $("#selpic").addClass("hidden");
+            $("#podiv").removeClass("hidden");
+            $(".addprice").remove();
+        }
+        else
+        {
+            $("#pdiv").removeClass("hidden");
+            $("#selpic").removeClass("hidden");
+            $("#podiv").addClass("hidden");
+        }
+    }
+
+    function setpno(obj)
+    {
+        if($(obj).prop('checked')!=true)
+        {
+            $("#ppiddiv").addClass("hidden");
+        }
+        else
+        {
+            $("#ppiddiv").removeClass("hidden");
+        }
+    }
+
+    function checkproduct()
+    {
+        if($("#other_pd").prop('checked')!=true)
+        {
+            if($("#productid").val()==""){alert("请先选择产品！");return false;}
+            if($("#semiinfo").val()==""){alert("请输入项目内容！");return false;}
+        }
+        else
+        {
+            if($("#semiinfo2").val()==""){alert("请输入项目内容！");return false;}
+        }
+        var num=$("#num").val();
+        var price=$("#price").val();
+        if(num==""||price==""){alert("请输入数量以及价格！");return false;}
+        var numprice=num+","+price;
+
+        var numlist=$(".numlist");
+        var pricelist=$(".pricelist");
+        for(var i=0;i<numlist.length;i++)
+        {
+            if(($(numlist[i]).val()==""&&$(pricelist[i]).val()!="")||($(numlist[i]).val()!=""&&$(pricelist[i]).val()==""))
+            {
+                alert("请输入正确的数量以及价格，不能单独输入数量或价格！");return false;
+            }
+            else
+            {
+                numprice += "|" + $(numlist[i]).val()+","+$(pricelist[i]).val();
+            }
+        }
+        $("#numprice").val(numprice);
+        return true;
+    }
+
+    function checkform(ntype)
+    {
+        if($("#suppliersid").val()==""){alert("您还未选择供应商！");return false;}
+        if($("#seminame").val()!=""){alert("您还有项目未完成，请先完成项目再提交！");return false;}
+        if($("#semiinfo").val()!=""){alert("您还有项目未完成，请先完成项目再提交！");return false;}
+        if(ntype==1){ $("#type").val('r');}
+        form1.action="?action=submit&no=<?php echo $no; ?>";form1.submit();
+    }
+
+    function sheet_edit(id)
+    {
+        form1.action="?action=edit&no=<?php echo $no; ?>&itemid="+id;form1.submit();
+    }
+
+    function sheet_del(id)
+    {
+        form1.action="?action=del&no=<?php echo $no; ?>&itemid="+id;form1.submit();
+    }
+
+    function SelectPI(val)
+    {
+        if(val == 2){
+            $.ajax({
+                type:'POST',
+                url:'selectpi.html',
+                data:{sid:val},
+                datatype:'json',
+                success:function(data){
+                    $("#piid").val(data.status);
+                    form1.action="?action=selectpnotype&no=<?php echo $no; ?>";form1.submit();
+                }
+            });
+        }else if (val == 1){
+            SelectID("pi","",function(){form1.action="?action=selectpi&no=<?php echo $no; ?>";form1.submit()});
+        }
+    }
+    function blurcount(){
+        $("#num").blur(function(){
+            $a = $("#num").val() * $("#price").val();
+            $("#count").val('')
+            $("#count").val($a)
+        });
+        $("#price").blur(function(){
+            $b = $("#num").val() * $("#price").val();
+            $("#count").val('')
+            $("#count").val($b)
+        });
+    }
+    $(document).ready(function(){
+        //$("#priceterm").addClass("easyui-combobox");
+        $('#priceterm').combobox();
+        $("#payment").css("width","98%");
+        $('#payment').combobox();
+        blurcount();
+    });
+</script>
+</body>
+</html>

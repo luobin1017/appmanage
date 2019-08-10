@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><?php echo Config('sys_info')['sys_company']; ?> - 外贸管理系统</title>
+<script src="/tms/js/all.js" language="javascript"></script>
+</head>
+<body>
+<h1>考勤管理</h1>
+<div class="mypanel">
+    <div class="mypanel-heading">
+	    <div class="mypanel-lead"><em>考勤管理</em>可以在此查看考勤信息</div>
+    </div>
+
+    <div class="mypanel-body">
+        <div id="toolbar" class="toolbar">
+        	<div class="pull-right">
+	            <a href="/tms/index.php/tms_setting/kaoqin/day" class="btn-add" title="添加" >考勤日报</a>
+                <a href="/tms/index.php/tms_setting/kaoqin/month" class="btn-add" title="添加" >考勤月报</a>
+                <a href="/tms/index.php/tms_setting/kaoqin/year" class="btn-add" title="添加" >考勤年报</a>
+                <a href="/tms/index.php/tms_setting/kaoqin/update" class="btn-add" title="添加" >同步记录</a>
+                <a href="/tms/index.php/tms_setting/kaoqin/edit" class="btn-add" title="添加" >打卡补签</a>
+            </div>
+            <div class="pull-left">
+            <form name="form1" action="?" method="post">
+            	<table border="0">
+                <tr>
+                  <td height="26" align="center">时间</td>
+                  <td align="center"><input name="makedate1" type="text" id="makedate1" class="easyui-datebox" value="<?php echo input('makedate1', '')?>" size="13"></td>
+                  <td align="center">&nbsp;到&nbsp;</td>
+                  <td align="center"><input name="makedate2" type="text" id="makedate2" class="easyui-datebox" value="<?php echo input('makedate2', '')?>" size="13"></td>
+                  <td align="center"><?php echo showselect('username',input('username', ''),$userarray,"用户",'');?></td>
+                  <td align="center"><input name="Submit" type="submit" class="searchbuttom" id="Submit" value="搜索"></td>
+                </tr>
+              </tbody></table>
+              </form>
+            </div>
+        </div>
+            <table id="mytable" class="mytable">
+            <thead>
+                <tr>
+                    <th><input name="btSelectAll" type="checkbox"></th>
+                    <th>ID</th>
+                    <th>用户 </th>
+                    <th>考勤号</th>
+                    <th>打卡方式</th>
+                    <th>时间</th>
+                </tr>
+            </thead>
+            <tbody>
+            {foreach name="list" item="v" key="k"}
+            <tr>
+            <td><input data-index="0" name="btSelectItem" type="checkbox"></td>
+            <td><?php echo $k+1; ?></td>
+            <td><?php echo $v[sysinfo('sys_kaoqinname')]; ?></td>
+            <td><?php echo $v['enroll']; ?></td>
+            <td><?php echo array("密码","指纹")[$v['verifymode']]; ?></td>
+            <td><?php echo $v['dwtime']; ?></td>
+            </tr>
+            {/foreach}
+            </tbody>
+            </table>
+            <div class="table-pagination" style="display: block;">
+                <div class="pull-right"><?php echo $page; ?></div>
+                <div class="pull-left pagination-detail">
+                    总共 <?php echo $total; ?> 条记录，<?php echo $pagesize; ?>条 / 页，页数 <?php echo $pagenow; ?> / <?php echo $totalPage; ?>
+                   </span>
+                </div>
+            </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>Deepsea后台管理系统</title>
+	<link rel="stylesheet" href="/style/layui/css/layui.css">
+	<link rel="stylesheet" href="/style/main.css">
+	<link rel="stylesheet" href="/style/pretty-checkbox.css">
+</head>
+<body class="layui-layout-body">
+<div class="bgindex">
+	<div class="layui-layout layui-layout-admin">
+
+		{include file="public/header" /}
+
+		<div class="layui-side layui-bg-black layui-bg-black-updata">
+			<div class="layui-side layui-bg-black layui-bg-black-updata">
+				<div class="layui-side-scroll">
+					<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+					<ul class="layui-nav layui-nav-tree"  lay-filter="test">
+						<li class="layui-nav-item">
+							<a class="" href="/index.php/cms/index/index">用户反馈及回复</a>
+						</li>
+						<li class="layui-nav-item layui-nav-itemed">
+							<a href="javascript:;">用户管理</a>
+							<dl class="layui-nav-child">
+								<dd class="layui-this"><a href="/index.php/cms/userinfo/index">列表展示</a></dd>
+								<dd><a href="/index.php/cms/userinfo/picshow">图表展示</a></dd>
+							</dl>
+						</li>
+						<li class="layui-nav-item">
+							<a href="javascript:;">消息推送</a>
+							<dl class="layui-nav-child">
+								<dd><a href="/index.php/cms/apppush/index">推送APP消息</a></dd>
+								<dd><a href="/index.php/cms/apppush/emailpush">推送邮件信息</a></dd>
+							</dl>
+						</li>
+						<li class="layui-nav-item"><a href="/index.php/cms/appconfig/index">APP主页配置</a></li>
+						<li class="layui-nav-item"><a href="/index.php/cms/usercontrol/index">账号管理</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="layui-body layui-body-content" id="layerDemo">
+			<div class="layui-body" id="LAY_app_body">
+				<div class="layadmin-tabsbody-item layui-show"><div class="layui-card layadmin-header">
+					<div class="layui-breadcrumb" lay-filter="breadcrumb" style="visibility: visible;">
+						<a lay-href="">主页</a><span lay-separator="">/</span>
+						<a><cite>组件</cite></a><span lay-separator="">/</span>
+						<a><cite>数据表格</cite></a><span lay-separator="">/</span>
+						<a><cite>开启合计行</cite></a>
+					</div>
+				</div><div class="layui-fluid">
+					<div class="layui-row layui-col-space15">
+						<div class="layui-col-md12">
+							<div class="layui-card">
+								<div class="layui-card-header">开启合计行</div>
+								<div class="layui-card-body">
+									<table class="layui-hide" id="test-table-totalRow" lay-filter="test-table-totalRow"></table><div class="layui-form layui-border-box layui-table-view" lay-filter="LAY-table-32" lay-id="test-table-totalRow" style=" "><div class="layui-table-tool"><div class="layui-table-tool-temp"> <div class="layui-btn-container"> <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button> <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button> <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button> </div> </div><div class="layui-table-tool-self"><div class="layui-inline" title="筛选列" lay-event="LAYTABLE_COLS"><i class="layui-icon layui-icon-cols"></i></div><div class="layui-inline" title="导出" lay-event="LAYTABLE_EXPORT"><i class="layui-icon layui-icon-export"></i></div><div class="layui-inline" title="打印" lay-event="LAYTABLE_PRINT"><i class="layui-icon layui-icon-print"></i></div></div></div><div class="layui-table-box"><div class="layui-table-header"><table cellspacing="0" cellpadding="0" border="0" class="layui-table"><thead><tr><th data-field="0" data-key="32-0-0" data-unresize="true" class=" layui-table-col-special"><div class="layui-table-cell laytable-cell-32-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary" lay-filter="layTableAllChoose"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></div></th><th data-field="id" data-key="32-0-1" data-unresize="true" class=" layui-unselect"><div class="layui-table-cell laytable-cell-32-0-1"><span>ID</span><span class="layui-table-sort layui-inline"><i class="layui-edge layui-table-sort-asc" title="升序"></i><i class="layui-edge layui-table-sort-desc" title="降序"></i></span></div></th><th data-field="username" data-key="32-0-2" class=""><div class="layui-table-cell laytable-cell-32-0-2"><span>用户名</span></div></th><th data-field="experience" data-key="32-0-3" class=" layui-unselect"><div class="layui-table-cell laytable-cell-32-0-3"><span>积分</span><span class="layui-table-sort layui-inline"><i class="layui-edge layui-table-sort-asc" title="升序"></i><i class="layui-edge layui-table-sort-desc" title="降序"></i></span></div></th><th data-field="sex" data-key="32-0-4" class=" layui-unselect"><div class="layui-table-cell laytable-cell-32-0-4"><span>性别</span><span class="layui-table-sort layui-inline"><i class="layui-edge layui-table-sort-asc" title="升序"></i><i class="layui-edge layui-table-sort-desc" title="降序"></i></span></div></th><th data-field="logins" data-key="32-0-5" class=" layui-unselect"><div class="layui-table-cell laytable-cell-32-0-5"><span>登入次数</span><span class="layui-table-sort layui-inline"><i class="layui-edge layui-table-sort-asc" title="升序"></i><i class="layui-edge layui-table-sort-desc" title="降序"></i></span></div></th><th data-field="sign" data-key="32-0-6" class=""><div class="layui-table-cell laytable-cell-32-0-6"><span>签名</span></div></th></tr></thead></table></div><div class="layui-table-body layui-table-main"><table cellspacing="0" cellpadding="0" border="0" class="layui-table"><tbody><tr data-index="0" class=""><td data-field="0" data-key="32-0-0" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-32-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></div></td><td data-field="id" data-key="32-0-1" class=""><div class="layui-table-cell laytable-cell-32-0-1">10001</div></td><td data-field="username" data-key="32-0-2" data-edit="text" class=""><div class="layui-table-cell laytable-cell-32-0-2">杜甫</div></td><td data-field="experience" data-key="32-0-3" class=""><div class="layui-table-cell laytable-cell-32-0-3">116</div></td><td data-field="sex" data-key="32-0-4" data-edit="text" class=""><div class="layui-table-cell laytable-cell-32-0-4">男</div></td><td data-field="logins" data-key="32-0-5" class=""><div class="layui-table-cell laytable-cell-32-0-5">108</div></td><td data-field="sign" data-key="32-0-6" class=""><div class="layui-table-cell laytable-cell-32-0-6">点击此处，显示更多。当内容超出时，点击单元格会自动显示更多内容。</div></td></tr><tr data-index="1" class=""><td data-field="0" data-key="32-0-0" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-32-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary" checked=""><div class="layui-unselect layui-form-checkbox layui-form-checked" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></div></td><td data-field="id" data-key="32-0-1" class=""><div class="layui-table-cell laytable-cell-32-0-1">10002</div></td><td data-field="username" data-key="32-0-2" data-edit="text" class=""><div class="layui-table-cell laytable-cell-32-0-2">李白</div></td><td data-field="experience" data-key="32-0-3" class=""><div class="layui-table-cell laytable-cell-32-0-3">12</div></td><td data-field="sex" data-key="32-0-4" data-edit="text" class=""><div class="layui-table-cell laytable-cell-32-0-4">男</div></td><td data-field="logins" data-key="32-0-5" class=""><div class="layui-table-cell laytable-cell-32-0-5">106</div></td><td data-field="sign" data-key="32-0-6" class=""><div class="layui-table-cell laytable-cell-32-0-6">君不见，黄河之水天上来，奔流到海不复回。 君不见，高堂明镜悲白发，朝如青丝暮成雪。 人生得意须尽欢，莫使金樽空对月。 天生我材必有用，千金散尽还复来。 烹羊宰牛且为乐，会须一饮三百杯。 岑夫子，丹丘生，将进酒，杯莫停。 与君歌一曲，请君为我倾耳听。(倾耳听 一作：侧耳听) 钟鼓馔玉不足贵，但愿长醉不复醒。(不足贵 一作：何足贵；不复醒 一作：不愿醒/不用醒) 古来圣贤皆寂寞，惟有饮者留其名。(古来 一作：自古；惟 通：唯) 陈王昔时宴平乐，斗酒十千恣欢谑。 主人何为言少钱，径须沽取对君酌。 五花马，千金裘，呼儿将出换美酒，与尔同销万古愁。</div></td></tr><tr data-index="2" class=""><td data-field="0" data-key="32-0-0" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-32-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></div></td><td data-field="id" data-key="32-0-1" class=""><div class="layui-table-cell laytable-cell-32-0-1">10003</div></td><td data-field="username" data-key="32-0-2" data-edit="text" class=""><div class="layui-table-cell laytable-cell-32-0-2">王勃</div></td><td data-field="experience" data-key="32-0-3" class=""><div class="layui-table-cell laytable-cell-32-0-3">65</div></td><td data-field="sex" data-key="32-0-4" data-edit="text" class=""><div class="layui-table-cell laytable-cell-32-0-4">男</div></td><td data-field="logins" data-key="32-0-5" class=""><div class="layui-table-cell laytable-cell-32-0-5">106</div></td><td data-field="sign" data-key="32-0-6" class=""><div class="layui-table-cell laytable-cell-32-0-6">人生恰似一场修行</div></td></tr><tr data-index="3" class=""><td data-field="0" data-key="32-0-0" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-32-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></div></td><td data-field="id" data-key="32-0-1" class=""><div class="layui-table-cell laytable-cell-32-0-1">10004</div></td><td data-field="username" data-key="32-0-2" data-edit="text" class=""><div class="layui-table-cell laytable-cell-32-0-2">李清照</div></td><td data-field="experience" data-key="32-0-3" class=""><div class="layui-table-cell laytable-cell-32-0-3">666</div></td><td data-field="sex" data-key="32-0-4" data-edit="text" class=""><div class="layui-table-cell laytable-cell-32-0-4">女</div></td><td data-field="logins" data-key="32-0-5" class=""><div class="layui-table-cell laytable-cell-32-0-5">106</div></td><td data-field="sign" data-key="32-0-6" class=""><div class="layui-table-cell laytable-cell-32-0-6">人生恰似一场修行</div></td></tr><tr data-index="4" class=""><td data-field="0" data-key="32-0-0" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-32-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></div></td><td data-field="id" data-key="32-0-1" class=""><div class="layui-table-cell laytable-cell-32-0-1">10005</div></td><td data-field="username" data-key="32-0-2" data-edit="text" class=""><div class="layui-table-cell laytable-cell-32-0-2">冰心</div></td><td data-field="experience" data-key="32-0-3" class=""><div class="layui-table-cell laytable-cell-32-0-3">86</div></td><td data-field="sex" data-key="32-0-4" data-edit="text" class=""><div class="layui-table-cell laytable-cell-32-0-4">女</div></td><td data-field="logins" data-key="32-0-5" class=""><div class="layui-table-cell laytable-cell-32-0-5">106</div></td><td data-field="sign" data-key="32-0-6" class=""><div class="layui-table-cell laytable-cell-32-0-6">人生恰似一场修行</div></td></tr><tr data-index="5" class=""><td data-field="0" data-key="32-0-0" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-32-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></div></td><td data-field="id" data-key="32-0-1" class=""><div class="layui-table-cell laytable-cell-32-0-1">10006</div></td><td data-field="username" data-key="32-0-2" data-edit="text" class=""><div class="layui-table-cell laytable-cell-32-0-2">贤心</div></td><td data-field="experience" data-key="32-0-3" class=""><div class="layui-table-cell laytable-cell-32-0-3">12</div></td><td data-field="sex" data-key="32-0-4" data-edit="text" class=""><div class="layui-table-cell laytable-cell-32-0-4">男</div></td><td data-field="logins" data-key="32-0-5" class=""><div class="layui-table-cell laytable-cell-32-0-5">106</div></td><td data-field="sign" data-key="32-0-6" class=""><div class="layui-table-cell laytable-cell-32-0-6">人生恰似一场修行</div></td></tr><tr data-index="6" class=""><td data-field="0" data-key="32-0-0" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-32-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></div></td><td data-field="id" data-key="32-0-1" class=""><div class="layui-table-cell laytable-cell-32-0-1">10007</div></td><td data-field="username" data-key="32-0-2" data-edit="text" class=""><div class="layui-table-cell laytable-cell-32-0-2">贤心</div></td><td data-field="experience" data-key="32-0-3" class=""><div class="layui-table-cell laytable-cell-32-0-3">16</div></td><td data-field="sex" data-key="32-0-4" data-edit="text" class=""><div class="layui-table-cell laytable-cell-32-0-4">男</div></td><td data-field="logins" data-key="32-0-5" class=""><div class="layui-table-cell laytable-cell-32-0-5">106</div></td><td data-field="sign" data-key="32-0-6" class=""><div class="layui-table-cell laytable-cell-32-0-6">人生恰似一场修行</div></td></tr><tr data-index="7" class=""><td data-field="0" data-key="32-0-0" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-32-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></div></td><td data-field="id" data-key="32-0-1" class=""><div class="layui-table-cell laytable-cell-32-0-1">10008</div></td><td data-field="username" data-key="32-0-2" data-edit="text" class=""><div class="layui-table-cell laytable-cell-32-0-2">贤心</div></td><td data-field="experience" data-key="32-0-3" class=""><div class="layui-table-cell laytable-cell-32-0-3">106</div></td><td data-field="sex" data-key="32-0-4" data-edit="text" class=""><div class="layui-table-cell laytable-cell-32-0-4">男</div></td><td data-field="logins" data-key="32-0-5" class=""><div class="layui-table-cell laytable-cell-32-0-5">106</div></td><td data-field="sign" data-key="32-0-6" class=""><div class="layui-table-cell laytable-cell-32-0-6">人生恰似一场修行</div></td></tr></tbody></table></div><div class="layui-table-fixed layui-table-fixed-l"><div class="layui-table-header"><table cellspacing="0" cellpadding="0" border="0" class="layui-table"><thead><tr><th data-field="0" data-key="32-0-0" data-unresize="true" class=" layui-table-col-special"><div class="layui-table-cell laytable-cell-32-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary" lay-filter="layTableAllChoose"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></div></th><th data-field="id" data-key="32-0-1" data-unresize="true" class=" layui-unselect"><div class="layui-table-cell laytable-cell-32-0-1"><span>ID</span><span class="layui-table-sort layui-inline"><i class="layui-edge layui-table-sort-asc" title="升序"></i><i class="layui-edge layui-table-sort-desc" title="降序"></i></span></div></th></tr></thead></table></div><div class="layui-table-body" style="height: 305px;"><table cellspacing="0" cellpadding="0" border="0" class="layui-table"><tbody><tr data-index="0" class=""><td data-field="0" data-key="32-0-0" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-32-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></div></td><td data-field="id" data-key="32-0-1" class=""><div class="layui-table-cell laytable-cell-32-0-1">10001</div></td></tr><tr data-index="1" class=""><td data-field="0" data-key="32-0-0" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-32-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary" checked=""><div class="layui-unselect layui-form-checkbox layui-form-checked" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></div></td><td data-field="id" data-key="32-0-1" class=""><div class="layui-table-cell laytable-cell-32-0-1">10002</div></td></tr><tr data-index="2" class=""><td data-field="0" data-key="32-0-0" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-32-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></div></td><td data-field="id" data-key="32-0-1" class=""><div class="layui-table-cell laytable-cell-32-0-1">10003</div></td></tr><tr data-index="3" class=""><td data-field="0" data-key="32-0-0" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-32-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></div></td><td data-field="id" data-key="32-0-1" class=""><div class="layui-table-cell laytable-cell-32-0-1">10004</div></td></tr><tr data-index="4" class=""><td data-field="0" data-key="32-0-0" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-32-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></div></td><td data-field="id" data-key="32-0-1" class=""><div class="layui-table-cell laytable-cell-32-0-1">10005</div></td></tr><tr data-index="5" class=""><td data-field="0" data-key="32-0-0" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-32-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></div></td><td data-field="id" data-key="32-0-1" class=""><div class="layui-table-cell laytable-cell-32-0-1">10006</div></td></tr><tr data-index="6" class=""><td data-field="0" data-key="32-0-0" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-32-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></div></td><td data-field="id" data-key="32-0-1" class=""><div class="layui-table-cell laytable-cell-32-0-1">10007</div></td></tr><tr data-index="7" class=""><td data-field="0" data-key="32-0-0" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-32-0-0 laytable-cell-checkbox"><input type="checkbox" name="layTableCheckbox" lay-skin="primary"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div></div></td><td data-field="id" data-key="32-0-1" class=""><div class="layui-table-cell laytable-cell-32-0-1">10008</div></td></tr></tbody></table></div></div></div><div class="layui-table-total"><table cellspacing="0" cellpadding="0" border="0" class="layui-table"><tbody><tr><td data-field="0" data-key="32-0-0" class="layui-table-col-special"><div class="layui-table-cell laytable-cell-32-0-0 laytable-cell-checkbox"></div></td><td data-field="id" data-key="32-0-1" class=""><div class="layui-table-cell laytable-cell-32-0-1">合计</div></td><td data-field="username" data-key="32-0-2" class=""><div class="layui-table-cell laytable-cell-32-0-2"></div></td><td data-field="experience" data-key="32-0-3" class=""><div class="layui-table-cell laytable-cell-32-0-3">1079.00</div></td><td data-field="sex" data-key="32-0-4" class=""><div class="layui-table-cell laytable-cell-32-0-4"></div></td><td data-field="logins" data-key="32-0-5" class=""><div class="layui-table-cell laytable-cell-32-0-5">850.00</div></td><td data-field="sign" data-key="32-0-6" class=""><div class="layui-table-cell laytable-cell-32-0-6"></div></td></tr></tbody></table></div><div class="layui-table-page"><div id="layui-table-page32"><div class="layui-box layui-laypage layui-laypage-default" id="layui-laypage-20"><a href="javascript:;" class="layui-laypage-prev layui-disabled" data-page="0"><i class="layui-icon"></i></a><span class="layui-laypage-curr"><em class="layui-laypage-em"></em><em>1</em></span><a href="javascript:;" data-page="2">2</a><a href="javascript:;" data-page="3">3</a><span class="layui-laypage-spr">…</span><a href="javascript:;" class="layui-laypage-last" title="尾页" data-page="300000">300000</a><a href="javascript:;" class="layui-laypage-next" data-page="2"><i class="layui-icon"></i></a><span class="layui-laypage-skip">到第<input type="text" min="1" value="1" class="layui-input">页<button type="button" class="layui-laypage-btn">确定</button></span><span class="layui-laypage-count">共 3000000 条</span><span class="layui-laypage-limits"><select lay-ignore=""><option value="10" selected="">10 条/页</option><option value="20">20 条/页</option><option value="30">30 条/页</option><option value="40">40 条/页</option><option value="50">50 条/页</option><option value="60">60 条/页</option><option value="70">70 条/页</option><option value="80">80 条/页</option><option value="90">90 条/页</option></select></span></div></div></div><style>.laytable-cell-32-0-0{ width: 48px; }.laytable-cell-32-0-1{ width: 80px; }.laytable-cell-32-0-2{ width: 120px; }.laytable-cell-32-0-3{ width: 80px; }.laytable-cell-32-0-4{ width: 80px; }.laytable-cell-32-0-5{ width: 100px; }.laytable-cell-32-0-6{  }</style></div>
+
+									<script type="text/html" id="test-table-totalRow-toolbarDemo">
+										<div class="layui-btn-container">
+											<button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+											<button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+											<button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+										</div>
+									</script>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div><script>
+					layui.use(['admin', 'table'], function(){
+						var admin = layui.admin
+								,table = layui.table;
+
+						table.render({
+							elem: '#test-table-totalRow'
+							,url:'./json/table/demo.js'
+							,toolbar: '#test-table-totalRow-toolbarDemo'
+							,title: '用户数据表'
+							,totalRow: true
+							,cols: [[
+								{type: 'checkbox', fixed: 'left'}
+								,{field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true, totalRowText: '合计'}
+								,{field:'username', title:'用户名', width:120, edit: 'text'}
+								,{field:'experience', title:'积分', width:80, sort: true, totalRow: true}
+								,{field:'sex', title:'性别', width:80, edit: 'text', sort: true}
+								,{field:'logins', title:'登入次数', width:100, sort: true, totalRow: true}
+								,{field:'sign', title:'签名'}
+							]]
+							,page: true
+						});
+
+						//头工具栏事件
+						table.on('toolbar(test-table-totalRow)', function(obj){
+							var checkStatus = table.checkStatus(obj.config.id);
+							switch(obj.event){
+								case 'getCheckData':
+									var data = checkStatus.data;
+									layer.alert(JSON.stringify(data));
+									break;
+								case 'getCheckLength':
+									var data = checkStatus.data;
+									layer.msg('选中了：'+ data.length + ' 个');
+									break;
+								case 'isAll':
+									layer.msg(checkStatus.isAll ? '全选': '未全选');
+									break;
+							};
+						});
+
+					});
+				</script></div>
+			</div>
+		</div>
+
+	</div>
+	<!--<div class="layui-footer">
+		&lt;!&ndash; 底部固定区域 &ndash;&gt;
+		© layui.com - 底部固定区域
+	</div>-->
+</div>
+</div>
+<script src="/style/jquery.js"></script>
+<script src="/style/layui/layui.js"></script>
+<script type="text/javascript" src="/style/layui/layui.all.js"></script>
+<script src="/style/main.js"></script>
+<script type="text/javascript">
+
+	layui.use('layer', function() { //独立版的layer无需执行这一句
+		var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+
+		form = layui.form;
+
+		//全选
+
+		form.on('checkbox(allChoose)', function (data) {
+
+			var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
+
+			child.each(function (index, item) {
+
+				item.checked = data.elem.checked;
+
+			});
+
+			form.render('checkbox');
+
+		});
+	})
+
+</script>
+<script>
+	layui.use('layer', function(){ //独立版的layer无需执行这一句
+		var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+		//常规用法
+		//触发事件
+		var active = {
+			setTop: function(){
+				var that = this;
+				//多窗口模式，层叠置顶
+				layer.open({
+					type: 2 //此处以iframe举例
+					,title: '当你选择该窗体时，即会在最顶端'
+					,area: ['390px', '260px']
+					,shade: 0
+					,maxmin: true
+					,offset: [ //为了演示，随机坐标
+						Math.random()*($(window).height()-300)
+						,Math.random()*($(window).width()-390)
+					]
+					,content: '//layer.layui.com/test/settop.html'
+					,btn: ['继续弹出', '全部关闭'] //只是为了演示
+					,yes: function(){
+						$(that).click();
+					}
+					,btn2: function(){
+						layer.closeAll();
+					}
+
+					,zIndex: layer.zIndex //重点1
+					,success: function(layero){
+						layer.setTop(layero); //重点2
+					}
+				});
+			}
+			,confirmTrans: function(){
+				//配置一个透明的询问框
+				layer.msg('大部分参数都是可以公用的<br>合理搭配，展示不一样的风格', {
+					time: 20000, //20s后自动关闭
+					btn: ['明白了', '知道了', '哦']
+				});
+			}
+			,isemail: function(){
+				//示范一个公告层
+				layer.open({
+					type: 1
+					,title: false //不显示标题栏
+					,closeBtn: false
+					,area: '300px;'
+					,shade: 0.8
+					,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+					/*,btn: ['查询', '取消']*/
+					,btnAlign: 'c'
+					,moveType: 1 //拖拽模式，0或者1
+					,content:
+					'<form action="index" method="post" id="loginForm1"><div style="padding: 30px;border-radius:20px 20px 0 0; line-height: 22px;background: RGBA(110, 120, 141, 0.9); color: #fff; font-weight: 300;font-size: 18px;text-align: center">' +
+					'<div style="margin-bottom: 40px;">请选择回复状态</div><input type="radio" name="isemail" checked="checked" value="1">接收</input>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+					'<input type="radio" name="isemail" value="0">不接收</input>' +
+					'<input type="hidden" value="<?php echo input('email')?>" name="email">' +
+					'<input type="hidden" value="<?php echo input('country')?>" name="country">' +
+					'<input type="hidden" value="<?php echo input('makedata1')?>" name="makedata1">' +
+					'<input type="hidden" value="<?php echo input('makedata2')?>" name="makedata2">' +
+					'</div>' +
+					'<div class="layui-layer-btn layui-layer-btn-c" style="background: RGBA(110, 120, 141, 0.9);"><a href="javascript:;" onclick="document:loginForm1.submit()" class="layui-layer-btn0">查询</a><a class="layui-layer-btn1">取消</a>' +
+					'</div>' +
+					'</form>'
+					,success: function(layero){
+						var btn = layero.find('');
+						btn.find('.layui-layer-btn0').attr({
+							href: 'http://www.layui.com/'
+							,target: '_blank'
+						});
+					}
+				});
+			}
+			,email: function(){
+				//示范一个公告层
+				layer.open({
+					type: 1
+					,title: false //不显示标题栏
+					,closeBtn: false
+					,area: '300px;'
+					,shade: 0.8
+					,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+					/*,btn: ['查询', '取消']*/
+					,btnAlign: 'c'
+					,moveType: 1 //拖拽模式，0或者1
+					,content:
+					'<form action="index" method="post" id="loginForm2"><div style="padding: 30px;border-radius:20px 20px 0 0; line-height: 22px;background: RGBA(110, 120, 141, 0.9); color: #fff; font-weight: 300;font-size: 18px;text-align: center">' +
+					'<div style="margin-bottom: 40px;">请输入关键词(支持模糊查询)</div>' +
+					'<input type="text" name="email"  required lay-verify="required"  placeholder="请输入查询邮箱" autocomplete="off" class="layui-input">' +
+					'<input type="hidden" value="<?php echo input('isemail')?>" name="isemail">' +
+					'<input type="hidden" value="<?php echo input('country')?>" name="country">' +
+					'<input type="hidden" value="<?php echo input('makedata1')?>" name="makedata1">' +
+					'<input type="hidden" value="<?php echo input('makedata2')?>" name="makedata2">' +
+					'</div>' +
+					'<div class="layui-layer-btn layui-layer-btn-c" style="background: RGBA(110, 120, 141, 0.9);"><a href="javascript:;" onclick="document:loginForm2.submit()" class="layui-layer-btn0">查询</a><a class="layui-layer-btn1">取消</a>' +
+					'</div>' +
+					'</form>'
+					,success: function(layero){
+						var btn = layero.find('');
+						btn.find('.layui-layer-btn0').attr({
+							href: 'http://www.layui.com/'
+							,target: '_blank'
+						});
+					}
+				});
+			}
+			,country: function(){
+				//示范一个公告层
+				layer.open({
+					type: 1
+					,title: false //不显示标题栏
+					,closeBtn: false
+					,area: '300px;'
+					,shade: 0.8
+					,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+					/*,btn: ['查询', '取消']*/
+					,btnAlign: 'c'
+					,moveType: 1 //拖拽模式，0或者1
+					,content:
+					'<form action="index" method="post" id="loginForm"><div style="padding: 30px;border-radius:20px 20px 0 0; line-height: 22px;background: RGBA(110, 120, 141, 0.9); color: #fff; font-weight: 300;font-size: 18px;text-align: center">' +
+					'<div style="margin-bottom: 40px;">请输入关键词(支持模糊查询)</div>' +
+					'<input type="text" name="country" required lay-verify="required" placeholder="请输入查询国家" autocomplete="off" class="layui-input">     ' +
+					'<input type="hidden" value="<?php echo input('isemail')?>" name="isemail">' +
+					'<input type="hidden" value="<?php echo input('email')?>" name="email">' +
+					'<input type="hidden" value="<?php echo input('makedata1')?>" name="makedata1">' +
+					'<input type="hidden" value="<?php echo input('makedata2')?>" name="makedata2">' +
+					'</div>' +
+					'<div class="layui-layer-btn layui-layer-btn-c" style="background: RGBA(110, 120, 141, 0.9);"><a href="javascript:;" onclick="document:loginForm.submit()" class="layui-layer-btn0">查询</a><a class="layui-layer-btn1">取消</a>' +
+					'</div>' +
+					'</form>'
+					,success: function(layero){
+						var btn = layero.find('');
+						btn.find('.layui-layer-btn0').attr({
+							href: 'http://www.layui.com/'
+							,target: '_blank'
+						});
+					}
+				});
+			}
+			,regtime: function(){
+				//示范一个公告层
+				layer.open({
+					type: 1
+					,title: false //不显示标题栏
+					,closeBtn: false
+					,area: '300px;'
+					,shade: 0.8
+					,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+					/*,btn: ['查询', '取消']*/
+					,btnAlign: 'c'
+					,moveType: 1 //拖拽模式，0或者1
+					,content:
+					'<form action="index" method="post" id="loginForm"><div style="padding: 30px;border-radius:20px 20px 0 0; line-height: 22px;background: RGBA(110, 120, 141, 0.9); color: #fff; font-weight: 300;font-size: 18px;text-align: center">' +
+					'<div style="margin-bottom: 40px;">请选择日期</div>' +
+					'<div class="layui-form"><div class="layui-form-item"><div class="layui-inline"><label class="layui-form-label">开始日期</label><div class="layui-input-inline"><input style="width: 120%;" type="text" name="makedate1" readonly="readonly"  class="layui-input" id="test1" placeholder="年-月-日"  lay-key="1"></div></div></div></div>'+
+					'<div class="layui-form"><div class="layui-form-item"><div class="layui-inline"><label class="layui-form-label">结束日期</label><div class="layui-input-inline"><input style="width: 120%;" type="text" name="makedate2" readonly="readonly"  class="layui-input" id="test2" placeholder="年-月-日"  lay-key="2"></div></div></div></div>'+
+					'<input type="hidden" value="<?php echo input('isemail')?>" name="isemail">' +
+					'<input type="hidden" value="<?php echo input('email')?>" name="email">' +
+					'<input type="hidden" value="<?php echo input('country')?>" name="country">' +
+					'</div>' +
+					'<div class="layui-layer-btn layui-layer-btn-c" style="background: RGBA(110, 120, 141, 0.9);"><a href="javascript:;" onclick="document:loginForm.submit()" class="layui-layer-btn0">查询</a><a class="layui-layer-btn1">取消</a>' +
+					'</div>' +
+					'</form>'
+					,success: function(layero, index){
+						layui.use('laydate', function(){
+							var laydate = layui.laydate;
+							//常规用法
+							laydate.render({
+								elem: '#test1'
+							});
+							laydate.render({
+								elem: '#test2'
+							});
+						});
+					}
+
+				});
+			}
+			,offset: function(othis){
+				var type = othis.data('type')
+						,text = othis.text();
+
+				layer.open({
+					type: 1
+					,offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+					,id: 'layerDemo'+type //防止重复弹出
+					,content: '<div style="padding: 20px 100px;">'+ text +'</div>'
+					,btn: '关闭全部'
+					,btnAlign: 'c' //按钮居中
+					,shade: 0 //不显示遮罩
+					,yes: function(){
+						layer.closeAll();
+					}
+				});
+			}
+		};
+		$('#layerDemo .layui-btn-main').on('click', function(){
+			var othis = $(this), method = othis.data('method');
+			active[method] ? active[method].call(this, othis) : '';
+		});
+	});
+</script>
+<style>
+	.layui-layer-dialog .layui-layer-content {background-color: #F8F8F8;}
+	.layui-layer-btn {background-color: #F8F8F8;}
+</style>
+<script>
+	//ajax
+	function daochu(a,b,c,d,e) {
+		if(a==null||a==undefined||a==""){a=200;}
+
+		if(b==null||b==undefined||b==""){b=200;}
+
+		if(c==null||c==undefined||c==""){c=200;}
+
+		if(d==null||d==undefined||d==""){d=200;}
+
+		if(e==null||e==undefined||e==""){e=200;}
+		layer.confirm('确定要导出数据吗？', {
+			btn: ['确定','取消'] //按钮
+		}, function(){
+			window.location.href="daochu?email="+a+"&location="+b+"&ismail="+c+"&makedate1="+d+"&makedate2="+e;
+			layer.msg('导出成功', {icon: 1});
+		});
+	}
+	$(".allChoosed").click(function(){
+		alert(1)
+		$(".check-opt").each(function(){
+			$(".check-opt").attr("checked");
+		});
+	})
+	function daochupart(){
+		$("#sub").ajaxSubmit(function(data){
+			alert(data.Message);
+		})
+		var a = new Array;
+		var i = 0 ;
+		$(".check-opt").each(function(){
+			if($("#radio_"+i).is(":checked")){
+				a[i] = $(this).val();
+				i = i +1;
+			}
+		});
+		console.log(a)
+		layer.confirm('确定要导出所选数据吗？', {
+			btn: ['确定','取消'] //按钮
+		}, function(){
+			window.location.href="daochupart?allid="
+			layer.msg('导出成功', {icon: 1});
+		});
+	}
+</script>
+</body>
+</html>

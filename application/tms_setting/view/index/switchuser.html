@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><?php echo Config('sys_info')['sys_company']; ?> - 外贸管理系统</title>
+<script src="/tms/js/all.js" language="javascript"></script>
+</head>
+<body>
+<h1>切换用户</h1>
+<div class="mypanel">
+<div class="mypanel-heading">
+        <div class="mypanel-lead"><em>切换用户</em>可以在这里切换到其他用户</div>
+    </div>
+
+    <div class="mypanel-body">
+        <div id="myTabContent" class="mytab-content">
+            <div class="mytab-pane active" id="basic">
+                <div class="widget-body no-padding">
+                    <form id="basic-form" method="POST" action="/tms/index.php/tms_setting/index/switchuser_ok">
+                        <table class="table-setting">
+                          <tr>
+                            <td width="120" align="right">目标用户</td>
+                            <td><?php echo showselect('username','',$userarray,"请选择要切换的用户",'');?></td>
+                          </tr>
+                          <tr>
+                            <td align="right">原用户</td>
+                            <td><?php if($oldusername!=""){ ?><a href="switchuser_old"><?php echo $oldusername; ?></a><?php } ?>&nbsp;</td>
+                          </tr>
+                          <tr>
+                              <td></td>
+                              <td>
+                                  <button type="submit">确定</button>
+                                  <button type="reset">重置</button>
+                              </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

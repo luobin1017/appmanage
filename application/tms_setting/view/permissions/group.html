@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><?php echo Config('sys_info')['sys_company']; ?> - 外贸管理系统</title>
+<script src="/tms/js/all.js" language="javascript"></script>
+</head>
+<body>
+<h1>系统权限分组管理</h1>
+<div class="mypanel">
+    <div class="mypanel-heading">
+	    <div class="mypanel-lead"><em>系统权限分组管理</em>可以在此添加/修改系统权限分组信息</div>
+    </div>
+
+    <div class="mypanel-body">
+      <div id="toolbar" class="toolbar">
+        	<div class="pull-right">
+                <a href="/tms/index.php/tms_setting/permissions/group_edit" class="btn-add" title="添加" >添加</a>
+            </div>
+            <div class="pull-left">
+            </div>
+        </div>
+            <table id="mytable" class="mytable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>权限分组名称</th>
+                    <th>权限分组备注</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>            
+            {foreach name="list" item="v" key="k"}
+            <tr>
+            <td><?php echo $k+1; ?></td>
+            <td><?php echo $v['name']; ?></td>
+            <td><?php echo $v['memo']; ?></td>
+            <td>
+                <a href="/tms/index.php/tms_setting/permissions/group_edit?id=<?php echo $v['id']; ?>">编辑</a>
+                <a href="/tms/index.php/tms_setting/permissions/group_del?id=<?php echo $v['id']; ?>">删除</a>
+            </td>
+            </tr>
+            {/foreach}
+            </tbody>
+            </table>
+        </div>
+</div>
+</body>
+</html>

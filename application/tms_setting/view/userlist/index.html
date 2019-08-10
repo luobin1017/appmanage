@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><?php echo Config('sys_info')['sys_company']; ?> - 外贸管理系统</title>
+<script src="/tms/js/all.js" language="javascript"></script>
+</head>
+<body>
+<h1>用户管理</h1>
+<div class="mypanel">
+    <div class="mypanel-heading">
+	    <div class="mypanel-lead"><em>用户管理</em>可以在此修改用户信息</div>
+    </div>
+
+    <div class="mypanel-body">
+        <div id="toolbar" class="toolbar">
+        	<div class="pull-right">
+	            <a href="/tms/index.php/tms_setting/userlist/edit" class="btn-add" title="添加" >添加</a>
+            </div>
+        </div>
+            <table id="mytable" class="mytable">
+            <thead>
+                <tr>
+                    <th><input name="btSelectAll" type="checkbox"></th>
+                    <th>ID</th>
+                    <th>登录名</th>
+                    <th>英文名 </th>
+                    <th>中文名</th>
+                    <th>考勤号</th>
+                    <th>职位</th>
+                    <th>分机号</th>
+                    <th>状态</th>
+                    <th> 本次登录时间</th>
+                    <th>本次登录I</th>
+                    <th>上次登录时间</th>
+                    <th>上次登录IP</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+            {foreach name="list" item="v" key="k"}
+            <tr>
+            <td><input data-index="0" name="btSelectItem" type="checkbox"></td>
+            <td><?php echo $k+1; ?></td>
+            <td><?php echo $v['username']; ?></td>
+            <td><?php echo $v['ename']; ?></td>
+            <td><?php echo $v['name']; ?></td>
+            <td><?php echo $v['checkid']; ?></td>
+            <td><?php echo $v['jobs']; ?></td>
+            <td><?php echo $v['ext']; ?></td>
+            <td><?php echo $v['nouse']; ?></td>
+            <td><?php echo $v['thislogin']; ?></td>
+            <td><?php echo $v['thisip']; ?></td>
+            <td><?php echo $v['lastlogin']; ?></td>
+            <td><?php echo $v['lastip']; ?></td>
+            <td>
+                <a href="/tms/index.php/tms_setting/userlist/edit?id=<?php echo $v['id']; ?>">编辑</a>
+            </td>
+            </tr>
+            {/foreach}
+            </tbody>
+            </table>
+            <div class="table-pagination" style="display: block;">
+                <div class="pull-right"><?php echo $page; ?></div>
+                <div class="pull-left pagination-detail">
+                    总共 <?php echo $total; ?> 条记录，<?php echo $pagesize; ?>条 / 页，页数 <?php echo $pagenow; ?> / <?php echo $totalPage; ?>
+                   </span>
+                </div>
+            </div>
+    </div>
+</div>
+</body>
+</html>

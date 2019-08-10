@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>选择图片</title>
+    <script type="text/javascript" src="/TMS/js/all.js"></script>
+</head>
+<body style=" width:740px;">
+<div class="mypanel">
+  <div class="mypanel-body">
+    <div id="toolbar" class="toolbar">
+        	<div class="pull-right">
+	            <form name="form1" action="upload/" method="post" enctype="multipart/form-data">
+                    <div class="pull-left">
+                    	<input type="hidden" name="ptype" id="ptype" value="<?php echo input("ptype"); ?>" />
+                        <input type="hidden" name="input" id="input" value="<?php echo input("input"); ?>" />
+                        <input type="hidden" name="img" id="img" value="<?php echo input("img"); ?>" />
+                        上传图片：<input name="file1" id="file1" type="file" />
+                        <input name="btnsub1" type="submit" id="btnsub1" value="上传" />
+                    </div>
+                 </form>
+            </div>
+            <div class="pull-left">
+            	<form name="form2" action="?" method="post">
+                    <div class="pull-left">
+                        <input type="hidden" name="input" id="input" value="<?php echo input("input"); ?>" />
+                        <input type="hidden" name="ptype" id="ptype" value="<?php echo input("ptype"); ?>" />
+                        <input type="hidden" name="img" id="img" value="<?php echo input("img"); ?>" />
+                        名称：<input name="name" type="text" id="name" value="<?php echo input('name')?>" size="16" />
+                        <input name="btnsub2" type="submit" id="btnsub2" value="搜索" />
+                        双击指定行可进行选择。
+                    </div>
+                 </form>
+            </div>
+      </div>
+          <table id="mytable" class="mytable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>图片</th>
+                    <th>文件名称</th>
+                    <th>更新时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+            {foreach name="list" item="v" key="k"}
+            <tr>
+            <td><?php echo $k+1; ?></td>
+            <td><?php echo $v['filename']; ?></td>
+            <td><img src="/tms/upfiles/other/<?php echo $v['ptype']; ?>/<?php echo $v['picture']; ?>" height="100" width="100" /></td>
+            <td><?php echo $v['time']; ?></td>
+            <td><a href="javascript:;" onclick="selpicture('/tms/upfiles/other/<?php echo $v['ptype']; ?>/<?php echo $v['picture']; ?>');">选择</a></td>
+            </tr>
+            {/foreach}
+          </table>
+           <div class="table-pagination" style="display: block;">
+                <div class="pull-right"><?php echo $page; ?></div>
+                <div class="pull-left pagination-detail">
+                    总共 <?php echo $total; ?> 条记录
+                   </span>
+                </div>
+            </div>
+    </div>
+</div>
+<script>
+function selpicture(img)
+{
+	parent.SetPicture($("#input").val(),$("#img").val(),img);
+	parent.SelectReturn("");
+}
+</script>
+</body>
+</html>

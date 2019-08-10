@@ -1,0 +1,188 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>江森制品有限公司 - 外贸管理系统</title>
+    <script src="/tms/js/all.js" language="javascript"></script>
+    <style>
+        /*show*/
+        /*.table  .text-c-tr td{ vertical-align: middle;  text-align: center; }
+        .table  .text-c-td{ text-align: left!important;  }*/
+    </style>
+</head>
+<body>
+<h1><strong>查看Quotation资料</strong></h1>
+<div class="mypanel">
+    <div class="mypanel-heading">
+        <div class="mypanel-lead"><em></em>可以在此查看quotation信息</div>
+    </div>
+    <table width="1191" class="table table-border table-bordered table-bg table-hover">
+        <tr class="text-c ">
+            <td width="148">To</td>
+            <td width="453"><?php echo $rs['customname']; ?>(<?php echo $rs['customid']; ?>)</td>
+            <td width="148">Our Ref No.</td>
+            <td width="440"><?php echo $rs['allno']; ?></td>
+        </tr>
+        <tr class="text-c ">
+            <td></td>
+            <td><?php echo $rs['customaddress']; ?></td>
+            <td>Customer Ref. No.</td>
+            <td><?php echo $rs['customid']; ?></td>
+        </tr>
+        <tr class="text-c ">
+            <td>Attn</td>
+            <td><?php echo $rs['contact']; ?></td>
+            <td>Date</td>
+            <td><?php echo $rs['makedate']; ?></td>
+        </tr>
+        <tr class="text-c ">
+            <td>Tel</td>
+            <td><?php echo $rs['phone']; ?></td>
+            <td>Source</td>
+            <td><?php echo $source['classname']; ?></td>
+        </tr>
+        <tr class="text-c ">
+            <td>Fax</td>
+            <td><?php echo $rs['fax']; ?></td>
+            <td>Country</td>
+            <td></td>
+        </tr>
+        <tr class="text-c ">
+            <td>E-mail</td>
+            <td><?php echo $rs['email']; ?></td>
+            <td>From</td>
+            <td><?php echo $rs['makename']; ?></td>
+        </tr>
+
+    </table>
+    <!---->
+    <table width="1191" class="table table-border table-bordered table-bg table-hover">
+        <tr class="text-c-tr text-c-tr-bg">
+            <td>No</td>
+            <td>Picture</td>
+            <td>Description</td>
+            <td>Quantity</td>
+            <td>Unit Price <br />
+                (<?php echo $rs['priceterm']; ?>)</td>
+        </tr>
+        {foreach $itemarr as $k=>$v}
+        <tr class="text-c text-c-tr">
+            <td><?php echo $k+1; ?></td>
+            <td> <img src="<?php echo $v['picture']; ?>" width="80" height="80" />
+            </td>
+            <td class="text-c-td">
+                 <span style="font-weight:bold; font-size:14px;">
+			<?php echo $v['productname']; ?> {if condition="$v.isbasic==0"}<span style="color:red;">(非標準産品)</span>{/if}
+            </span><br />
+
+                <div style="max-width:600px">
+                    <script>
+                        var pdtext<?php echo $v['id']; ?>="<?php echo strtojs($v["productinfo"]); ?>";
+                        var pd<?php echo $v['id']; ?>=new JDetion("pd<?php echo $v['id']; ?>",null,false,pdtext<?php echo $v['id']; ?>);
+                        pd<?php echo $v['id']; ?>.Show();
+                    </script>
+                </div>
+            </td>
+            <td width="120" align="right">
+                <?php
+                $x = strexplode_numprice($v['numprice'],'|',',','num');
+                foreach($x as $val)
+                {
+                   echo str3x($val).$v['unit']."<br/><br/>";
+                }
+                ?>
+            <td width="180" align="right">
+                <?php
+                $x = strexplode_numprice($v['numprice'],'|',',','price');
+                foreach($x as $val)
+                {
+                   echo $rs['currencys']." ".strtocurr($val)."<br/><br/>";
+                }
+                ?>
+            </td>
+        </tr>
+        {/foreach}
+    </table>
+    <!---->
+    <table width="1191" class="table table-border table-bordered table-bg table-striped table-hover">
+        <tr>
+            <td width="166"><span class="tdright">印刷费<br>
+          Imprint charges </span></td>
+            <td width="1013"><?php echo $rs['silkscreen']; ?></td>
+        </tr>
+        <tr>
+            <td><span class="tdright">模具定制费<br>
+          Customized shape Mold Cost </span></td>
+            <td><?php echo $rs['customized']; ?></td>
+        </tr>
+        <tr>
+            <td><span class="tdright">图案定制印刷版费<br>
+            Printing set up charges </span></td>
+            <td><?php echo $rs['block']; ?></td>
+        </tr>
+        <tr>
+            <td><span class="tdright">其他费用<br>
+            Other Charges </span></td>
+            <td><?php echo $rs['othercharges']; ?></td>
+        </tr>
+        <tr>
+            <td><span class="tdright">打样时间<br>
+            Approval sample</span></td>
+            <td><?php echo $rs['approval']; ?></td>
+        </tr>
+        <tr>
+            <td><span class="tdright">生产交货期<br>
+            Delivery</span></td>
+            <td><?php echo $rs['delivery']; ?></td>
+        </tr>
+        <tr>
+            <td><span class="tdright">付款方式<br>
+            Payment</span></td>
+            <td><?php echo $rs['payment']; ?></td>
+        </tr>
+        <tr>
+            <td><span class="tdright">最低起订量<br>
+            Mnimum order</span></td>
+            <td><?php echo $rs['minimum']; ?></td>
+        </tr>
+        <tr>
+            <td><span class="tdright">证书<br>
+            Certificate</span></td>
+            <td><?php echo $rs['certificate']; ?></td>
+        </tr>
+        <tr>
+            <td><span class="tdright">其他备注<br>
+            Remark</span></td>
+            <td><?php echo $rs['remark']; ?></td>
+        </tr>
+        <tr>
+          <td><span class="tdright">提供样品<br>
+          Samples</span></td>
+          <td><?php echo $rs['samples']; ?></td>
+        </tr>
+        <tr>
+            <td><span class="tdright">有效期<br>
+            Validity</span></td>
+            <td><?php echo $rs['validity']; ?></td>
+        </tr>
+        </table>
+    <!---->
+<table height="20" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-bottom: 20px">
+        <tr>
+            <td width="120" align="center"><input name="modify" type="button" id="modify" value="修改资料" onclick="window.location='edit.html?action=modify&id=<?php echo $rs['id']; ?>'" /></td>
+            <td width="120" align="center"><input name="return" type="button" id="return" value="返回列表" onclick="document.location='index.html';" /></td>
+        </tr>
+</table>
+
+
+</div>
+</body>
+<script>
+    $(document).ready(function(){
+        $(".contact-taggle").hide();
+        $("#hidebtn").click(function() {
+            $(".contact-taggle").toggle();
+        })
+    });
+</script>
+</html>

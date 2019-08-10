@@ -1,0 +1,119 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><?php echo Config('sys_info')['sys_company']; ?> - 外贸管理系统</title>
+<script src="/tms/js/all.js" language="javascript"></script>
+</head>
+<body>
+<h1>系统菜单管理</h1>
+<div class="mypanel">
+    <div class="mypanel-heading">
+	    <div class="mypanel-lead"><em>系统菜单管理</em>可以在此添加/修改系统菜单信息</div>
+    </div>
+
+    <div class="mypanel-body">
+      <div id="toolbar" class="toolbar">
+        	<div class="pull-right">
+                <a href="/tms/index.php/tms_setting/menu/edit" class="btn-add" title="添加" >添加</a>
+            </div>
+            <div class="pull-left">
+            </div>
+        </div>
+            <table id="mytable" class="mytable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>菜单名称</th>
+                    <th>菜单地址</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="myclasssort">
+            <tr>
+              <td>&nbsp;</td>
+              <td class="tdleft"><input name="save" type="button" id="save" onClick="savesort();" value="保存排序"></td>
+              <td class="tdleft">&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
+            <?php $parentid=""; ?>
+            {foreach name="list" item="v" key="k"}
+            <tr id="a_<?php echo $v['id']; ?>-<?php echo $v['parentid']; ?>" class="myclassitem myclassitem-<?php echo $v['parentid']; ?>" data-parent="<?php echo $v['parentid']; ?>" data-id="<?php echo $v['id']; ?>" data-i="<?php echo $k; ?>">
+            <td><?php echo $k+1; ?></td>
+            <td class="tdleft">
+                <?php
+                	for($i=0;$i<strlen($v['tree']);$i++)
+                    {
+                    	$treecode=substr($v['tree'],$i,1);
+                        echo "<span class='tree_".$treecode."'></span>";
+                    }
+                ?><?php echo $v['menuname']; ?></td>
+            <td class="tdleft"><?php echo $v['url']; ?></td>
+            <td>
+                <a href="/tms/index.php/tms_setting/menu/edit?id=<?php echo $v['id']; ?>">编辑</a>
+                <a href="/tms/index.php/tms_setting/menu/del?id=<?php echo $v['id']; ?>">删除</a>
+            </td>
+            </tr>
+            {/foreach}
+            <tr>
+              <td>&nbsp;</td>
+              <td class="tdleft"><input name="save2" type="button" onClick="savesort();" id="save2" value="保存排序"></td>
+              <td class="tdleft">&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
+            </tbody>
+            </table>
+        </div>
+</div>
+</body>
+<script>
+	//开始排序，隐藏非同一级菜单
+	$('#myclasssort').sortable({ start: function(event, ui) {
+		var parentid=$(ui.item).attr("data-parent");
+		$('.myclassitem').addClass("hide");
+		$('.myclassitem-'+parentid).removeClass("hide");
+		 }});
+	//排序完成，将各自的子菜单全部更新排序
+	$('#myclasssort').sortable({ update: function(event, ui) {
+		var prev=$(ui.item).prev();
+		var next=$(ui.item).next();
+		moveitem($($(ui.item).prev()).attr("data-id"),$($(ui.item).prev()).attr("data-parent"));
+		moveitem($(ui.item).attr("data-id"),$(ui.item).attr("data-parent"));
+		moveitem($($(ui.item).next()).attr("data-id"),$($(ui.item).next()).attr("data-parent"));
+		}});
+	//排序结束，将隐藏的菜单显示出来
+	$('#myclasssort').sortable({ stop: function(event, ui) {
+		$('#myclasssort tr').removeClass("hide");
+		 }});
+	//保存排序，将排序转换成字符串提交到sort
+	function savesort()
+	{
+		var itemlist=$('.myclassitem');
+		var idlist="";
+		for(i=0;i<itemlist.length;i++)
+		{
+			id=strcut(itemlist[i].id,"_","-",2);
+			if(id!="")
+			{
+				if(idlist!="")idlist+=",";
+				idlist+=id;
+			}
+		}
+		document.location="sort.html?id="+idlist;
+	}
+	//移动同一类别下面的菜单到本菜单下面
+	function moveitem(id,parentid)
+	{
+		var item=$("#a_"+id+"-"+parentid);
+		var list=$(".myclassitem-"+id);
+		for(var i=list.length-1;i>=0;i--)
+		{
+			var parentid=$(list[i]).attr("data-parent");
+			var id=$(list[i]).attr("data-id");
+			item.after($(list[i]).prop("outerHTML"));
+			$(list[i]).remove();
+			moveitem(id,parentid);
+		}
+	}
+</script>
+</html>

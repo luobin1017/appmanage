@@ -1,0 +1,145 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title><?php echo Config('sys_info')['sys_company']; ?> - 外贸管理系统</title>
+    <script src="/tms/js/all.js" language="javascript"></script>
+</head>
+<body>
+<h1>供应商管理</h1>
+<div class="mypanel">
+    <div class="mypanel-heading">
+        <div class="mypanel-lead"><em>供应商管理</em>可以在此修改客户信息</div>
+    </div>
+
+    <div class="mypanel-body">
+        <div id="toolbar" class="toolbar">
+            <div class="pull-right">
+                <a href="/tms/index.php/tms_purchase/suppliers/edit" class="btn-add" title="添加" >添加</a>
+            </div>
+            <div class="pull-left">
+                <form name="form1" action="?" method="post">
+                    <table border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td>
+                                <table border="0">
+                                    <tr>
+                                        <td height="26" align="center">供应商代码</td>
+                                        <td align="center"><input name="no" type="text" id="no" value="<?php echo input('no')?>" size="12"></td>
+                                        <td align="center">公司名称</td>
+                                        <td align="center"><input name="name" type="text" id="name" value="<?php echo input('name')?>" size="12"></td>
+                                        <td align="center">所在地区</td>
+                                        <td align="center"><input name="city" type="text" id="city" value="<?php echo input('city')?>" size="12"></td>
+                                        <td align="center">联系人名称</td>
+                                        <td align="center"><input name="contact" type="text" id="contact" value="<?php echo input('contact')?>" size="12"></td>
+                                        <td align="center"><input name="Submit" type="submit" class="searchbuttom" id="Submit" value="搜索"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table border="0">
+                                    <tr>
+                                        <td>电话</td>
+                                        <td align="center"><input name="phone" type="text" id="phone" value="<?php echo input('phone')?>" size="12"></td>
+                                        <td align="center">邮箱</td>
+                                        <td><input name="email" type="text" id="email" value="<?php echo input('email')?>" size="12"></td>
+                                        <td align="center">传真</td>
+                                        <td align="center"><input name="fax" type="text" id="fax" value="<?php echo input('fax')?>" size="12"></td>
+                                        <td align="center">网址</td>
+                                        <td align="center"><input name="web" type="text" id="web" value="<?php echo input('fax')?>" size="12"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table border="0">
+                                    <tr>
+                                        <td align="center">是否黑名单</td>
+                                        <td align="center"><?php echo showselect('black',input('black', ''),array(array('是','1'),array('否','0')),"请选择",'');?></td>
+                                        <td align="center">经营产品</td>
+                                        <td><input name="jinyin" type="text" id="jinyin" value="<?php echo input('jinyin')?>" size="12"></td>
+                                        <td align="center">曾询价产品</td>
+                                        <td align="center"><input name="xunjia" type="text" id="xunjia" value="<?php echo input('xunjia')?>" size="12"></td>
+
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table border="0">
+                                    <tr>
+                                        <td align="center"><?php echo showselect('makename',input('makename', ''),$userarray,"建档人",'');?></td>
+                                        <td height="26" align="center">时间</td>
+                                        <td align="center"><input name="makedate1" type="text" id="makedate1" class="easyui-datebox" value="<?php echo input('makedate1', '')?>" size="13"></td>
+                                        <td align="center">&nbsp;到&nbsp;</td>
+                                        <td align="center"><input name="makedate2" type="text" id="makedate2" class="easyui-datebox" value="<?php echo input('makedate2', '')?>" size="13"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                    </table>
+                </form>
+            </div>
+        </div>
+        <table id="mytable" class="mytable">
+            <thead>
+            <tr>
+                <th><input name="btSelectAll" type="checkbox"></th>
+                <th>ID</th>
+                <th>供应商代码</th>
+                <th>公司中文名</th>
+                <th>所在地区</th>
+                <th>联系人</th>
+                <th>联系电话</th>
+                <th>邮箱</th>
+                <th>黑名单</th>
+                <th>新供应商</th>
+                <th>曾询价产品</th>
+                <th>建档人</th>
+                <th>更新时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $rs as $k=>$v }
+            <tr style="{if condition="$v.blacklist == 1"}color:red;font-weight:700{else/}{/if}" >
+            <td><input data-index="0" name="btSelectItem" type="checkbox"></td>
+            <td><?php echo $k+1; ?></td>
+            <td><?php echo $v['allno']; ?></td>
+            <td><?php echo $v['name']; ?></td>
+            <td><?php echo $v['city']; ?></td>
+            <td><?php echo $v['contact1']; ?></td>
+            <td><?php echo $v['phone1']; ?></td>
+            <td><?php echo $v['email1']; ?></td>
+            <td>{if condition="$v.blacklist == 1"}是{else/}否{/if}</td>
+            <td>{if condition="$v.isnew == 1"}<span style='color:red;'>是</span>{else/}<span>否</span>{/if}</td>
+            <td><?php echo $v['xunjia']; ?></td>
+            <td><?php echo $v['username']; ?></td>
+            <td>{if condition="$v.upuser == ''"}{else/}<?php echo $v['username']; ?>,<?php echo $v['uptime']; ?>{/if}</td>
+            <td>
+                <a href="edit?id=<?php echo $v['id']; ?>">编辑</a>
+                <a href="#" onclick="parent.menubar_add('查看<?php echo $v['id']; ?>','/tms/index.php/tms_purchase/suppliers/suppliers_show.html?id=<?php echo $v['id']; ?>');">查看</a>
+            </td>
+            </tr>
+            {/foreach}
+            <?php if(count($rs)<=0){ ?>
+            <tr><td colspan="15" style="height:100px;">没有符合 <span style="color:red; font-weight:bold;"><?php echo $sqlwhere; ?></span> 的搜索结果</td></tr>
+            <?php } ?>
+            </tbody>
+        </table>
+        <div class="table-pagination" style="display: block;">
+      <div class="pull-right"><?php echo $page; ?></div>
+            <div class="pull-left pagination-detail">
+                总共 <?php echo $total; ?> 条记录，<?php echo $pagesize; ?>条 / 页，页数 <?php echo $pagenow; ?> / <?php echo $totalPage; ?>
+                </span>
+            </div>
+      </div>
+    </div>
+</div>
+</body>
+</html>

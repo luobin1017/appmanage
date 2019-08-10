@@ -1,0 +1,297 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><?php echo Config('sys_info')['sys_company']; ?> - 外贸管理系统</title>
+<script src="/tms/js/all.js" language="javascript"></script>
+<script>
+    function hibb(objname){
+        var tmid = document.getElementById(objname);
+        if(tmid.style.display==''){
+            tmid.style.display="none";
+        }else{
+            tmid.style.display="";
+        }
+    }
+</script>
+<style type="text/css">
+    .bbitem { float:left; padding:3px;}
+    .bbitem span { float:left; display:block; width:79px;}
+</style>
+</head>
+<body>
+<h1>添加/编辑客户信息</h1>
+<div class="mypanel">
+	<div class="mypanel-heading">
+        <div class="mypanel-lead"><em>添加/编辑客户信息</em>可以在此添加/修改客户的详细信息</div>
+    </div>
+
+    <div class="mypanel-body">
+        <div id="myTabContent" class="mytab-content">
+            <div class="mytab-pane active">
+                <div class="widget-body no-padding">
+                    <form id="basic-form" method="POST" action="/tms/index.php/tms_business/customerdata/update">
+                        <table class="table-setting">
+                          <tr>
+                            <td width="120" align="right">客户代码
+                              <input name="id" type="hidden" value="<?php echo $rs['id']; ?>"></td>
+                            <td><font color="red"><?php echo $rs['allno']; ?>&nbsp;</font></td>
+                            <td width="120">客户来源</td>
+                            <td><?php echo showselect('source',$rs['source'],$source_arr,"请选择来源",'');?></td>
+                            <td>所属国家</td>
+                            <td><?php echo showselect('nationalid',$rs['nationalid'],$nationalarr,"国家/地区",'');?>
+                              <!--<input name="AreaID" type="hidden" id="AreaID" value="0" />-->
+                            <font color="red">*</font></td>
+                          </tr>
+                          <tr class="listtd1">
+                        <td>公司英文名</td>
+                        <td><font >
+                            <input name="enname" type="text" id="enname" value="<?php echo $rs['enname']; ?>" />
+                            *</font></td>
+                        <td>客户类型</td>
+                        <td>
+                            <select name="class">
+                                <option value="A" {if condition="$rs.class=='A'"}selected="selected"{/if}>A类</option>
+                                <option value="B" {if condition="$rs.class=='B'"}selected="selected"{/if}>B类</option>
+                                <option value="C" {if condition="$rs.class=='C'"}selected="selected"{/if}>C类</option>
+                            </select>
+                        </td>
+                        <td>所属业务员</td>
+                        <td>
+                            <?php echo showselect('username',$rs['username'],$userarray,"所有人",'');?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>公司中文名</td>
+                        <td><input name="cnname" type="text" id="cnname" value="<?php echo $rs['cnname']; ?>" /></td>
+                        <td>父公司</td>
+                        <td><input name="parentno" type="text" id="customid" value="<?php echo $rs['parentno']; ?>" readonly="readonly" />
+                            <a href="javascript:void(0)" onclick='SelectID("custom","",function(){})'>选择</a>
+                            <a href="#" onclick="setinputvalue('customid','')">清除</a></td>
+                        <td>建档时间</td>
+                        <td><?php echo $rs['time']; ?></td>
+                    </tr>
+                    <tr>
+                        <td>联系人1</td>
+                        <td><input name="contact1" type="text" id="contact1" value="<?php echo $rs['contact1']; ?>" />
+                            <font color="red"> *</font></td>
+                        <td>邮箱1</td>
+                        <td><input name="email1" type="text" id="email1" value="<?php echo $rs['email1']; ?>" />
+                            <font color="red"> *</font></td>
+                        <td>电话1</td>
+                        <td><input name="phone1" type="text" id="phone1" value="<?php echo $rs['phone1']; ?>" /></td>
+                    </tr>
+                    <tr>
+                        <td>联系人2</td>
+                        <td><input name="contact2" type="text" id="contact2" value="<?php echo $rs['phone1']; ?>" /><?php echo $rs['contact1']; ?></td>
+                        <td>邮箱2</td>
+                        <td><input name="email2" type="text" id="email2" value="<?php echo $rs['email2']; ?>" /></td>
+                        <td>电话2</td>
+                        <td>
+                            <input name="phone2" type="text" id="phone2" value="<?php echo $rs['phone2']; ?>" />
+                            <a href="javascript:void(null)" onclick="if(contact_list.style.display=='none'){contact_list.style.display='';}else{contact_list.style.display='none';}">更多联系人>></a>
+                        </td>
+                    </tr>
+    
+                    <tbody id="contact_list" style="display:none;">
+                    <tr>
+                        <td>联系人3</td>
+                        <td><input name="contact3" type="text" id="contact3" value="<?php echo $rs['contact3']; ?>" /></td>
+                        <td>邮箱3</td>
+                        <td><input name="email3" type="text" id="email3" value="<?php echo $rs['email3']; ?>" /></td>
+                        <td>电话3</td>
+                        <td><input name="phone3" type="text" id="phone3" value="<?php echo $rs['phone3']; ?>" /></td>
+                    </tr>
+                    <tr>
+                        <td>联系人4</td>
+                        <td><input name="contact4" type="text" id="contact4" value="<?php echo $rs['contact4']; ?>" /></td>
+                        <td>邮箱4</td>
+                        <td><input name="email4" type="text" id="email4" value="<?php echo $rs['email4']; ?>" /></td>
+                        <td>电话4</td>
+                        <td><input name="phone4" type="text" id="phone4" value="<?php echo $rs['phone4']; ?>" /></td>
+                    </tr>
+                    <tr>
+                        <td>联系人5</td>
+                        <td><input name="contact5" type="text" id="contact5" value="<?php echo $rs['contact5']; ?>" /></td>
+                        <td>邮箱5</td>
+                        <td><input name="email5" type="text" id="email5" value="<?php echo $rs['email5']; ?>" /></td>
+                        <td>电话5</td>
+                        <td><input name="phone5" type="text" id="phone5" value="<?php echo $rs['phone5']; ?>" /></td>
+                    </tr>
+                    <tr>
+                        <td>联系人6</td>
+                        <td><input name="contact6" type="text" id="contact6" value="<?php echo $rs['contact6']; ?>" /></td>
+                        <td>邮箱6</td>
+                        <td><input name="email6" type="text" id="email6" value="<?php echo $rs['email6']; ?>" /></td>
+                        <td>电话6</td>
+                        <td><input name="phone6" type="text" id="phone6" value="<?php echo $rs['phone6']; ?>" /></td>
+                    </tr>
+                    </tbody>
+                    <tbody style="display:none">
+                    <tr>
+                        <td>联系人7</td>
+                        <td><input name="contact7" type="text" id="contact7" value="<?php echo $rs['contact7']; ?>" /></td>
+                        <td>邮箱7</td>
+                        <td><input name="email7" type="text" id="email7" value="<?php echo $rs['email7']; ?>" /></td>
+                        <td>电话7</td>
+                        <td><input name="phone7" type="text" id="phone7" value="<?php echo $rs['phone7']; ?>" /></td>
+                    </tr>
+                    <tr>
+                        <td>联系人8</td>
+                        <td><input name="contact8" type="text" id="contact8" value="<?php echo $rs['contact8']; ?>" /></td>
+                        <td>邮箱8</td>
+                        <td><input name="email8" type="text" id="email8" value="<?php echo $rs['email8']; ?>" /></td>
+                        <td>电话8</td>
+                        <td><input name="phone8" type="text" id="phone8" value="<?php echo $rs['phone8']; ?>" /></td>
+                    </tr>
+                    <tr>
+                        <td>联系人9</td>
+                        <td><input name="contact9" type="text" id="contact9" value="<?php echo $rs['contact9']; ?>" /></td>
+                        <td>邮箱9</td>
+                        <td><input name="email9" type="text" id="email9" value="<?php echo $rs['email9']; ?>" /></td>
+                        <td>电话9</td>
+                        <td><input name="phone9" type="text" id="phone9" value="<?php echo $rs['phone9']; ?>" /></td>
+                    </tr>
+                    <tr>
+                        <td>联系人10</td>
+                        <td><input name="contact10" type="text" id="contact10" value="<?php echo $rs['contact10']; ?>" /></td>
+                        <td>邮箱10</td>
+                        <td><input name="email10" type="text" id="email10" value="<?php echo $rs['email10']; ?>" /></td>
+                        <td>电话10</td>
+                        <td><input name="phone10" type="text" id="phone10" value="<?php echo $rs['phone10']; ?>" /></td>
+                    </tr>
+                    </tbody>
+    
+                    <tr>
+                        <td>传真</td>
+                        <td><input name="fax" type="text" id="fax" value="<?php echo $rs['fax']; ?>" /></td>
+                        <td>网址</td>
+                        <td><input name="web" type="text" id="web" value="<?php echo $rs['web']; ?>" /></td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr class="listtd1">
+                        <td>公司英文地址</td>
+                        <td colspan="2">
+                            <textarea name="enaddress" cols="50" rows="1" id="enaddress" onfocus="ResizeTextarea(this,1);" onkeyup="javascript:ResizeTextarea(this,1);"><?php echo $rs['enaddress']; ?></textarea>
+                        </td>
+                        <td colspan="3"></td>
+                    </tr>
+                    <tr class="listtd1">
+                        <td>公司中文地址</td>
+                        <td>
+                            <textarea name="cnaddress" cols="50" rows="1" id="cnaddress" onfocus="ResizeTextarea(this,1);" onkeyup="javascript:ResizeTextarea(this,1);"><?php echo $rs['cnaddress']; ?></textarea>
+                        </td>
+                        <td colspan="3"></td>
+                    </tr>
+                    <tr class="listtd1">
+                        <td>社交软件</td>
+                        <td colspan="5">
+    
+                            <table border="0" cellpadding="3" cellspacing="1" >
+                                <tr class="listtd1">
+                                    <td colspan="6">
+                                        <div style="clear:both; padding-bottom:5px;">
+                                            <label for="qq_i"><input type="checkbox"  name="qq_i" id="qq_i" onclick="hibb('qq_d');" /> QQ</label>
+                                            <label for="whatsapp_i"><input type="checkbox"  name="whatsapp_i" id="whatsapp_i" onclick="hibb('whatsapp_d');" /> WhatsApp</label>
+                                            <label for="webchat_i"><input type="checkbox"  name="webchat_i" id="webchat_i" onclick="hibb('webchat_d');" /> Wechat</label>
+                                            <label for="facebook_i"><input type="checkbox"  name="facebook_i" id="facebook_i" onclick="hibb('facebook_d');" /> Facebook</label>
+                                            <label for="google_i"><input type="checkbox"  name="google_i" id="google_i" onclick="hibb('google_d');" /> Google Plus</label>
+                                            <label for="linkedin_i"><input type="checkbox"  name="linkedin_i" id="linkedin_i" onclick="hibb('linkedin_d');" /> Linkedin</label>
+                                            <label for="pinterest_i"><input type="checkbox"  name="pinterest_i" id="pinterest_i" onclick="hibb('pinterest_d');" /> Pinterest</label>
+                                            <label for="twitter_i"><input type="checkbox"  name="twitter_i" id="twitter_i" onclick="hibb('twitter_d');" /> Twitter</label>
+                                            <label for="instagram_i"><input type="checkbox"  name="instagram_i" id="instagram_i" onclick="hibb('instagram_d');" /> Instagram</label>
+                                            <label for="youtube_i"><input type="checkbox"  name="youtube_i" id="youtube_i" onclick="hibb('youtube_d');" /> Youtube</label>
+                                            <label for="skype_i"><input type="checkbox"  name="skype_i" id="skype_i" onclick="hibb('skype_d');" /> Skype</label>
+                                        </div>
+                                        <div class="bbitem" style="display:none;" id="qq_d"><span>QQ</span><input name="qq" type="text" id="QQ" value="<?php echo $rs['qq']; ?>" /></div>
+                                        <div class="bbitem" style="display:none;" id="whatsapp_d"><span>WhatsApp</span><input name="whatsapp" type="text" id="WhatsApp" value="<?php echo $rs['whatsapp']; ?>" /></div>
+                                        <div class="bbitem" style="display:none;" id="webchat_d"><span>Webchat</span><input name="webchat" type="text" id="Webchat" value="<?php echo $rs['webchat']; ?>" /></div>
+                                        <div class="bbitem" style="display:none;" id="facebook_d"><span>Facebook</span><input name="facebook" type="text" id="Facebook" value="<?php echo $rs['facebook']; ?>" /></div>
+                                        <div class="bbitem" style="display:none;" id="google_d"><span>Google Plus</span><input name="google" type="text" id="Google" value="<?php echo $rs['google']; ?>" /></div>
+                                        <div class="bbitem" style="display:none;" id="linkedin_d"><span>Linkedin</span><input name="linkedin" type="text" id="Linkedin" value="<?php echo $rs['linkedin']; ?>" /></div>
+                                        <div class="bbitem" style="display:none;" id="pinterest_d"><span>Pinterest</span><input name="pinterest" type="text" id="Pinterest" value="<?php echo $rs['pinterest']; ?>" /></div>
+                                        <div class="bbitem" style="display:none;" id="twitter_d"><span>Twitter</span><input name="twitter" type="text" id="Twitter" value="<?php echo $rs['twitter']; ?>" /></div>
+                                        <div class="bbitem" style="display:none;" id="instagram_d"><span>Instagram</span><input name="instagram" type="text" id="Instagram" value="<?php echo $rs['instagram']; ?>" /></div>
+                                        <div class="bbitem" style="display:none;" id="youtube_d"><span>Youtube</span><input name="youtube" type="text" id="Youtube" value="<?php echo $rs['youtube']; ?>" /></div>
+                                        <div class="bbitem" style="display:none;" id="skype_d"><span>Skype</span><input name="skype" type="text" id="Skype" value="<?php echo $rs['skype']; ?>" /></div>
+                                    </td>
+                                </tr>
+                            </table>
+    
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>备注</td>
+                        <td colspan="5">
+                            <textarea id="content" name="content" cols="20" rows="2" class="ckeditor"><?php echo $rs['content']; ?></textarea>
+                        </td>
+                    </tr>
+                    <tr class="listtd1">
+                        <td>快递帐号</td>
+                        <td><textarea id="ex" name="ex" rows="1" cols="30"><?php echo $rs['ex']; ?></textarea>
+                            <select name="select" onchange="if(this.options[this.selectedIndex].value!='0'){var exno=window.prompt('请输入'+this.options[this.selectedIndex].value+'快递号码','');if(exno!=''&&exno!=null){setinputvalue('ex',getinputvalue('ex')+this.options[this.selectedIndex].value+' 号码 '+exno + ';');}}this.selectedIndex=0;">
+                                <option value="0">选择快递公司</option>
+                                <option value="FedEX">FedEX</option>
+                                <option value="DHL">DHL</option>
+                                <option value="TNT">TNT</option>
+                                <option value="UPS">UPS</option>
+                                <option value="EMS">EMS</option>
+                                <option value="OCS">OCS</option>
+                            </select></td>
+                        <td>是否黑名单</td>
+                        <td>
+                            <label for="blacklist">
+                                <input name="blacklist" type="checkbox" id="blacklist" value="1" {if condition="$rs.blacklist==1"}checked="checked"{/if} />
+                                是</label>、原因
+                            <textarea id="black" name="black" rows="1" onfocus="ResizeTextarea(this,1);" onkeyup="javascript:ResizeTextarea(this,1);"><?php echo $rs['black']; ?></textarea>
+                        </td>
+                        <td>曾用 Air Mail  寄样品</td>
+                        <td><label for="isAirMail">
+                            <input name="isairmail" type="checkbox" id="isAirMail" value="1"  {if condition="$rs.isairmail==1"}checked="checked"{/if}/> 是</label>、备注
+                            <textarea id="AirMail" name="airmail" cols="30" rows="1" onfocus="ResizeTextarea(this,1);" onkeyup="javascript:ResizeTextarea(this,1);"><?php echo $rs['airmail']; ?></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>其他选项</td>
+                        <td colspan="5">
+                            <label for="vemail"><input name="vemail" type="checkbox" id="vemail" value="1"  {if condition="$rs.vemail==1"}checked="checked"{/if}/> 邮箱失效</label>
+                            <label for="nosend"><input name="nosend" type="checkbox" id="nosend" value="1"  {if condition="$rs.nosend==1"}checked="checked"{/if}/> 不可发广告邮件</label>
+                            <label for="isqt"><input name="isqt" type="checkbox" id="isqt" value="1"  {if condition="$rs.isqt==1"}checked="checked"{/if}/> 询过价</label>
+                            <label for="ispi"><input name="ispi" type="checkbox" id="ispi" value="1"  {if condition="$rs.ispi==1"}checked="checked"{/if}/> 开过PI</label>
+                            <label for="isdn"><input name="isdn" type="checkbox" id="isdn" value="1"  {if condition="$rs.isdn==1"}checked="checked"{/if}/> 开过Debit Note</label>
+                            <label for="isci"><input name="isci" type="checkbox" id="isci" value="1"  {if condition="$rs.isci==1"}checked="checked"{/if}/> 寄过样板</label>
+                            <label for="isqp"><input name="isqp" type="checkbox" id="isqp" value="1"  {if condition="$rs.isqp==1"}checked="checked"{/if}/> 常询价不下单</label>
+                            <label for="isprice"><input name="isprice" type="checkbox" id="isprice" value="1"  {if condition="$rs.isprice==1"}checked="checked"{/if}/> 没有目标的要价</label>
+                            <label for="isfall"><input name="isfall" type="checkbox" id="isfall" value="1"  {if condition="$rs.isfall==1"}checked="checked"{/if}/> 落后国家</label>
+                        </td>
+                    </tr>
+                            <tfoot>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <button type="submit" onClick="return checkform();">确定</button>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+function checkform()
+{
+	if ($("#source").val()==""){alert("请选择客户来源！");return false;}
+	if ($("#nationalid").val()==""){alert("请选择客户所属国家/地区！");return false;}
+	return true;
+}
+</script>
+</body>
+</html>

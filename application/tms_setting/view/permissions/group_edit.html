@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><?php echo Config('sys_info')['sys_company']; ?> - 外贸管理系统</title>
+<script src="/tms/js/all.js" language="javascript"></script>
+</head>
+<body>
+<h1>添加/编辑权限分组</h1>
+<div class="mypanel">
+	<div class="mypanel-heading">
+        <div class="mypanel-lead"><em>添加/编辑权限分组</em>可以在此添加/修改权限分组的详细信息</div>
+    </div>
+
+    <div class="mypanel-body">
+        <div id="myTabContent" class="mytab-content">
+            <div class="mytab-pane active">
+                <div class="widget-body no-padding">
+                    <form id="basic-form" method="POST" action="/tms/index.php/tms_setting/permissions/group_update">
+                        <table class="table-setting">
+                          <tr>
+                            <td width="120" align="right">权限分组名称
+                              <input name="id" type="hidden" value="<?php echo $v['id']; ?>"></td>
+                            <td><input name="name" type="text" id="name" value="<?php echo $v['name']; ?>" size="20"></td>
+                          </tr>
+                          <tr>
+                            <td align="right">权限分组说明</td>
+                            <td><textarea name="memo" cols="50" rows="5" id="memo"><?php echo $v['memo']; ?></textarea></td>
+                          </tr>
+                          <tr>
+                            <td width="120" align="right"> 权限</td>
+                            <td>
+                            	<table id="mytable" class="mytable">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>权限名称</th>
+                                        {foreach name="plist" item="p" key="k"}
+                                        <th><?php echo $p; ?><input type="checkbox" onClick="checkpermissions(this,<?php echo $k+1; ?>);" ></th>
+                                        {/foreach}
+                                    </tr>
+                                </thead>
+                                <tbody id="myclasssort">
+                                {foreach name="permissions" item="permissions" key="k"}
+                                <tr class="myclassitem" id="myclasssort_<?php echo $v['id']; ?>">
+                                <td><?php echo $k+1; ?></td>
+                                <td><?php echo $permissions['name']; ?></td>
+                                {foreach name="plist" item="p" key="k2"}
+                                <td>
+                                    <?php
+                                        if(strstr(','.$permissions['permissions'].',',','.(string)($k2+1).',')!=false)
+                                        {
+                                        	$ptemp=$permissions['no'].numtochr($k2+1,2);
+                                            $pcheck="";
+                                            if(strstr(','.$v['permissions'].',',','.$ptemp.',')!=false)
+                                            {
+                                            	$pcheck="checked";
+                                            }
+                                            echo '<input type="checkbox" class="permissions_'.($k2+1).'" name="permissions[]" value="'.$ptemp.'" '.$pcheck.' />';
+                                        }
+                                    ?>
+                                </td>
+                                {/foreach}
+                                </tr>
+                                {/foreach}
+                                </tbody>
+                                </table>
+                            </td>
+                          </tr>
+                            <tfoot>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <button type="submit">确定</button>
+                                        <button type="reset">重置</button>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+function checkpermissions(obj,id)
+{
+	if ($(obj).prop("checked"))
+	{
+		$(".permissions_"+id).attr("checked", true);
+	}
+	else
+	{
+		$(".permissions_"+id).attr("checked", false);
+	}
+}
+</script>
+</body>
+</html>

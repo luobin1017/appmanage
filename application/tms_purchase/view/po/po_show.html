@@ -1,0 +1,184 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>江森制品有限公司 - 外贸管理系统</title>
+    <script src="/tms/js/all.js" language="javascript"></script>
+    <style>
+        /*show*/
+        .table  .text-c-tr td{ vertical-align: middle;  text-align: center; }
+        .table  .text-c-td{ text-align: left!important;  }
+    </style>
+</head>
+<body>
+<h1><strong>查看PO资料</strong></h1>
+<div class="mypanel">
+    <div class="mypanel-heading">
+        <div class="mypanel-lead"><em></em>可以在此查看PO信息</div>
+    </div>
+    <table width="1191" class="table table-border table-bordered table-bg table-hover">
+        <tr class="text-c ">
+            <td width="148">供应商编码</td>
+            <td width="453"><?php echo $rs['suppliersid']; ?></td>
+            <td width="148">Po No.</td>
+            <td width="440"><?php echo $rs['allno']; ?></td>
+        </tr>
+        <tr class="text-c ">
+            <td>供应商名称</td>
+            <td><?php echo $rs['suppliersname']; ?></td>
+            <td>联系人</td>
+            <td><?php echo $rs['contact']; ?></td>
+        </tr>
+        <tr class="text-c ">
+            <td>地址</td>
+            <td><?php echo $rs['suppliersaddress']; ?></td>
+            <td>E-mail</td>
+            <td><?php echo $rs['email']; ?></td>
+        </tr>
+        <tr class="text-c ">
+            <td>联系电话</td>
+            <td><?php echo $rs['phone']; ?></td>
+            <td>传真</td>
+            <td><?php echo $rs['fax']; ?></td>
+        </tr>
+        <tr class="text-c ">
+            <td>制单人</td>
+            <td><?php echo $rs['makename']; ?></td>
+            <td>制单时间</td>
+            <td><?php echo $rs['makedate']; ?></td>
+        </tr>
+
+    </table>
+    <!---->
+  <table width="1191" class="table table-border table-bordered table-bg table-hover">
+        <tr class="text-c-tr" style="background-color: #9d9d9d">
+            <td>序号</td>
+            <td>物料编码</td>
+            <td>物料描述</td>
+            <td>包装</td>
+            <td>数量</td>
+            <td><p>单价</p>
+          <p>(货送深圳)</p></td>
+            <td>小计</td>
+        </tr>
+      <?php $num=0; $cfeetype='';?>
+      {foreach $itemarr as $k=>$v}
+      <?php
+      		$num += $v['num'];
+      		$unit=$v['unit'];
+      ?>
+        <tr class="text-c text-c-tr">
+            <td><?php echo $k+1; ?></td>
+            <td>
+                {if condition="$v['picture']!=''"}<img src="<?php echo $v['picture'];?>" width="80" height="80" />
+                {elseif condition="$v['feetype']==2"}增值税费用
+                {elseif condition="$v['feetype']==3"}物料费用
+                {/if}
+            </td>
+            <td class="text-c-td">
+                 <span style="font-weight:bold; font-size:14px;">
+			<?php echo $v['seminame']; ?>            </span><br />
+
+                <div style="max-width:600px">
+                    <script>
+                        var pdtext<?php echo $v['id']; ?>="<?php echo strtojs($v["semiinfo"]); ?>";
+                        var pd<?php echo $v['id']; ?>=new JDetion("pd<?php echo $v['id']; ?>",null,false,pdtext<?php echo $v['id']; ?>);
+                        pd<?php echo $v['id']; ?>.Show();
+                    </script>
+                </div>
+            </td>
+            <td width="120" align="right"><?php echo $v['packing']; ?></td>
+            <td width="180" align="right"><?php echo str3x($v['num']); ?></td>
+            <td width="180" align="right"><?php echo $rs['currencys']." ".strtocurr($v['price']); ?></td>
+            <td width="180" align="right"><?php echo $rs['currencys']." ".strtocurr($v['num']*$v['price']); ?></td>
+        </tr>
+      {/foreach}
+      <tr class="text-c-tr">
+          <td ></td>
+          <td ></td>
+          <td ></td>
+          <td >合计 ：</td>
+          <td><?php echo $num." ".$unit;?></td>
+          <td ></td>
+          <td ><?php echo $rs['currencys']." ".strtocurr($rs['amount']); ?></td>
+      </tr>
+    </table>
+    <!---->
+    <table width="1195" class="table table-border table-bordered table-bg table-striped table-hover">
+        <tr>
+            <td width="166">付款条件</td>
+            <td width="1013"><?php echo $rs['deliverymethod']; ?></td>
+        </tr>
+        <tr>
+            <td>货期</td>
+            <td><?php echo $rs['delivery']; ?></td>
+        </tr>
+        <tr>
+            <td>验货日期</td>
+            <td><?php echo $rs['inspection']; ?></td>
+        </tr>
+        <tr>
+            <td>交货地址</td>
+            <td><?php echo $rs['address']; ?></td>
+        </tr>
+        <tr>
+            <td>备注</td>
+            <td><?php echo $v['content']; ?></td>
+        </tr>
+        <tr>
+            <td>使用备注</td>
+            <td><?php echo $rs['usecontent']; ?></td>
+        </tr>
+        <tr>
+            <td>内箱正唛</td>
+            <td><?php echo $rs['mark2']; ?></td>
+        </tr>
+        <tr>
+          <td>内箱侧唛</td>
+            <td><?php echo $rs['side2']; ?></td>
+        </tr>
+        <tr>
+          <td>外箱正唛</td>
+            <td><?php echo $rs['mark']; ?></td>
+        </tr>
+        <tr>
+          <td>外箱侧唛</td>
+            <td><?php echo $rs['side']; ?></td>
+        </tr>
+        <tr>
+            <td>相关DN</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>是否主产品</td>
+            <td>{if condition="$rs.ismain==1"}是{else/}否{/if}</td>
+        </tr>
+        <tr>
+            <td>是否一达通付款</td>
+            <td>{if condition="$rs.isonetouch==1"}是{else/}否{/if}</td>
+        </tr>
+        <tr>
+            <td>是否淘悦购单</td>
+            <td>{if condition="$rs.istaoyue==1"}是{else/}否{/if}</td>
+        </tr>
+    </table>
+    <!---->
+<table height="20" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-bottom: 20px">
+        <tr>
+            <td width="120" align="center"><input name="modify" type="button" id="modify" value="修改PO资料" onclick="window.location='edit.html?action=modify&id=<?php echo $rs['id']; ?>'" /></td>
+            <td width="120" align="center"><input name="return" type="button" id="return" value="返回列表" onclick="document.location='index.html';" /></td>
+        </tr>
+    </table>
+
+
+</div>
+</body>
+<script>
+    $(document).ready(function(){
+        $(".contact-taggle").hide();
+        $("#hidebtn").click(function() {
+            $(".contact-taggle").toggle();
+        })
+    });
+</script>
+</html>

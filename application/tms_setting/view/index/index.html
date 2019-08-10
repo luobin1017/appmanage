@@ -1,0 +1,227 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><?php echo Config('sys_info')['sys_company']; ?> - 外贸管理系统</title>
+<script src="/tms/js/all.js" language="javascript"></script>
+</head>
+<body>
+<h1>系统设置</h1>
+<div class="mypanel">
+<div class="mypanel-heading">
+        <div class="mypanel-lead"><em>系统设置</em>可以在此修改系统中的一些设置</div>
+        <ul class="nav">
+            <li class="active"><a href="#basic">基础设置</a></li>
+            <li><a href="#email">邮件设置</a></li>
+            <li><a href="#variable">系统变量</a></li>
+        </ul>
+    </div>
+
+    <div class="mypanel-body">
+        <div id="myTabContent" class="mytab-content">
+            <div class="mytab-pane active" id="basic">
+                <div class="widget-body no-padding">
+                    <form id="basic-form" method="POST" action="/tms/index.php/tms_setting/index/update">
+                        <table class="table-setting">
+                          <tr>
+                            <td width="120" align="right">公司名称</td>
+                            <td><input name="sys_company" type="text" value="<?php echo $v['sys_company']; ?>" size="50"></td>
+                            <td>&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td align="right">公司英文名称</td>
+                            <td><input name="sys_encompany" type="text" value="<?php echo $v['sys_encompany']; ?>" size="50"></td>
+                            <td>&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td align="right">公司地址</td>
+                            <td><input name="sys_address" type="text" value="<?php echo $v['sys_address']; ?>" size="50"></td>
+                            <td>&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td align="right">公司英文地址</td>
+                            <td><input name="sys_enaddress" type="text" value="<?php echo $v['sys_enaddress']; ?>" size="50"></td>
+                            <td>&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td align="right">公司电话</td>
+                            <td><input name="sys_tel" type="text" value="<?php echo $v['sys_tel']; ?>" size="50"></td>
+                            <td>&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td align="right">公司传真</td>
+                            <td><input name="sys_fax" type="text" value="<?php echo $v['sys_fax']; ?>" size="50"></td>
+                            <td>&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td align="right">公司邮箱</td>
+                            <td><input name="sys_email" type="text" value="<?php echo $v['sys_email']; ?>" size="50"></td>
+                            <td>&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td align="right">公司网址</td>
+                            <td><input name="sys_web" type="text" value="<?php echo $v['sys_web']; ?>" size="50"></td>
+                            <td>&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td align="right">样式路径</td>
+                            <td><input name="sys_cssname" type="text" value="<?php echo $v['sys_cssname']; ?>" size="50"></td>
+                            <td>&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td align="right">&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td align="right">考勤记录字段</td>
+                            <td><input name="sys_kaoqinname" type="text" id="sys_kaoqinname" value="<?php echo $v['sys_kaoqinname']; ?>" size="50"></td>
+                            <td>&nbsp;</td>
+                          </tr>
+                                <tr>
+                                  <td align="right">国家所属洲</td>
+                                  <td><textarea name="sys_countryarea" cols="50" rows="5" id="sys_countryarea"><?php echo $v['sys_countryarea']; ?></textarea></td>
+                                  <td></td>
+                          </tr>
+                          <tr>
+                            <td align="right">单位</td>
+                                  <td><textarea name="sys_units" cols="50" rows="5" id="sys_units"><?php echo $v['sys_units']; ?></textarea></td>
+                                  <td></td>
+                          </tr>
+                          <tr>
+                            <td align="right">印刷选择</td>
+                                  <td><textarea name="sys_imprint" cols="50" rows="5" id="sys_imprint"><?php echo $v['sys_imprint']; ?></textarea></td>
+                                  <td></td>
+                          </tr>
+                            <tr>
+                                <td align="right">结算方式</td>
+                                <td><textarea name="sys_payment" cols="50" rows="5" id="sys_payment"><?php echo $v['sys_payment']; ?></textarea></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td align="right">送货方式</td>
+                                <td><textarea name="sys_deliverymethod" cols="50" rows="5" id="sys_deliverymethod"><?php echo $v['sys_deliverymethod']; ?></textarea></td>
+                                <td></td>
+                            </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <button type="submit">确定</button>
+                                        <button type="reset">重置</button>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+
+            <div class="mytab-pane " id="email">
+                <div class="widget-body no-padding">
+                    <form id="email-form"  method="POST" action="/tms/index.php/tms_setting/index/update">
+                      <table class="table-setting">
+                        <tr>
+                          <td width="120" align="right">邮箱服务器</td>
+                          <td><input name="email_server" type="text" value="<?php echo $v['email_server']; ?>" size="50"></td>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td align="right">邮箱端口</td>
+                          <td><input name="email_port" type="text" value="<?php echo $v['email_port']; ?>" size="50"></td>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td align="right">邮箱用户名</td>
+                          <td><input name="email_user" type="text" value="<?php echo $v['email_user']; ?>" size="50"></td>
+                          <td>&nbsp;</td>
+                        </tr>
+                          <tr>
+                            <td align="right">邮箱密码</td>
+                            <td><input name="email_password" type="text" value="<?php echo $v['email_password']; ?>" size="50"></td>
+                            <td>&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td align="right">发件人名称</td>
+                            <td><input name="email_name" type="text" value="<?php echo $v['email_name']; ?>" size="50"></td>
+                            <td>&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td align="right">发件人邮箱</td>
+                            <td><input name="email_sendemail" type="text" value="<?php echo $v['email_sendemail']; ?>" size="50"></td>
+                            <td>&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td align="right">回复邮箱</td>
+                            <td><input name="email_receive" type="text" value="<?php echo $v['email_receive']; ?>" size="50"></td>
+                            <td>&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td></td>
+                            <td><button type="submit">确定</button>
+                              <button type="reset">重置</button></td>
+                            <td></td>
+                          </tr>
+                      </table>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="mytab-pane  " id="variable">
+                <div class="widget-body no-padding">
+                    <form id="email-form"  method="POST" action="/tms/index.php/tms_setting/index/update">
+                      <table class="table-setting">
+                        <tr>
+                          <td width="120" align="right">部门列表</td>
+                          <td><textarea name="var_department" cols="50" rows="5" id="var_department"><?php echo $v['var_department']; ?></textarea></td>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td align="right">职位列表</td>
+                          <td><textarea name="var_jobs" cols="50" rows="5" id="var_jobs"><?php echo $v['var_jobs']; ?></textarea></td>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td align="right">招聘状态</td>
+                          <td><textarea name="var_jobstatus" cols="50" rows="5" id="var_jobstatus"><?php echo $v['var_jobstatus']; ?></textarea></td>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td align="right">历史记录操作类型</td>
+                          <td><textarea name="history_operation" cols="50" rows="5" id="history_operation"><?php echo $v['history_operation']; ?></textarea></td>
+                          <td>&nbsp;</td>
+                        </tr>
+                          <tr>
+                            <td align="right">历史记录操作单据</td>
+                            <td><textarea name="history_table" cols="50" rows="5" id="history_table"><?php echo $v['history_table']; ?></textarea></td>
+                            <td>&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td align="right">&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td align="right">&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td align="right">&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td></td>
+                            <td><button type="submit">确定</button>
+                              <button type="reset">重置</button></td>
+                            <td></td>
+                          </tr>
+                      </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>Deepsea后台管理系统</title>
+	<link rel="stylesheet" href="/style/layui/css/layui.css">
+	<link rel="stylesheet" href="/style/main.css">
+	<link rel="stylesheet" href="/style/pretty-checkbox.css">
+	<style>
+		.layui-form-checked[lay-skin=primary] i {
+			border-color: #01AAED;
+			background-color: #01AAED;
+			color: #fff;
+		}
+		.layui-layer-btn-c {
+			background: RGBA(110, 120, 141, 0.9);
+			border-radius: 0 0 20px 20px;
+		}
+	</style>
+</head>
+<body class="layui-layout-body">
+<div class="bgindex">
+	<div class="layui-layout layui-layout-admin">
+		{include file="public/header" /}
+		<div class="layui-side layui-bg-black layui-bg-black-updata">
+			<div class="layui-side layui-bg-black layui-bg-black-updata">
+				<div class="layui-side-scroll">
+					<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+					<ul class="layui-nav layui-nav-tree"  lay-filter="test">
+						<li class="layui-nav-item">
+							<a class="" href="/index.php/cms/index/index">用户反馈及回复</a>
+						</li>
+						<li class="layui-nav-item ">
+							<a href="javascript:;">用户管理</a>
+							<dl class="layui-nav-child">
+								<dd ><a href="/index.php/cms/userinfo/index">列表展示</a></dd>
+								<dd><a href="/index.php/cms/userinfo/picshow">图表展示</a></dd>
+							</dl>
+						</li>
+						<li class="layui-nav-item layui-nav-itemed">
+							<a href="javascript:;">消息推送</a>
+							<dl class="layui-nav-child">
+								<dd><a href="/index.php/cms/apppush/index">推送APP消息</a></dd>
+								<dd class="layui-this"><a href="/index.php/cms/apppush/emailpush">推送邮件信息</a></dd>
+							</dl>
+						</li>
+						<li class="layui-nav-item"><a href="/index.php/cms/appconfig/index">APP主页配置</a></li>
+						<li class="layui-nav-item"><a href="/index.php/cms/updatefirmware/index">固件信息管理</a></li>
+						<li class="layui-nav-item"><a href="/index.php/cms/usercontrol/index">账号管理</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="layui-body layui-body-content" id="layerDemo">
+			<div class="content-main" style="padding: 15px;color: #fff;" >
+				<form action="send_mail?user=part" method="post" id="pushsubmit" enctype="multipart/form-data">
+					<div class="fankui">推送标题 <button class="layui-btn layui-btn-lg layui-btn-normal layui-btn-updata" style="margin-left: 83%;border-radius: 25px;font-size: 14px" >推送历史</button></div>
+					<input type="hidden" name="user" value="part">
+					<input type="hidden" value="<?php echo input('email')?>" name="email">
+					<input type="hidden" value="<?php echo input('isemail')?>" name="isemail">
+					<input type="hidden" value="<?php echo input('country')?>" name="country">
+					<input type="hidden" value="<?php echo input('makedate1')?>" name="makedate1">
+					<input type="hidden" value="<?php echo input('makedate2')?>" name="makedate2">
+					<div class="layui-input-block fankui_in">
+						<textarea name="sendtitle" id="sendtitle" cols="182" rows="2" ></textarea>
+					</div>
+					<div class="fankui">推送内容：</div>
+					<div class="layui-input-block fankui_in">
+						<textarea name="sendcontent" class="fankui_int2" id="sendcontent"  cols="182" rows="8" style="border: 1px solid #fff"></textarea>
+						<input type="hidden" name="partpush" id="partpush" value="">
+					</div>
+					<div class="fankui">附件</div>
+					<div class="layui-input-block fankui_in">
+						<input type="file" name="pushfile">
+					</div>
+
+					<div class="radio" style="text-align: center;width: 80%">
+						推送对象：
+						<label style="cursor: pointer">
+							<input name="checkbox1" id="checkbox1" type="radio" onclick="location='emailpush'">
+							所有用户
+						</label>
+						<label style="cursor: pointer">
+							<input name="checkbox2" id="checkbox2" type="radio" checked="checked" >
+							指定用户
+						</label>
+					</div>
+				</form>
+				<div id="reply-btn" style="margin-top: 50px;">
+					<button class="layui-btn layui-btn-lg layui-btn-normal" onclick="beforeSubmit();">确认推送</button>
+					<!--<button class="layui-btn layui-btn-lg layui-btn-primary" onclick="location='index'">返回上级</button>-->
+				</div>
+				<table class="layui-table layui-form" id="test" lay-filter="test" style="width: 85%">
+					<colgroup>
+						<col width="150">
+						<col width="200">
+						<col>
+					</colgroup>
+					<thead>
+					<tr>
+						<th width="40px">序号</th>
+						<th style="width:300px;background-color: rgba(0, 7, 69, 1)">邮箱 <a href="javascript:;" data-method="email" class="layui-btn-main"><img src="/images/admin/shalou.png" alt=""></a></th>
+						<th width="300px">IP注册时所在国家 <a href="javascript:;" data-method="country" class="layui-btn-main"><img src="/images/admin/shalou.png" alt=""></a></th>
+						<th width="300px">注册时间 <a href="javascript:;" data-method="regtime" class="layui-btn-main"><img src="/images/admin/shalou.png" alt=""></a></th>
+						<th width="300px">接受邮件<a href="javascript:;" data-method="isemail" class="layui-btn-main"><img src="/images/admin/shalou.png" alt=""></a></th>
+						<th width="300px">
+							<span onclick="setallvalue(this)">选择用户<input type="checkbox"  class="all_option allChoosed" name="allChoose" value="0" id="allChoose" lay-filter="allChoose" lay-skin="primary"  /></span>
+						</th>
+					</tr>
+					</thead>
+					<tbody>
+					{foreach $arr as $k=>$v }
+					<tr>
+						<td><?php echo $k+1?></td>
+						<td><?php echo $v['email']; ?></td>
+						<td><?php echo $v['country']; ?></td>
+						<td><?php echo $v['regtime'];?></td>
+						<td>
+							{if $v.isemail==1}接收
+							{else /}不接收
+							{/if}
+						</td>
+						<td style="font-size: 15px;">
+							<div class="pretty p-default p-round">
+								<input type="checkbox" name="radio_<?php echo $k+1;?>" value="<?php echo $v['id'];?>" onclick="setchecked(this,this.value)" id="radio_<?php echo $k+1;?>" class="check-opt" lay-ignore>
+								<div class="state p-primary-o">
+									<label></label>
+								</div>
+							</div>
+						</td>
+					</tr>
+					{/foreach}
+
+					</tbody>
+					<?php if(count($arr)<=0&&isset($sqlwhere)){ ?>
+					<tr><td colspan="12" style="height:20px;background-color:rgba(69, 0, 0, 0.5);border: inherit">没有符合 <span style="color:red; font-weight:bold;"><?php echo $sqlwhere; ?></span> 的搜索结果</td></tr>
+					<?php } ?>
+				</table>
+				<div class="layui-box layui-laypage layui-laypage-default" style="width: 80%;text-align:center;margin-top: 25px;"><?php echo $page; ?></div>
+				<div class="pull-left pagination-detail" style="text-align: center;width:80%;">
+					总共 <?php echo $total; ?> 条记录，<?php echo $pagesize; ?>条 / 页，页数 <?php echo $pagenow; ?> / <?php echo $totalPage; ?>
+					</span>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+</div>
+</div>
+<script src="/style/jquery.js"></script>
+<script src="/style/layui/layui.js"></script>
+<script type="text/javascript" src="/style/layui/layui.all.js"></script>
+<script src="/style/main.js"></script>
+<script>
+	//JavaScript代码区域
+	layui.use('element', function(){
+		var element = layui.element;
+
+		layui.use('laydate', function(){
+			var laydate = layui.laydate;
+			//常规用法
+			laydate.render({
+				elem: '#test3'
+				,type: 'datetime'
+			});
+			laydate.render({
+				elem: '#test4'
+				,type: 'datetime'
+			});
+		});
+
+	});
+
+</script>
+<script>
+	layui.use('layer', function(){ //独立版的layer无需执行这一句
+		var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+		//常规用法
+		//触发事件
+		var active = {
+			setTop: function(){
+				var that = this;
+				//多窗口模式，层叠置顶
+				layer.open({
+					type: 2 //此处以iframe举例
+					,title: '当你选择该窗体时，即会在最顶端'
+					,area: ['390px', '260px']
+					,shade: 0
+					,maxmin: true
+					,offset: [ //为了演示，随机坐标
+						Math.random()*($(window).height()-300)
+						,Math.random()*($(window).width()-390)
+					]
+					,content: '//layer.layui.com/test/settop.html'
+					,btn: ['继续弹出', '全部关闭'] //只是为了演示
+					,yes: function(){
+						$(that).click();
+					}
+					,btn2: function(){
+						layer.closeAll();
+					}
+
+					,zIndex: layer.zIndex //重点1
+					,success: function(layero){
+						layer.setTop(layero); //重点2
+					}
+				});
+			}
+			,confirmTrans: function(){
+				//配置一个透明的询问框
+				layer.msg('大部分参数都是可以公用的<br>合理搭配，展示不一样的风格', {
+					time: 20000, //20s后自动关闭
+					btn: ['明白了', '知道了', '哦']
+				});
+			}
+			,isemail: function(){
+				//示范一个公告层
+				layer.open({
+					type: 1
+					,title: false //不显示标题栏
+					,closeBtn: false
+					,area: '300px;'
+					,shade: 0.8
+					,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+					/*,btn: ['查询', '取消']*/
+					,btnAlign: 'c'
+					,moveType: 1 //拖拽模式，0或者1
+					,content:
+					'<form action="emailpush_show" method="post" id="loginForm1"><div style="padding: 30px;border-radius:20px 20px 0 0; line-height: 22px;background: RGBA(110, 120, 141, 0.9); color: #fff; font-weight: 300;font-size: 18px;text-align: center">' +
+					'<div style="margin-bottom: 40px;">请选择回复状态</div><input type="radio" name="isemail" checked="checked" value="1">接收</input>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+					'<input type="radio" name="isemail" value="0">不接收</input>' +
+					'<input type="hidden" value="<?php echo input('email')?>" name="email">' +
+					'<input type="hidden" value="<?php echo input('country')?>" name="country">' +
+					'<input type="hidden" value="<?php echo input('makedata1')?>" name="makedata1">' +
+					'<input type="hidden" value="<?php echo input('makedata2')?>" name="makedata2">' +
+					'</div>' +
+					'<div class="layui-layer-btn layui-layer-btn-c"><a href="javascript:;" onclick="document:loginForm1.submit()" class="layui-layer-btn0">查询</a><a class="layui-layer-btn1">取消</a>' +
+					'</div>' +
+					'</form>'
+					,success: function(layero){
+						var btn = layero.find('');
+						btn.find('.layui-layer-btn0').attr({
+							href: 'http://www.layui.com/'
+							,target: '_blank'
+						});
+					}
+				});
+			}
+			,email: function(){
+				//示范一个公告层
+				layer.open({
+					type: 1
+					,title: false //不显示标题栏
+					,closeBtn: false
+					,area: '300px;'
+					,shade: 0.8
+					,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+					/*,btn: ['查询', '取消']*/
+					,btnAlign: 'c'
+					,moveType: 1 //拖拽模式，0或者1
+					,content:
+					'<form action="emailpush_show" method="post" id="loginForm1"><div style="padding: 30px;border-radius:20px 20px 0 0; line-height: 22px;background: RGBA(110, 120, 141, 0.9); color: #fff; font-weight: 300;font-size: 18px;text-align: center">' +
+					'<div style="margin-bottom: 40px;">请输入关键词(支持模糊查询)</div>' +
+					'<input type="text" name="email"  required lay-verify="required"  placeholder="请输入查询邮箱" autocomplete="off" class="layui-input">' +
+					'<input type="hidden" value="<?php echo input('isemail')?>" name="isemail">' +
+					'<input type="hidden" value="<?php echo input('country')?>" name="country">' +
+					'<input type="hidden" value="<?php echo input('makedata1')?>" name="makedata1">' +
+					'<input type="hidden" value="<?php echo input('makedata2')?>" name="makedata2">' +
+					'</div>' +
+					'<div class="layui-layer-btn layui-layer-btn-c"><a href="javascript:;" onclick="document:loginForm1.submit()" class="layui-layer-btn0">查询</a><a class="layui-layer-btn1">取消</a>' +
+					'</div>' +
+					'</form>'
+					,success: function(layero){
+						var btn = layero.find('');
+						btn.find('.layui-layer-btn0').attr({
+							href: 'http://www.layui.com/'
+							,target: '_blank'
+						});
+					}
+				});
+			}
+			,country: function(){
+				//示范一个公告层
+				layer.open({
+					type: 1
+					,title: false //不显示标题栏
+					,closeBtn: false
+					,area: '300px;'
+					,shade: 0.8
+					,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+					/*,btn: ['查询', '取消']*/
+					,btnAlign: 'c'
+					,moveType: 1 //拖拽模式，0或者1
+					,content:
+					'<form action="emailpush_show" method="post" id="loginForm2"><div style="padding: 30px;border-radius:20px 20px 0 0; line-height: 22px;background: RGBA(110, 120, 141, 0.9); color: #fff; font-weight: 300;font-size: 18px;text-align: center">' +
+					'<div style="margin-bottom: 40px;">请输入关键词(支持模糊查询)</div>' +
+					'<input type="text" name="country" required lay-verify="required" placeholder="请输入查询国家" autocomplete="off" class="layui-input">     ' +
+					'<input type="hidden" value="<?php echo input('isemail')?>" name="isemail">' +
+					'<input type="hidden" value="<?php echo input('email')?>" name="email">' +
+					'<input type="hidden" value="<?php echo input('makedata1')?>" name="makedata1">' +
+					'<input type="hidden" value="<?php echo input('makedata2')?>" name="makedata2">' +
+					'</div>' +
+					'<div class="layui-layer-btn layui-layer-btn-c"><a href="javascript:;" onclick="document:loginForm2.submit()" class="layui-layer-btn0">查询</a><a class="layui-layer-btn1">取消</a>' +
+					'</div>' +
+					'</form>'
+					,success: function(layero){
+						var btn = layero.find('');
+						btn.find('.layui-layer-btn0').attr({
+							href: 'http://www.layui.com/'
+							,target: '_blank'
+						});
+					}
+				});
+			}
+			,regtime: function(){
+				//示范一个公告层
+				layer.open({
+					type: 1
+					,title: false //不显示标题栏
+					,closeBtn: false
+					,area: '300px;'
+					,shade: 0.8
+					,trigger: 'click'//呼出事件改成click
+					,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+					/*,btn: ['查询', '取消']*/
+					,btnAlign: 'c'
+					,moveType: 1 //拖拽模式，0或者1
+					,content:
+					'<form action="emailpush_show" method="post" id="loginForm3"><div style="padding: 30px;border-radius:20px 20px 0 0; line-height: 22px;background: RGBA(110, 120, 141, 0.9); color: #fff; font-weight: 300;font-size: 18px;text-align: center">' +
+					'<div style="margin-bottom: 40px;">请选择日期</div>' +
+					'<div class="layui-form"><div class="layui-form-item"><div class="layui-inline"><label class="layui-form-label">开始日期</label><div class="layui-input-inline"><input style="width: 120%;" type="text" name="makedate1" readonly="readonly"  class="layui-input" id="test1" placeholder="yyyy-MM-dd"  ></div></div></div></div>'+
+					'<div class="layui-form"><div class="layui-form-item"><div class="layui-inline"><label class="layui-form-label">结束日期</label><div class="layui-input-inline"><input style="width: 120%;" type="text" name="makedate2" readonly="readonly"  class="layui-input" id="test2" placeholder="yyyy-MM-dd"  ></div></div></div></div>'+
+					'<input type="hidden" value="<?php echo input('isemail')?>" name="isemail">' +
+					'<input type="hidden" value="<?php echo input('email')?>" name="email">' +
+					'<input type="hidden" value="<?php echo input('country')?>" name="country">' +
+					'</div>' +
+					'<div class="layui-layer-btn layui-layer-btn-c"><a href="javascript:;" onclick="document:loginForm3.submit()" class="layui-layer-btn0">查询</a><a class="layui-layer-btn1">取消</a>' +
+					'</div>' +
+					'</form>'
+					,success: function(layero, index){
+						layui.use('laydate', function(){
+							var laydate = layui.laydate;
+							//常规用法
+							laydate.render({
+								elem: '#test1',
+								type: 'date',
+								trigger: 'click',
+							});
+							laydate.render({
+								elem: '#test2',
+								type: 'date',
+								trigger: 'click',
+							});
+						});
+					}
+
+				});
+			}
+			,offset: function(othis){
+				var type = othis.data('type')
+						,text = othis.text();
+
+				layer.open({
+					type: 1
+					,offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+					,id: 'layerDemo'+type //防止重复弹出
+					,content: '<div style="padding: 20px 100px;">'+ text +'</div>'
+					,btn: '关闭全部'
+					,btnAlign: 'c' //按钮居中
+					,shade: 0 //不显示遮罩
+					,yes: function(){
+						layer.closeAll();
+					}
+				});
+			}
+		};
+		$('#layerDemo .layui-btn-main').on('click', function(){
+			var othis = $(this), method = othis.data('method');
+			active[method] ? active[method].call(this, othis) : '';
+		});
+	});
+</script>
+<style>
+	.layui-layer-dialog .layui-layer-content {background-color: #F8F8F8;}
+	.layui-layer-btn {background-color: #F8F8F8;}
+</style>
+<script type="text/javascript">
+
+	layui.use('layer', function() { //独立版的layer无需执行这一句
+		var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+
+		form = layui.form;
+
+		//全选
+
+		form.on('checkbox(allChoose)', function (data) {
+
+			var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
+
+			child.each(function (index, item) {
+
+				item.checked = data.elem.checked;
+
+			});
+
+			form.render('checkbox');
+
+		});
+	})
+
+</script>
+<script>
+	//ajax
+	function setallvalue(obj){
+		var param0 = $("input[name='allChoose']");
+		a = $("#allChoose").val();
+		if (a == 0){
+			$("#allChoose").val(1);
+			param0.attr('checked', true);
+			$(".check-opt").attr('checked', true);
+		}else{
+			$("#allChoose").val(0);
+			param0.removeAttr("checked");
+			$(".check-opt").removeAttr("checked");
+		}
+	}
+	function setchecked(obj,a){
+		var param0 = $("input[name='allChoose']");
+		b = $("#"+obj.id);
+		if(b.is(":checked")){
+			b.attr('checked', true);
+		}else{
+			if(param0.is(":checked")){
+				param0.removeAttr("checked");
+			}
+			b.removeAttr("checked");
+		}
+	}
+
+	function beforeSubmit(form){
+		if($("#sendtitle").val()==''){
+			alert('标题不能为空！');
+			$("#sendtitle").focus();
+			return false;
+		}
+		if($("#sendcontent").val()==''){
+			alert('内容不能为空！');
+			$("#sendcontent").focus();
+			return false;
+		}
+		var a = new Array;
+		var i = 1 ;
+		$(".check-opt").each(function(){
+			if($("#radio_"+i).is(":checked")){
+				a[i] = $(this).val();
+			}else{
+				a[i] = 0;
+			}
+			i = i +1;
+		});
+		var arr = a.join(',');
+		$("#partpush").val(arr);
+		layer.confirm('是否推送消息？', {
+			btn: ['确定','取消'] //按钮
+		}, function(){
+			pushsubmit();
+			layer.msg('推送成功', {icon: 1});
+		});
+	}
+	function pushsubmit(){
+		$("#pushsubmit").submit();
+	}
+</script>
+</body>
+</html>
+

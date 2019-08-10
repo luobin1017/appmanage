@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>Deepsea后台管理系统</title>
+	<link rel="stylesheet" href="/style/layui/css/layui.css">
+	<link rel="stylesheet" href="/style/main.css">
+	<script src="/style/echarts.js"></script>
+</head>
+<body class="layui-layout-body">
+<div class="bgindex">
+	<div class="layui-layout layui-layout-admin">
+
+		{include file="public/header" /}
+
+		<div class="layui-side layui-bg-black layui-bg-black-updata">
+			<div class="layui-side layui-bg-black layui-bg-black-updata">
+				<div class="layui-side-scroll">
+					<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+					<ul class="layui-nav layui-nav-tree"  lay-filter="test">
+						<li class="layui-nav-item">
+							<a class="" href="/index.php/cms/index/index">用户反馈及回复</a>
+						</li>
+						<li class="layui-nav-item layui-nav-itemed">
+							<a href="javascript:;">用户管理</a>
+							<dl class="layui-nav-child">
+								<dd ><a href="/index.php/cms/userinfo/index">列表展示</a></dd>
+								<dd class="layui-this"><a href="/index.php/cms/userinfo/picshow">图表展示</a></dd>
+							</dl>
+						</li>
+						<li class="layui-nav-item">
+							<a href="javascript:;">消息推送</a>
+							<dl class="layui-nav-child">
+								<dd><a href="/index.php/cms/apppush/index">推送APP消息</a></dd>
+								<dd><a href="/index.php/cms/apppush/emailpush">推送邮件信息</a></dd>
+							</dl>
+						</li>
+						<li class="layui-nav-item"><a href="/index.php/cms/appconfig/index">APP主页配置</a></li>
+						<li class="layui-nav-item"><a href="/index.php/cms/updatefirmware/index">固件信息管理</a></li>
+						<li class="layui-nav-item"><a href="/index.php/cms/usercontrol/index">账号管理</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!---->
+		<div class="layui-body layui-body-content" id="layerDemo">
+			<div style="text-align: center;color:white;margin-top: 30px"><h1>邮箱注册数量数据统计</h1></div>
+			<div class="content-main" style="padding: 15px;color: #fff;">
+				<div style="width: 1800px;height:400px;">
+					<!--<div id="main" style="width: 800px;height:400px;float: left"></div>-->
+					<div id="main_10" style="width: 850px;height:530px;float: left"></div>
+					<div id="main_12" style="width: 800px;height:530px;float: left"></div>
+				</div>
+				<!-- 最近一周开始-->
+				<script>
+					// 基于准备好的dom，初始化echarts实例
+					var myChart = echarts.init(document.getElementById('main_10'));
+
+					// 指定图表的配置项和数据
+					option = {
+						title: {
+							/*text: '邮箱注册数量数据统计',*/
+							text: '最近一周用户增长量',
+							textStyle: {
+								align: 'left',
+								color: '#fff',
+								fontSize: 20,
+							},
+							top: '3%',
+							left: '10%',
+						},
+						grid: {
+							top: "25%",
+							bottom: "10%"
+						},
+						tooltip: {
+							trigger: "axis",
+							axisPointer: {
+								type: "shadow",
+								label: {
+									show: true
+								}
+							}
+						},
+						legend: {
+							data: ["上周邮箱注册数量", "本周邮箱注册数量"],
+							top: "15%",
+							textStyle: {
+								color: "#ffffff"
+							}
+						},
+						xAxis: {
+							data: [
+								"周一",
+								"周二",
+								"周三",
+								"周四",
+								"周五",
+								"周六",
+								"周日",
+
+							],
+							axisLine: {
+								show: true //隐藏X轴轴线
+							},
+							axisTick: {
+								show: true //隐藏X轴刻度
+							},
+							axisLabel: {
+								show: true,
+								textStyle: {
+									color: "#FFFFFF" //X轴文字颜色
+								}
+							},
+							axisLine: {
+								lineStyle: {
+									color: '#FFFFFF'
+								}
+							},
+						},
+						yAxis: [{
+							type: "value",
+							name: "邮箱注册数量",
+							nameTextStyle: {
+								color: "#FFFFFF"
+							},
+							splitLine: {
+								show: false
+							},
+							splitLine: {
+								show: false
+							},
+							axisTick: {
+								show: true
+							},
+							axisLine: {
+								show: true
+							},
+							axisLabel: {
+								show: true,
+								textStyle: {
+									color: "#FFFFFF"
+								}
+							},
+							axisLine: {
+								lineStyle: {
+									color: '#FFFFFF'
+								}
+							},
+						},
+							{
+								type: "value",
+								name: "上周同比",
+								nameTextStyle: {
+									color: "#FFFFFF"
+								},
+								position: "right",
+								splitLine: {
+									show: false
+								},
+								splitLine: {
+									show: false
+								},
+								axisTick: {
+									show: false
+								},
+								axisLine: {
+									show: false
+								},
+								axisLabel: {
+									show: true,
+									formatter: "{value} %", //右侧Y轴文字显示
+									textStyle: {
+										color: "#FFFFFF"
+									}
+								}
+							},
+							{
+								type: "value",
+								gridIndex: 0,
+								min: 50,
+								max: 100,
+								splitNumber: 8,
+								splitLine: {
+									show: false
+								},
+								axisLine: {
+									show: false
+								},
+								axisTick: {
+									show: false
+								},
+								axisLabel: {
+									show: false
+								},
+								splitArea: {
+									show: true,
+									areaStyle: {
+										color: ["rgba(250,250,250,0.0)", "rgba(250,250,250,0.05)"]
+									}
+								}
+							}
+						],
+						series: [{
+							name: "上周邮箱注册数量",
+							type: "line",
+							yAxisIndex: 1, //使用的 y 轴的 index，在单个图表实例中存在多个 y轴的时候有用
+							smooth: true, //平滑曲线显示
+							showAllSymbol: true, //显示所有图形。
+							symbol: "circle", //标记的图形为实心圆
+							symbolSize: 10, //标记的大小
+							itemStyle: {
+								//折线拐点标志的样式
+								color: "#058cff"
+							},
+							lineStyle: {
+								color: "#058cff"
+							},
+							areaStyle: {
+								color: "rgba(5,140,255, 0.2)"
+							},
+							data: [{$lrs1}, {$lrs2}, {$lrs3}, {$lrs4}, {$lrs5}, {$lrs6},{$lrs7}],
+						},
+							{
+								name: "本周邮箱注册数量",
+								type: "bar",
+								barWidth: 15,
+								itemStyle: {
+									normal: {
+										color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+											offset: 0,
+											color: "#00FFE3"
+										},
+											{
+												offset: 1,
+												color: "#4693EC"
+											}
+										])
+									}
+								},
+								data: [{$rs1}, {$rs2}, {$rs3}, {$rs4}, {$rs5}, {$rs6},{$rs7}],
+							}
+						]
+					};
+					// 使用刚指定的配置项和数据显示图表。
+					myChart.setOption(option);
+				</script>
+				<script type="text/javascript">
+				// 基于准备好的dom，初始化echarts实例
+				var myChart = echarts.init(document.getElementById('main'));
+
+				// 指定图表的配置项和数据
+				option = {
+					title: {
+						text: '最近一周用户增长量'
+					},
+					xAxis: {
+						type: 'category',
+						data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+					},
+					yAxis: {
+						type: 'value'
+					},
+					series: [{
+						data: [{$rs1}, {$rs2}, {$rs3}, {$rs4}, {$rs5}, {$rs6},{$rs7}],
+						type: 'line'
+					}]
+				};
+
+				// 使用刚指定的配置项和数据显示图表。
+				myChart.setOption(option);
+			</script>
+				<!-- 最近一周结束-->
+
+				<!-- 最近一月开始-->
+				<div style="width: 1800px;height:400px;clear: both">
+					<!--<div id="main" style="width: 800px;height:400px;float: left"></div>-->
+					<div id="main_11" style="width: 850px;height:530px;float: left;"></div>
+				</div>
+				<script>
+					// 基于准备好的dom，初始化echarts实例
+					var myChart = echarts.init(document.getElementById('main_11'));
+
+					// 指定图表的配置项和数据
+					option = {
+						title: {
+							/*text: '邮箱注册数量数据统计',*/
+							text: '最近一月用户增长量',
+							textStyle: {
+								align: 'left',
+								color: '#fff',
+								fontSize: 20,
+							},
+							top: '3%',
+							left: '10%',
+						},
+						grid: {
+							top: "25%",
+							bottom: "10%"
+						},
+						tooltip: {
+							trigger: "axis",
+							axisPointer: {
+								type: "shadow",
+								label: {
+									show: true
+								}
+							}
+						},
+						legend: {
+							data: ["上月邮箱注册数量", "本月邮箱注册数量"],
+							top: "15%",
+							textStyle: {
+								color: "#ffffff"
+							}
+						},
+						xAxis: {
+							data: [
+								"第一周",
+								"第二周",
+								"第三周",
+								"第四周",
+							],
+							axisLine: {
+								show: true //隐藏X轴轴线
+							},
+							axisTick: {
+								show: true //隐藏X轴刻度
+							},
+							axisLabel: {
+								show: true,
+								textStyle: {
+									color: "#FFFFFF" //X轴文字颜色
+								}
+							},
+							axisLine: {
+								lineStyle: {
+									color: '#FFFFFF'
+								}
+							},
+						},
+						yAxis: [{
+							type: "value",
+							name: "邮箱注册数量",
+							nameTextStyle: {
+								color: "#FFFFFF"
+							},
+							splitLine: {
+								show: false
+							},
+							splitLine: {
+								show: false
+							},
+							axisTick: {
+								show: true
+							},
+							axisLine: {
+								show: true
+							},
+							axisLabel: {
+								show: true,
+								textStyle: {
+									color: "#FFFFFF"
+								}
+							},
+							axisLine: {
+								lineStyle: {
+									color: '#FFFFFF'
+								}
+							},
+						},
+							{
+								type: "value",
+								name: "上月同比",
+								nameTextStyle: {
+									color: "#FFFFFF"
+								},
+								position: "right",
+								splitLine: {
+									show: false
+								},
+								splitLine: {
+									show: false
+								},
+								axisTick: {
+									show: false
+								},
+								axisLine: {
+									show: false
+								},
+								axisLabel: {
+									show: true,
+									formatter: "{value} %", //右侧Y轴文字显示
+									textStyle: {
+										color: "#FFFFFF"
+									}
+								}
+							},
+							{
+								type: "value",
+								gridIndex: 0,
+								min: 50,
+								max: 100,
+								splitNumber: 8,
+								splitLine: {
+									show: false
+								},
+								axisLine: {
+									show: false
+								},
+								axisTick: {
+									show: false
+								},
+								axisLabel: {
+									show: false
+								},
+								splitArea: {
+									show: true,
+									areaStyle: {
+										color: ["rgba(250,250,250,0.0)", "rgba(250,250,250,0.05)"]
+									}
+								}
+							}
+						],
+						series: [{
+							name: "上月邮箱注册数量",
+							type: "line",
+							yAxisIndex: 1, //使用的 y 轴的 index，在单个图表实例中存在多个 y轴的时候有用
+							smooth: true, //平滑曲线显示
+							showAllSymbol: true, //显示所有图形。
+							symbol: "circle", //标记的图形为实心圆
+							symbolSize: 10, //标记的大小
+							itemStyle: {
+								//折线拐点标志的样式
+								color: "#058cff"
+							},
+							lineStyle: {
+								color: "#058cff"
+							},
+							areaStyle: {
+								color: "rgba(5,140,255, 0.2)"
+							},
+							data: [{$lrs1}, {$lrs2}, {$lrs3}, {$lrs4}],
+						},
+							{
+								name: "本月邮箱注册数量",
+								type: "bar",
+								barWidth: 15,
+								itemStyle: {
+									normal: {
+										color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+											offset: 0,
+											color: "#00FFE3"
+										},
+											{
+												offset: 1,
+												color: "#4693EC"
+											}
+										])
+									}
+								},
+								data: [{$rs1}, {$rs2}, {$rs3}, {$rs4}],
+							}
+						]
+					};
+					// 使用刚指定的配置项和数据显示图表。
+					myChart.setOption(option);
+				</script>
+				<!-- 最近一月结束-->
+
+
+				<!-- 最近一季度开始-->
+				<div style="width: 1800px;height:400px;clear: both;">
+					<!--<div id="main" style="width: 800px;height:400px;float: left"></div>-->
+					<div id="main_13" style="width: 850px;height:530px;float:left"></div>
+				</div>
+				<script>
+					// 基于准备好的dom，初始化echarts实例
+					var myChart = echarts.init(document.getElementById('main_13'));
+
+					// 指定图表的配置项和数据
+					option = {
+						title: {
+							/*text: '邮箱注册数量数据统计',*/
+							text: '最近一季用户增长量',
+							textStyle: {
+								align: 'left',
+								color: '#fff',
+								fontSize: 20,
+							},
+							top: '3%',
+							left: '10%',
+						},
+						grid: {
+							top: "25%",
+							bottom: "10%"
+						},
+						tooltip: {
+							trigger: "axis",
+							axisPointer: {
+								type: "shadow",
+								label: {
+									show: true
+								}
+							}
+						},
+						legend: {
+							data: ["上季度邮箱注册数量", "本季度邮箱注册数量"],
+							top: "15%",
+							textStyle: {
+								color: "#ffffff"
+							}
+						},
+						xAxis: {
+							data: [
+								"第一个月",
+								"第二个月",
+								"第三月",
+
+							],
+							axisLine: {
+								show: true //隐藏X轴轴线
+							},
+							axisTick: {
+								show: true //隐藏X轴刻度
+							},
+							axisLabel: {
+								show: true,
+								textStyle: {
+									color: "#FFFFFF" //X轴文字颜色
+								}
+							},
+							axisLine: {
+								lineStyle: {
+									color: '#FFFFFF'
+								}
+							},
+						},
+						yAxis: [{
+							type: "value",
+							name: "邮箱注册数量",
+							nameTextStyle: {
+								color: "#FFFFFF"
+							},
+							splitLine: {
+								show: false
+							},
+							splitLine: {
+								show: false
+							},
+							axisTick: {
+								show: true
+							},
+							axisLine: {
+								show: true
+							},
+							axisLabel: {
+								show: true,
+								textStyle: {
+									color: "#FFFFFF"
+								}
+							},
+							axisLine: {
+								lineStyle: {
+									color: '#FFFFFF'
+								}
+							},
+						},
+							{
+								type: "value",
+								name: "上季同比",
+								nameTextStyle: {
+									color: "#FFFFFF"
+								},
+								position: "right",
+								splitLine: {
+									show: false
+								},
+								splitLine: {
+									show: false
+								},
+								axisTick: {
+									show: false
+								},
+								axisLine: {
+									show: false
+								},
+								axisLabel: {
+									show: true,
+									formatter: "{value} %", //右侧Y轴文字显示
+									textStyle: {
+										color: "#FFFFFF"
+									}
+								}
+							},
+							{
+								type: "value",
+								gridIndex: 0,
+								min: 50,
+								max: 100,
+								splitNumber: 8,
+								splitLine: {
+									show: false
+								},
+								axisLine: {
+									show: false
+								},
+								axisTick: {
+									show: false
+								},
+								axisLabel: {
+									show: false
+								},
+								splitArea: {
+									show: true,
+									areaStyle: {
+										color: ["rgba(250,250,250,0.0)", "rgba(250,250,250,0.05)"]
+									}
+								}
+							}
+						],
+						series: [{
+							name: "上季度邮箱注册数量",
+							type: "line",
+							yAxisIndex: 1, //使用的 y 轴的 index，在单个图表实例中存在多个 y轴的时候有用
+							smooth: true, //平滑曲线显示
+							showAllSymbol: true, //显示所有图形。
+							symbol: "circle", //标记的图形为实心圆
+							symbolSize: 10, //标记的大小
+							itemStyle: {
+								//折线拐点标志的样式
+								color: "#058cff"
+							},
+							lineStyle: {
+								color: "#058cff"
+							},
+							areaStyle: {
+								color: "rgba(5,140,255, 0.2)"
+							},
+							data: [{$lrs1}, {$lrs2}, {$lrs3}, {$lrs4}],
+						},
+							{
+								name: "本季度邮箱注册数量",
+								type: "bar",
+								barWidth: 15,
+								itemStyle: {
+									normal: {
+										color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+											offset: 0,
+											color: "#00FFE3"
+										},
+											{
+												offset: 1,
+												color: "#4693EC"
+											}
+										])
+									}
+								},
+								data: [{$week1}, {$week2}, {$week3}, {$week4}],
+							}
+						]
+					};
+					// 使用刚指定的配置项和数据显示图表。
+					myChart.setOption(option);
+				</script>
+				<!-- 最近一季度结束-->
+
+
+				<!-- 最近半年开始-->
+				<div style="width: 1800px;height:400px;clear: both;">
+					<!--<div id="main" style="width: 800px;height:400px;float: left"></div>-->
+					<div id="main_14" style="width: 850px;height:530px;float:left"></div>
+				</div>
+				<script>
+					// 基于准备好的dom，初始化echarts实例
+					var myChart = echarts.init(document.getElementById('main_14'));
+
+					// 指定图表的配置项和数据
+					option = {
+						title: {
+							/*text: '邮箱注册数量数据统计',*/
+							text: '最近半年用户增长量',
+							textStyle: {
+								align: 'left',
+								color: '#fff',
+								fontSize: 20,
+							},
+							top: '3%',
+							left: '10%',
+						},
+						grid: {
+							top: "25%",
+							bottom: "10%"
+						},
+						tooltip: {
+							trigger: "axis",
+							axisPointer: {
+								type: "shadow",
+								label: {
+									show: true
+								}
+							}
+						},
+						legend: {
+							data: ["上月邮箱注册数量", "最近半年邮箱注册数量"],
+							top: "15%",
+							textStyle: {
+								color: "#ffffff"
+							}
+						},
+						xAxis: {
+							data: [
+								"第一个月",
+								"第二个月",
+								"第三个月",
+								"第四个月",
+								"第五个月",
+								"第六个月",
+
+							],
+							axisLine: {
+								show: true //隐藏X轴轴线
+							},
+							axisTick: {
+								show: true //隐藏X轴刻度
+							},
+							axisLabel: {
+								show: true,
+								textStyle: {
+									color: "#FFFFFF" //X轴文字颜色
+								}
+							},
+							axisLine: {
+								lineStyle: {
+									color: '#FFFFFF'
+								}
+							},
+						},
+						yAxis: [{
+							type: "value",
+							name: "邮箱注册数量",
+							nameTextStyle: {
+								color: "#FFFFFF"
+							},
+							splitLine: {
+								show: false
+							},
+							splitLine: {
+								show: false
+							},
+							axisTick: {
+								show: true
+							},
+							axisLine: {
+								show: true
+							},
+							axisLabel: {
+								show: true,
+								textStyle: {
+									color: "#FFFFFF"
+								}
+							},
+							axisLine: {
+								lineStyle: {
+									color: '#FFFFFF'
+								}
+							},
+						},
+							{
+								type: "value",
+								name: "上个半年同比",
+								nameTextStyle: {
+									color: "#FFFFFF"
+								},
+								position: "right",
+								splitLine: {
+									show: false
+								},
+								splitLine: {
+									show: false
+								},
+								axisTick: {
+									show: false
+								},
+								axisLine: {
+									show: false
+								},
+								axisLabel: {
+									show: true,
+									formatter: "{value} %", //右侧Y轴文字显示
+									textStyle: {
+										color: "#FFFFFF"
+									}
+								}
+							},
+							{
+								type: "value",
+								gridIndex: 0,
+								min: 50,
+								max: 100,
+								splitNumber: 8,
+								splitLine: {
+									show: false
+								},
+								axisLine: {
+									show: false
+								},
+								axisTick: {
+									show: false
+								},
+								axisLabel: {
+									show: false
+								},
+								splitArea: {
+									show: true,
+									areaStyle: {
+										color: ["rgba(250,250,250,0.0)", "rgba(250,250,250,0.05)"]
+									}
+								}
+							}
+						],
+						series: [{
+							name: "上周邮箱注册数量",
+							type: "line",
+							yAxisIndex: 1, //使用的 y 轴的 index，在单个图表实例中存在多个 y轴的时候有用
+							smooth: true, //平滑曲线显示
+							showAllSymbol: true, //显示所有图形。
+							symbol: "circle", //标记的图形为实心圆
+							symbolSize: 10, //标记的大小
+							itemStyle: {
+								//折线拐点标志的样式
+								color: "#058cff"
+							},
+							lineStyle: {
+								color: "#058cff"
+							},
+							areaStyle: {
+								color: "rgba(5,140,255, 0.2)"
+							},
+							data: [{$lrs1}, {$lrs2}, {$lrs3}, {$lrs4}],
+						},
+							{
+								name: "半年邮箱注册数量",
+								type: "bar",
+								barWidth: 15,
+								itemStyle: {
+									normal: {
+										color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+											offset: 0,
+											color: "#00FFE3"
+										},
+											{
+												offset: 1,
+												color: "#4693EC"
+											}
+										])
+									}
+								},
+								data: [{$week1}, {$week2}, {$week3}, {$week4}],
+							}
+						]
+					};
+					// 使用刚指定的配置项和数据显示图表。
+					myChart.setOption(option);
+				</script>
+				<!-- 最近一季度结束-->
+
+
+				<script type="text/javascript">
+					// 基于准备好的dom，初始化echarts实例
+					var myChart = echarts.init(document.getElementById('main_12'));
+
+					// 指定图表的配置项和数据
+					var weatherIcons = {
+						'Sunny': './data/asset/img/weather/sunny_128.png',
+						'Cloudy': './data/asset/img/weather/cloudy_128.png',
+						'Showers': './data/asset/img/weather/showers_128.png'
+					};
+
+					option = {
+						title: {
+							text: '用户统计信息',
+							subtext: '最近数据',
+							left: 'center'
+						},
+						tooltip : {
+							trigger: 'item',
+							formatter: "{a} <br/>{b} : {c} ({d}%)"
+						},
+						legend: {
+							// orient: 'vertical',
+							// top: 'middle',
+							bottom: 10,
+							left: 'center',
+							data: ['周', '月','季度','半年','整年']
+						},
+						series : [
+							{
+								type: 'pie',
+								radius : '65%',
+								center: ['50%', '50%'],
+								selectedMode: 'single',
+								data:[
+									{value:{$year}, name: '周',
+										label: {
+											normal: {
+												formatter: [
+													'{title|{b}}{abg|}',
+													'  {weatherHead|时间}{valueHead|人数}{rateHead|占比}',
+													'{hr|}',
+													'   周   {value|{$week1}}{rate|{$percent1}}',
+													'   月   {value|{$week4}}{rate|{$percent2}}',
+													'  季度 {value|{$quarter3}}{rate|{$percent3}}',
+													'  半年 {value|{$year6}}{rate|{$percent4}}',
+													'  整年 {value|{$year}}{rate|{$percent5}}',
+												].join('\n'),
+												backgroundColor: '#eee',
+												borderColor: '#777',
+												borderWidth: 1,
+												borderRadius: 4,
+												rich: {
+													title: {
+														color: '#eee',
+														align: 'center'
+													},
+													abg: {
+														backgroundColor: '#333',
+														width: '100%',
+														align: 'right',
+														height: 40,
+														borderRadius: [4, 4, 0, 0]
+													},
+													Sunny: {
+														height: 30,
+														align: 'left',
+														backgroundColor: {
+															image: weatherIcons.Sunny
+														}
+													},
+													Cloudy: {
+														height: 30,
+														align: 'left',
+														backgroundColor: {
+															image: weatherIcons.Cloudy
+														}
+													},
+													Showers: {
+														height: 30,
+														align: 'left',
+														backgroundColor: {
+															image: weatherIcons.Showers
+														}
+													},
+													weatherHead: {
+														color: '#333',
+														height: 24,
+														align: 'left'
+													},
+													hr: {
+														borderColor: '#777',
+														width: '100%',
+														borderWidth: 0.5,
+														height: 0
+													},
+													value: {
+														width: 20,
+														padding: [0, 20, 0, 30],
+														align: 'left'
+													},
+													valueHead: {
+														color: '#333',
+														width: 20,
+														padding: [0, 20, 0, 30],
+														align: 'center'
+													},
+													rate: {
+														width: 40,
+														align: 'right',
+														padding: [0, 10, 0, 0]
+													},
+													rateHead: {
+														color: '#333',
+														width: 40,
+														align: 'center',
+														padding: [0, 10, 0, 0]
+													}
+												}
+											}
+										}},
+									{value:{$week4}, name: '月'},
+									{value:{$quarter3}, name: '季度'},
+									{value:{$year6}, name: '半年'},
+									{value:{$year}, name: '整年'}
+								],
+								itemStyle: {
+									emphasis: {
+										shadowBlur: 10,
+										shadowOffsetX: 0,
+										shadowColor: 'rgba(0, 0, 0, 0.5)'
+									}
+								}
+							}
+						]
+					};
+
+					// 使用刚指定的配置项和数据显示图表。
+					myChart.setOption(option);
+				</script>
+			</div>
+		</div>
+		<!---->
+	</div>
+	<!--<div class="layui-footer">
+		&lt;!&ndash; 底部固定区域 &ndash;&gt;
+		© layui.com - 底部固定区域
+	</div>-->
+</div>
+</div>
+
+<script src="/style/layui/layui.js"></script>
+<script src="/style/jquery.js"></script>
+<script src="/style/main.js"></script>
+<script>
+	//JavaScript代码区域
+	layui.use('element', function(){
+		var element = layui.element;
+
+	});
+
+</script>
+<script>
+	layui.use('layer', function(){ //独立版的layer无需执行这一句
+		var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+		//常规用法
+		//触发事件
+		var active = {
+			setTop: function(){
+				var that = this;
+				//多窗口模式，层叠置顶
+				layer.open({
+					type: 2 //此处以iframe举例
+					,title: '当你选择该窗体时，即会在最顶端'
+					,area: ['390px', '260px']
+					,shade: 0
+					,maxmin: true
+					,offset: [ //为了演示，随机坐标
+						Math.random()*($(window).height()-300)
+						,Math.random()*($(window).width()-390)
+					]
+					,content: '//layer.layui.com/test/settop.html'
+					,btn: ['继续弹出', '全部关闭'] //只是为了演示
+					,yes: function(){
+						$(that).click();
+					}
+					,btn2: function(){
+						layer.closeAll();
+					}
+
+					,zIndex: layer.zIndex //重点1
+					,success: function(layero){
+						layer.setTop(layero); //重点2
+					}
+				});
+			}
+			,confirmTrans: function(){
+				//配置一个透明的询问框
+				layer.msg('大部分参数都是可以公用的<br>合理搭配，展示不一样的风格', {
+					time: 20000, //20s后自动关闭
+					btn: ['明白了', '知道了', '哦']
+				});
+			}
+			,isemail: function(){
+				//示范一个公告层
+				layer.open({
+					type: 1
+					,title: false //不显示标题栏
+					,closeBtn: false
+					,area: '300px;'
+					,shade: 0.8
+					,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+					/*,btn: ['查询', '取消']*/
+					,btnAlign: 'c'
+					,moveType: 1 //拖拽模式，0或者1
+					,content:
+					'<form action="index" method="post" id="loginForm1"><div style="padding: 30px;border-radius:20px 20px 0 0; line-height: 22px;background: RGBA(110, 120, 141, 0.9); color: #fff; font-weight: 300;font-size: 18px;text-align: center">' +
+					'<div style="margin-bottom: 40px;">请选择回复状态</div><input type="radio" name="isemail" checked="checked" value="1">接收</input>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+					'<input type="radio" name="isemail" value="0">不接收</input>' +
+					'<input type="hidden" value="<?php echo input('email')?>" name="email">' +
+					'<input type="hidden" value="<?php echo input('country')?>" name="country">' +
+					'<input type="hidden" value="<?php echo input('makedata1')?>" name="makedata1">' +
+					'<input type="hidden" value="<?php echo input('makedata2')?>" name="makedata2">' +
+					'</div>' +
+					'<div class="layui-layer-btn layui-layer-btn-c"><a href="javascript:;" onclick="document:loginForm1.submit()" class="layui-layer-btn0">查询</a><a class="layui-layer-btn1">取消</a>' +
+					'</div>' +
+					'</form>'
+					,success: function(layero){
+						var btn = layero.find('');
+						btn.find('.layui-layer-btn0').attr({
+							href: 'http://www.layui.com/'
+							,target: '_blank'
+						});
+					}
+				});
+			}
+			,email: function(){
+				//示范一个公告层
+				layer.open({
+					type: 1
+					,title: false //不显示标题栏
+					,closeBtn: false
+					,area: '300px;'
+					,shade: 0.8
+					,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+					/*,btn: ['查询', '取消']*/
+					,btnAlign: 'c'
+					,moveType: 1 //拖拽模式，0或者1
+					,content:
+					'<form action="index" method="post" id="loginForm2"><div style="padding: 30px;border-radius:20px 20px 0 0; line-height: 22px;background: RGBA(110, 120, 141, 0.9); color: #fff; font-weight: 300;font-size: 18px;text-align: center">' +
+					'<div style="margin-bottom: 40px;">请输入关键词(支持模糊查询)</div>' +
+					'<input type="text" name="email"  required lay-verify="required"  placeholder="请输入查询邮箱" autocomplete="off" class="layui-input">' +
+					'<input type="hidden" value="<?php echo input('isemail')?>" name="isemail">' +
+					'<input type="hidden" value="<?php echo input('country')?>" name="country">' +
+					'<input type="hidden" value="<?php echo input('makedata1')?>" name="makedata1">' +
+					'<input type="hidden" value="<?php echo input('makedata2')?>" name="makedata2">' +
+					'</div>' +
+					'<div class="layui-layer-btn layui-layer-btn-c"><a href="javascript:;" onclick="document:loginForm2.submit()" class="layui-layer-btn0">查询</a><a class="layui-layer-btn1">取消</a>' +
+					'</div>' +
+					'</form>'
+					,success: function(layero){
+						var btn = layero.find('');
+						btn.find('.layui-layer-btn0').attr({
+							href: 'http://www.layui.com/'
+							,target: '_blank'
+						});
+					}
+				});
+			}
+			,country: function(){
+				//示范一个公告层
+				layer.open({
+					type: 1
+					,title: false //不显示标题栏
+					,closeBtn: false
+					,area: '300px;'
+					,shade: 0.8
+					,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+					/*,btn: ['查询', '取消']*/
+					,btnAlign: 'c'
+					,moveType: 1 //拖拽模式，0或者1
+					,content:
+					'<form action="index" method="post" id="loginForm"><div style="padding: 30px;border-radius:20px 20px 0 0; line-height: 22px;background: RGBA(110, 120, 141, 0.9); color: #fff; font-weight: 300;font-size: 18px;text-align: center">' +
+					'<div style="margin-bottom: 40px;">请输入关键词(支持模糊查询)</div>' +
+					'<input type="text" name="country" required lay-verify="required" placeholder="请输入查询国家" autocomplete="off" class="layui-input">     ' +
+					'<input type="hidden" value="<?php echo input('isemail')?>" name="isemail">' +
+					'<input type="hidden" value="<?php echo input('email')?>" name="email">' +
+					'<input type="hidden" value="<?php echo input('makedata1')?>" name="makedata1">' +
+					'<input type="hidden" value="<?php echo input('makedata2')?>" name="makedata2">' +
+					'</div>' +
+					'<div class="layui-layer-btn layui-layer-btn-c"><a href="javascript:;" onclick="document:loginForm.submit()" class="layui-layer-btn0">查询</a><a class="layui-layer-btn1">取消</a>' +
+					'</div>' +
+					'</form>'
+					,success: function(layero){
+						var btn = layero.find('');
+						btn.find('.layui-layer-btn0').attr({
+							href: 'http://www.layui.com/'
+							,target: '_blank'
+						});
+					}
+				});
+			}
+			,regtime: function(){
+				//示范一个公告层
+				layer.open({
+					type: 1
+					,title: false //不显示标题栏
+					,closeBtn: false
+					,area: '300px;'
+					,shade: 0.8
+					,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+					/*,btn: ['查询', '取消']*/
+					,btnAlign: 'c'
+					,moveType: 1 //拖拽模式，0或者1
+					,content:
+					'<form action="index" method="post" id="loginForm"><div style="padding: 30px;border-radius:20px 20px 0 0; line-height: 22px;background: RGBA(110, 120, 141, 0.9); color: #fff; font-weight: 300;font-size: 18px;text-align: center">' +
+					'<div style="margin-bottom: 40px;">请选择日期</div>' +
+					'<div class="layui-form"><div class="layui-form-item"><div class="layui-inline"><label class="layui-form-label">开始日期</label><div class="layui-input-inline"><input style="width: 120%;" type="text" name="makedate1" readonly="readonly"  class="layui-input" id="test1" placeholder="yyyy-MM-dd"  lay-key="1"></div></div></div></div>'+
+					'<div class="layui-form"><div class="layui-form-item"><div class="layui-inline"><label class="layui-form-label">结束日期</label><div class="layui-input-inline"><input style="width: 120%;" type="text" name="makedate2" readonly="readonly"  class="layui-input" id="test2" placeholder="yyyy-MM-dd"  lay-key="2"></div></div></div></div>'+
+					'<input type="hidden" value="<?php echo input('isemail')?>" name="isemail">' +
+					'<input type="hidden" value="<?php echo input('email')?>" name="email">' +
+					'<input type="hidden" value="<?php echo input('country')?>" name="country">' +
+					'</div>' +
+					'<div class="layui-layer-btn layui-layer-btn-c"><a href="javascript:;" onclick="document:loginForm.submit()" class="layui-layer-btn0">查询</a><a class="layui-layer-btn1">取消</a>' +
+					'</div>' +
+					'</form>'
+					,success: function(layero, index){
+						layui.use('laydate', function(){
+							var laydate = layui.laydate;
+							//常规用法
+							laydate.render({
+								elem: '#test1'
+							});
+							laydate.render({
+								elem: '#test2'
+							});
+						});
+					}
+
+				});
+			}
+			,offset: function(othis){
+				var type = othis.data('type')
+						,text = othis.text();
+
+				layer.open({
+					type: 1
+					,offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+					,id: 'layerDemo'+type //防止重复弹出
+					,content: '<div style="padding: 20px 100px;">'+ text +'</div>'
+					,btn: '关闭全部'
+					,btnAlign: 'c' //按钮居中
+					,shade: 0 //不显示遮罩
+					,yes: function(){
+						layer.closeAll();
+					}
+				});
+			}
+		};
+		$('#layerDemo .layui-btn-main').on('click', function(){
+			var othis = $(this), method = othis.data('method');
+			active[method] ? active[method].call(this, othis) : '';
+		});
+	});
+</script>
+<style>
+	.layui-layer-dialog .layui-layer-content {background-color: #F8F8F8;}
+	.layui-layer-btn {background-color: #F8F8F8;}
+</style>
+<script>
+	//ajax
+	function daochu(a,b,c,d,e) {
+		if(a==null||a==undefined||a==""){a=200;}
+
+		if(b==null||b==undefined||b==""){b=200;}
+
+		if(c==null||c==undefined||c==""){c=200;}
+
+		if(d==null||d==undefined||d==""){d=200;}
+
+		if(e==null||e==undefined||e==""){e=200;}
+		layer.confirm('确定要导出数据吗？', {
+			btn: ['确定','取消'] //按钮
+		}, function(){
+			window.location.href="daochu?email="+a+"&location="+b+"&ismail="+c+"&makedate1="+d+"&makedate2="+e;
+			layer.msg('导出成功', {icon: 1});
+		});
+		/*var flag = confirm("您确定要导出吗？");
+		if(flag==true){
+			window.location.href="daochu?email="+a+"&location="+b+"&ismail="+c+"&makedate1="+d+"&makedate2="+e;
+		}else {
+			return false;
+		}*/
+		//console.log(a,b,c);
+		/*$.ajax({
+		 type: "POST",
+		 url: "daochu",
+		 contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+		 data: {email:a,location:b,isemail:c,makedata1:d,makedata2:e},
+		 dataType: "json",
+		 success: function(data){*/
+			/*},
+			error:function(e){
+					console.log(e);
+				}
+			});*/
+	}
+</script>
+</body>
+</html>
+

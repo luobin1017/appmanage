@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><?php echo Config('sys_info')['sys_company']; ?> - 外贸管理系统</title>
+<script src="/tms/js/all.js" language="javascript"></script>
+</head>
+<body>
+<h1>添加/编辑用户信息</h1>
+<div class="mypanel">
+	<div class="mypanel-heading">
+        <div class="mypanel-lead"><em>添加/编辑用户信息</em>可以在此添加/修改用户的详细信息</div>
+    </div>
+
+    <div class="mypanel-body">
+        <div id="myTabContent" class="mytab-content">
+            <div class="mytab-pane active">
+                <div class="widget-body no-padding">
+                    <form id="basic-form" method="POST" action="/tms/index.php/tms_setting/userlist/update">
+                        <table class="table-setting">
+                          <tr>
+                            <td width="120" align="right">用户名<input name="id" type="hidden" value="<?php echo $v['id']; ?>"></td>
+                            <td><input name="username" type="text" id="username" value="<?php echo $v['username']; ?>" size="10"></td>
+                            <td width="120" align="right">密码</td>
+                            <td><input name="password" type="text" id="password" size="10"> * 不修改密碼請不要輸入</td>
+                          </tr>
+                          <tr>
+                            <td align="right">英文名</td>
+                            <td><input name="ename" type="text" id="ename" value="<?php echo $v['ename']; ?>" size="10"></td>
+                            <td align="right">中文名</td>
+                            <td><input name="name" type="text" id="name" value="<?php echo $v['name']; ?>" size="10"></td>
+                          </tr>
+                          <tr>
+                            <td align="right">分机号</td>
+                            <td><input name="ext" type="text" id="ext" value="<?php echo $v['ext']; ?>" size="10"></td>
+                            <td align="right">考勤号</td>
+                            <td><input name="checkid" type="text" id="checkid" value="<?php echo $v['checkid']; ?>" size="10"></td>
+                          </tr>
+                          <tr>
+                            <td align="right">部门</td>
+                            <td>
+                              <select name="department" id="department">
+                              <option value="">请选择</option>
+                              {foreach name="deplist" item="dep" key="k"}
+                              <option value="<?php echo $dep; ?>" <?php if($dep==$v['department']){?> selected="selected"<?php }?>><?php echo $dep; ?></option>
+                              {/foreach}
+                            </select></td>
+                            <td align="right">职位</td>
+                            <td><select name="jobs" id="jobs">
+                              <option value="">请选择</option>
+                              {foreach name="joblist" item="job" key="k"}
+                              <option value="<?php echo $job; ?>" <?php if($job==$v['jobs']){?> selected="selected"<?php }?>><?php echo $job; ?></option>
+                              {/foreach}
+                            </select></td>
+                          </tr>
+                          <tr>
+                            <td align="right">是否离职</td>
+                            <td><input name="nouse" type="text" id="nouse" value="<?php echo $v['nouse']; ?>" size="10"></td>
+                            <td align="right">邮箱</td>
+                            <td><input name="email" type="text" id="email" value="<?php echo $v['email']; ?>" size="10"></td>
+                          </tr>
+                          <tr>
+                            <td align="right">权限表分组</td>
+                            <td colspan="3">
+                            {foreach name="permissions_group" item="pgitem" key="k"}
+                            <?php
+                           		$pcheck="";
+                                if(strstr(','.$v['permissions_group'].',',','.(string)$pgitem['id'].',')!=false)
+                                {
+                                    $pcheck="checked";
+                                }
+                            ?>
+                            <label for="permissions_group_<?php echo $pgitem['id']; ?>">
+                            <input name="permissions_group[]" id="permissions_group_<?php echo $pgitem['id']; ?>" type="checkbox" value="<?php echo $pgitem['id']; ?>" <?php echo $pcheck; ?> /><?php echo $pgitem['name']; ?>
+                            </label>
+                            {/foreach}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td align="right">权限表</td>
+                            <td colspan="3">
+                            <table id="mytable" class="mytable">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>权限名称</th>
+                                        {foreach name="plist" item="p" key="k"}
+                                        <th><?php echo $p; ?><input type="checkbox" onClick="checkpermissions(this,<?php echo $k+1; ?>);" ></th>
+                                        {/foreach}
+                                    </tr>
+                                </thead>
+                                <tbody id="myclasssort">
+                                {foreach name="permissions" item="permissions" key="k"}
+                                <tr class="myclassitem" id="myclasssort_<?php echo $v['id']; ?>">
+                                <td><?php echo $k+1; ?></td>
+                                <td><?php echo $permissions['name']; ?></td>
+                                {foreach name="plist" item="p" key="k2"}
+                                <td>
+                                    <?php
+                                        if(strstr(','.$permissions['permissions'].',',','.(string)($k2+1).',')!=false)
+                                        {
+                                        	$ptemp=$permissions['no'].numtochr($k2+1,2);
+                                            $pcheck="";
+                                            if(strstr(','.$v['permissions'].',',','.$ptemp.',')!=false)
+                                            {
+                                            	$pcheck="checked";
+                                            }
+                                            echo "( ".$ptemp." ) ".$p.' <br><input type="checkbox" title="'.$ptemp.'" class="permissions_'.($k2+1).'" name="permissions[]" value="'.$ptemp.'" '.$pcheck.' />';
+                                        }
+                                    ?>
+                                </td>
+                                {/foreach}
+                                </tr>
+                                {/foreach}
+                                </tbody>
+                                </table>
+                            </td>
+                          </tr>
+                            <tfoot>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <button type="submit">确定</button>
+                                        <button type="reset">重置</button>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+function checkpermissions(obj,id)
+{
+	if ($(obj).prop("checked"))
+	{
+		$(".permissions_"+id).attr("checked", true);
+	}
+	else
+	{
+		$(".permissions_"+id).attr("checked", false);
+	}
+}
+</script>
+</body>
+</html>

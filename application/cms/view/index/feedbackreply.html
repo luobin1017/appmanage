@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>Deepsea后台管理系统</title>
+	<link rel="stylesheet" href="/style/layui/css/layui.css">
+	<link rel="stylesheet" href="/style/main.css">
+	<link rel="stylesheet" href="/style/pictureview/css/pictureViewer.css">
+</head>
+<body class="layui-layout-body">
+<div class="bgindex">
+<div class="layui-layout layui-layout-admin">
+	{include file="public/header" /}
+
+	<div class="layui-side layui-bg-black layui-bg-black-updata">
+		<div class="layui-side layui-bg-black layui-bg-black-updata">
+			<div class="layui-side-scroll">
+				<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+				<ul class="layui-nav layui-nav-tree"  lay-filter="test">
+					<li class="layui-nav-item layui-nav-itemed layui-this">
+						<a class="" href="/index.php/cms/index/index">用户反馈及回复</a>
+					</li>
+					<li class="layui-nav-item">
+						<a href="javascript:;">用户管理</a>
+						<dl class="layui-nav-child">
+							<dd><a href="/index.php/cms/userinfo/index">列表展示</a></dd>
+							<dd><a href="/index.php/cms/userinfo/picshow">图表展示</a></dd>
+						</dl>
+					</li>
+					<li class="layui-nav-item">
+						<a href="javascript:;">消息推送</a>
+						<dl class="layui-nav-child">
+							<dd><a href="/index.php/cms/apppush/index">推送APP消息</a></dd>
+							<dd><a href="/index.php/cms/apppush/emailpush">推送邮件信息</a></dd>
+						</dl>
+					</li>
+					<li class="layui-nav-item"><a href="/index.php/cms/appconfig/index">APP主页配置</a></li>
+					<li class="layui-nav-item"><a href="/index.php/cms/updatefirmware/index">固件信息管理</a></li>
+					<li class="layui-nav-item"><a href="/index.php/cms/usercontrol/index">账号管理</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!--反馈回复-->
+	<div class="layui-body layui-body-content" id="layerDemo">
+		<div class="content-main" style="padding: 15px;color: #fff;">
+
+			<div class="fankui">用户反馈内容：</div>
+			<div class="image-list">
+				{foreach $picture as $k=>$v}
+					<div class="cover"><img src="/uploads/images/feedback/{$v}" alt=""></div>
+				{/foreach}
+			</div>
+			<div class="layui-input-block fankui_in">
+				<textarea name=""  cols="182" rows="2" readonly="readonly" style="border: 2px solid #5e6a84"><?php echo $arr['content'];?></textarea>
+			</div>
+			{if ($status)==1}
+				{foreach $res as $k=>$v}
+					<div class="fankui"><?php echo $v['htime'];?>&nbsp;&nbsp;&nbsp;&nbsp;由<?php echo $v['husername'];?>回复</div>
+					<div class="layui-input-block fankui_in">
+						<textarea name=""  cols="182" rows="2" readonly="readonly" style="border: 2px solid #5e6a84"><?php echo $v['huifucontent'];?></textarea>
+					</div>
+				{/foreach}
+			{else /}
+			{/if}
+			<form action="feedbackreply" method="post" id="feedbackreply">
+				<div class="fankui">回复：</div>
+				<div class="layui-input-block fankui_in">
+					<input type="hidden" name="id" value="<?php echo $arr['id'];?>">
+					<input type="hidden" name="status" value="<?php echo $status;?>">
+					<input type="hidden" name="email" value="<?php echo $email;?>">
+					<textarea name="huifucontent" class="fankui_int2"  cols="182" rows="2" style="border: 2px solid #fff"></textarea>
+				</div>
+			</form>
+		</div>
+
+			<div id="reply-btn">
+				<button class="layui-btn layui-btn-lg layui-btn-normal" onclick="document.getElementById('feedbackreply').submit();">确认回复</button>
+				<button class="layui-btn layui-btn-lg layui-btn-primary" onclick="location='index'">返回上级</button>
+			</div>
+	</div>
+
+</div>
+</div>
+
+<script src="/style/layui/layui.js"></script>
+<script src="/style/jquery.js"></script>
+<script src="/style/main.js"></script>
+<script src="/style/pictureview/js/jquery.mousewheel.min.js"></script>
+<script src="/style/pictureview/js/pictureViewer.js"></script>
+<script>
+	$(function () {
+		$('.image-list').on('click', '.cover', function () {
+			var this_ = $(this);
+			var images = this_.parents('.image-list').find('.cover');
+			var imagesArr = new Array();
+			$.each(images, function (i, image) {
+				imagesArr.push($(image).children('img').attr('src'));
+			});
+			$.pictureViewer({
+				images: imagesArr, //需要查看的图片，数据类型为数组
+				initImageIndex: this_.index() + 1, //初始查看第几张图片，默认1
+				scrollSwitch: true //是否使用鼠标滚轮切换图片，默认false
+			});
+		});
+	});
+</script>
+<script>
+	//JavaScript代码区域
+	layui.use('element', function(){
+		var element = layui.element;
+
+	});
+
+</script>
+<script>
+	layui.use('layer', function(){ //独立版的layer无需执行这一句
+		var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+		//常规用法
+		//触发事件
+
+		$('#layerDemo .layui-btn-main').on('click', function(){
+			var othis = $(this), method = othis.data('method');
+			active[method] ? active[method].call(this, othis) : '';
+		});
+	});
+</script>
+</body>
+</html>

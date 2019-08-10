@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>供應商信息管理</title>
+    <script src="/TMS/js/all.js" language="javascript"></script>
+</head>
+<body>
+
+<table wIDth="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td height="40" align="center" class="title">新增供應商資料</td>
+    </tr>
+    <tr>
+        <td height="40" align="right">
+            <input type="button" name="Submit" value="返回供應商列表" onclick="gourl('Suppliers.asp');" />
+        </td>
+    </tr>
+    <form action="suppliers_update_save.html" method="post" onsubmit="return checkform(this);">
+        <tr>
+            <td><table wIDth="100%"  border="0" align="center" cellpadding="3" cellspacing="1" class="listtable">
+                <tr class="listtd2">
+                    <td>供應商類型</td>
+                    <td><select name="own">
+                        <option value="SZS">深圳公司供應商</option>
+                        <!--<option value="S">香港公司供應商</option>-->
+                    </select></td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr class="listtd1">
+                    <td width="13%">公司中文名</td>
+                    <td width="37%"><font color="red">
+                        <input name="name" type="text" class="input80" id="name" value="<?php echo $arr['name']; ?>"/>
+                        <input name="id" type="hidden" class="input80"  value="<?php echo $arr['id']; ?>"/>
+                        *</font></td>
+                    <td width="13%">公司英文名</td>
+                    <td width="37%"><input name="ename" type="text" class="input80" id="ename" value="<?php echo $arr['ename']; ?>"/></td>
+                </tr>
+                <tr class="listtd2">
+                    <td>所在城市</td>
+                    <td><label for="blacklist"><font color="red">
+                        <input name="city" type="text" class="input80" id="city" value="<?php echo $arr['city']; ?>"/>
+                        *</font></label></td>
+                    <td>傳真</td>
+                    <td><input name="fax" type="text" class="input80" id="fax" value="<?php echo $arr['fax']; ?>" /></td>
+                </tr>
+                <tr class="listtd1">
+                    <td>聯系人1</td>
+                    <td><input name="contact1" type="text" class="input80" id="contact1" value="<?php echo $arr['contact1']; ?>" />
+                        <font color="red"> *</font></td>
+                    <td>電話1</td>
+                    <td><input name="phone1" type="text" class="input80" id="phone1" value="<?php echo $arr['phone1']; ?>" /></td>
+                </tr>
+                <tr class="listtd2">
+                    <td>E-mail1</td>
+                    <td><input name="email1" type="text" class="input80" id="email1" value="<?php echo $arr['email1']; ?>" />
+                        <font color="red">*</font></td>
+                    <td>手機1</td>
+                    <td><input name="mob1" type="text" class="input80" id="mob1" value="<?php echo $arr['mob1']; ?>" /></td>
+                </tr>
+                <tr class="listtd1">
+                    <td>QQ1</td>
+                    <td><input name="qq1" type="text" class="input80" id="qq1" value="<?php echo $arr['qq1']; ?>" /></td>
+                    <td>網絡通訊1</td>
+                    <td><input name="net1" type="text" class="input80" id="net1" value="<?php echo $arr['net1']; ?>" /></td>
+                </tr>
+                <tr class="listtd2">
+                    <td>聯系人2</td>
+                    <td><input name="contact2" type="text" class="input80" id="contact2" value="<?php echo $arr['contact2']; ?>" /></td>
+                    <td>電話2</td>
+                    <td><input name="phone2" type="text" class="input80" id="phone2" value="<?php echo $arr['phone2']; ?>" /></td>
+                </tr>
+                <tr class="listtd1">
+                    <td>E-mail2</td>
+                    <td><input name="email2" type="text" class="input80" id="email2" value="<?php echo $arr['email2']; ?>" /></td>
+                    <td>手機2</td>
+                    <td><input name="mob2" type="text" class="input80" id="mob2" value="<?php echo $arr['mob2']; ?>" /></td>
+                </tr>
+
+                <tr class="listtd2">
+                    <td>QQ2</td>
+                    <td><input name="qq2" type="text" class="input80" id="qq2" value="<?php echo $arr['qq2']; ?>" /></td>
+                    <td>網絡通訊2</td>
+                    <td><input name="net2" type="text" class="input80" id="net2" value="<?php echo $arr['net2']; ?>" /></td>
+                </tr>
+                <tr class="listtd2">
+                    <td>公司地址</td>
+                    <td colspan="3"><textarea name="address" rows="5" class="input80" id="address"><?php echo $arr['address']; ?></textarea>
+          <span class="musinput"><br />
+          只限輸入中文繁體</span></td>
+                </tr>
+                <tr class="listtd1">
+                    <td>網址</td>
+                    <td><input name="web" type="text" class="input80" id="web" value="<?php echo $arr['web']; ?>" /></td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr class="listtd2">
+                    <td>備注</td>
+                    <td colspan="3"><textarea id="content" name="content" cols="20" rows="2" class="ckeditor"><?php echo $arr['content']; ?></textarea></td>
+                </tr>
+                <tr class="listtd1">
+                    <td>經營產品</td>
+                    <td><textarea name="jinyin" rows="5" class="input80" id="jinyin"><?php echo $arr['jinyin']; ?></textarea></td>
+                    <td>曾詢價產品</td>
+                    <td><textarea name="xunjia" rows="5" class="input80" id="xunjia"><?php echo $arr['xunjia']; ?></textarea></td>
+                </tr>
+                <tr class="listtd2">
+                    <td colspan="4" align="center"><table border="0" align="center" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td wIDth="120" align="center"><input name="Submit" type="submit" ID="Submit" value="確定" /></td>
+                            <td wIDth="120" align="center"><input name="Reset" type="reset" ID="Reset" value="重新輸入" /></td>
+                            <td wIDth="120" align="center"><input name="return" type="button" id="return" value="返回供應商列表" onclick="document.location='index.html';" /></td>
+                        </tr>
+                    </table></td>
+                </tr>
+            </table></td>
+        </tr>
+    </form>
+</table>
+<script language="javascript">
+    function checkform(obj)
+    {
+        if(getinputvalue("name")==""){alert("請輸入公司中文名稱！");setfocus("name");return false;}
+        if(getinputvalue("city")==""){alert("請輸入公司所在城市！");setfocus("city");return false;}
+        if(getinputvalue("contact1")==""){alert("請輸入聯系人1！");setfocus("contact1");return false;}
+        /*	if(isEmail(getinputvalue("email1"))==false){alert("請輸入聯系人1的郵箱！");setfocus("email1");return false;}*/
+        if(isEmail(getinputvalue("email1"))==false&&getinputvalue("email1")!=""){alert("請輸入正確的郵箱！");setfocus("email1");return false;}
+        if(isEmail(getinputvalue("email2"))==false&&getinputvalue("email2")!=""){alert("請輸入正確的郵箱！");setfocus("email2");return false;}
+        OpenSubWin();
+    }
+</script>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="copyright" style="display:none;">
+    <tr>
+        <td align="center">Copyright &copy;2008 By Emori</td>
+    </tr>
+</table>
+
+</body>
+</html>

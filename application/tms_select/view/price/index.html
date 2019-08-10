@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>选择价格</title>
+    <script type="text/javascript" src="/TMS/js/all.js"></script>
+</head>
+<body style=" width:740px;">
+<div class="mypanel">
+  <div class="mypanel-body">
+    <div id="toolbar" class="toolbar">
+    	<form action="?" method="post">
+            <div class="pull-left">
+            	<input type="hidden" name="pno" id="pno" value="<?php echo input("pno"); ?>" />
+            	价格条款：<?php echo showselect('priceterm',input('priceterm'),$pricetermarray,"",'');?>
+                印刷方式：<?php echo showselect('priceprint',input('priceterm'),$priceprintarray,"",'');?>
+                <input name="Submit" type="submit" id="Submit" value="搜索" />
+            </div>
+         </form>
+      </div>
+          <table id="mytable" class="mytable">
+            <thead>
+                <tr>
+                    <th><input name="btselectall" type="checkbox" class="selectallcheck" data-class="selid"></th>
+                    <th>ID</th>
+                    <th>产品编号</th>
+                    <th>数量</th>
+                    <th>价格</th>
+                    <th>更新时间</th>
+                </tr>
+            </thead>
+            <tbody>
+            {foreach name="list" item="v" key="k"}
+            <tr>
+            <td><input class="selid" name="id" value="<?php echo $v['id']; ?>" type="checkbox" data-num="<?php echo $v['num']; ?>" data-price="<?php echo $v['price']; ?>" ></td>
+            <td><?php echo $k+1; ?></td>
+            <td><?php echo $v['productid']; ?></td>
+            <td><?php echo str3x($v['num']) ?></td>
+            <td><?php echo $v['currencys']; ?> <?php echo strtocurr($v['price']) ?></td>
+            <td><?php echo $v['time']; ?></td>
+            </tr>
+            {/foreach}
+            <tr>
+                <td colspan="6" style="height:60px">
+                </td>
+            </tr>
+          </table>
+          <div style="position:fixed; bottom:0px; left:0px; padding-top:5px; background:#fff; display:block; width:100%; text-align:center;">
+              <input class="bigbtn" name="btnall" type="button" value="全选" onClick="checkall('selid',true);"  />
+              <input class="bigbtn" name="btnclear" type="button" value="清除" onClick="checkall('selid',false);"  />
+              <input class="bigbtn" name="btnselect" type="button" value="提交" onClick="selprice();"  />
+          </div>
+    </div>
+</div>
+<script>
+function selprice()
+{
+	var checklist=$(".selid:checked");
+	if(checklist.length<=0){alert("您还未选择价格，请先选择价格！");return;}
+	var pricelist="";
+	for(var i=0;i<checklist.length;i++)
+	{
+		if(pricelist!="")pricelist+="|";
+		pricelist+=$(checklist[i]).attr("data-num")+","+$(checklist[i]).attr("data-price");
+	}
+	//alert(pricelist);
+	parent.SelectReturn(pricelist);
+}
+</script>
+</body>
+</html>

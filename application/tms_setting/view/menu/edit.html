@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><?php echo Config('sys_info')['sys_company']; ?> - 外贸管理系统</title>
+<script src="/tms/js/all.js" language="javascript"></script>
+</head>
+<body>
+<h1>添加/编辑菜单信息</h1>
+<div class="mypanel">
+	<div class="mypanel-heading">
+        <div class="mypanel-lead"><em>添加/编辑菜单信息</em>可以在此添加/修改菜单的详细信息</div>
+    </div>
+
+    <div class="mypanel-body">
+        <div id="myTabContent" class="mytab-content">
+            <div class="mytab-pane active">
+                <div class="widget-body no-padding">
+                    <form id="basic-form" method="POST" action="/tms/index.php/tms_setting/menu/update">
+                        <table class="table-setting">
+                        <tr>
+                            <td align="right">上级菜单</td>
+                            <td><?php echo showselect('parentid',$v['parentid'],$menuarray,"一级菜单",'0');?></td>
+                          </tr>
+                          <tr>
+                            <td width="120" align="right">菜单名称<input name="id" type="hidden" value="<?php echo $v['id']; ?>"></td>
+                            <td><input name="menuname" type="text" id="menuname" value="<?php echo $v['menuname']; ?>" size="20"></td>
+                          </tr>
+                          <tr>
+                            <td width="120" align="right">URL</td>
+                            <td><input name="url" type="text" id="url" value="<?php echo $v['url']; ?>" size="60"></td>
+                          </tr>
+                            <tfoot>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <button type="submit">确定</button>
+                                        <button type="reset">重置</button>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
